@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/homepage', 'TweetsController@index')->name('tweets.index');
+Route::get('/homepage', 'TweetsController@index')->name('tweets.index')->middleware('auth');
 
 Auth::routes();
 

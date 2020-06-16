@@ -25,6 +25,18 @@ class TweetsTest extends TestCase
             
         // Then he should be able to see the tweets
         $response->assertSee($tweet->body);
-        
+    }
+
+    /** @test */
+    function guests_cannot_see_tweets()
+    {
+        // Given there is  a tweet
+        $tweet = factory('App\Tweet')->create();
+
+        // When a guest goes to the homepage
+        $response = $this->get('/homepage');
+
+        // Then he should be redirected to the login page
+        $response->assertRedirect('login');
     }
 }
