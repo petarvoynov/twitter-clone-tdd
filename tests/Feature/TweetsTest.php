@@ -98,5 +98,19 @@ class TweetsTest extends TestCase
         $this->assertDatabaseHas('tweets', ['body' => 'changed']);
     }
 
+    /** @test */
+    function an_authenticated_user_cannot_update_the_tweet_of_others()
+    {
+        // Given we have a sign in user and a tweet not created by him
+        $user = factory('App\User')->create();
+        $tweet = factory('App\Tweet')->create();
+
+        // When he hits the route to update the tweet
+        $response = $this->patch('/tweets/' . $tweet->id, ['body' => 'changed']);
+
+        // Then he should recieve a 403 response
+        $response->assertStatus(403);
+    }   
+
 
 }

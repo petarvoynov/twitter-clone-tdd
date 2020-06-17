@@ -27,6 +27,10 @@ class TweetsController extends Controller
 
     public function update(Tweet $tweet)
     {
+        if(!auth()->id() == $tweet->user_id){
+            abort(403);
+        }
+
         $tweet->update(['body' => request('body')]);
 
         return redirect()->route('tweets.index');
