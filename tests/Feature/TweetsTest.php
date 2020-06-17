@@ -21,7 +21,7 @@ class TweetsTest extends TestCase
         $tweet = factory('App\Tweet')->create();
 
         // When a user goes to his homepage
-        $response = $this->get('/homepage');
+        $response = $this->get('/tweets');
             
         // Then he should be able to see the tweets
         $response->assertSee($tweet->body);
@@ -34,7 +34,7 @@ class TweetsTest extends TestCase
         $tweet = factory('App\Tweet')->create();
 
         // When a guest goes to the homepage
-        $response = $this->get('/homepage');
+        $response = $this->get('/tweets');
 
         // Then he should be redirected to the login page
         $response->assertRedirect('login');
