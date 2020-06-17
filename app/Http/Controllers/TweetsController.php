@@ -21,6 +21,7 @@ class TweetsController extends Controller
         ]);
 
         Tweet::create([
+            'user_id' => auth()->user()->id,
             'body' => request('body')
         ]);
         
