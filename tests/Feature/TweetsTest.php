@@ -82,5 +82,21 @@ class TweetsTest extends TestCase
         $this->post('/tweets', $tweet)->assertSessionHasErrors('body');
     }
 
+    /** @test */
+    function the_owner_of_the_tweet_can_update_it()
+    {
+        // Given we are sign in and we have a tweet
+        $user = factory('App\User')->create();
+        $this->actingAs($user);
+        $tweet = factory('App\Tweet')->create(['user_id' => $user->id]);
+
+        // When we hit the route to edit the tweet
+        $this->patch('/tweets/' . $tweet->id, ['body' => 'changed'])
+            ->assertRedirect('/tweets');
+
+        // Then we should see the changes in the database
+        $this->assertDatabaseHas('tweets', ['body' => 'changed']);
+    }
+
 
 }

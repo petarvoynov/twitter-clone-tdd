@@ -24,4 +24,11 @@ class TweetsController extends Controller
         
         return redirect()->route('tweets.index');
     }
+
+    public function update(Tweet $tweet)
+    {
+        $tweet->update(['body' => request('body')]);
+
+        return redirect()->route('tweets.index');
+    }
 }
