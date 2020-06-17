@@ -20,10 +20,7 @@ class TweetsController extends Controller
             'body' => 'required'
         ]);
 
-        Tweet::create([
-            'user_id' => auth()->user()->id,
-            'body' => request('body')
-        ]);
+        auth()->user()->tweets()->create($data);
         
         return redirect()->route('tweets.index');
     }
