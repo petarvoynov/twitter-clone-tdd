@@ -11,7 +11,7 @@ class TweetTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    function a_task_belongs_to_a_user()
+    function a_tweet_belongs_to_a_user()
     {
         $tweet = factory('App\Tweet')->create();
 
