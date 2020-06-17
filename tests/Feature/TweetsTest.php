@@ -69,4 +69,18 @@ class TweetsTest extends TestCase
         // Then he should be redirected to the login page
         $response->assertRedirect('login');
     }
+
+    /** @test */
+    function a_tweet_requires_a_body()
+    {
+        $user = factory('App\User')->create();
+        
+        $this->actingAs($user);
+
+        $tweet = factory('App\Tweet')->raw(['body' => '']);
+
+        $this->post('/tweets', $tweet)->assertSessionHasErrors('body');
+    }
+
+
 }

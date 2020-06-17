@@ -16,6 +16,10 @@ class TweetsController extends Controller
 
     public function store()
     {
+        $data = request()->validate([
+            'body' => 'required'
+        ]);
+
         Tweet::create([
             'body' => request('body')
         ]);
