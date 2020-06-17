@@ -13,4 +13,13 @@ class TweetsController extends Controller
 
         return view('tweets.index', compact('tweets'));
     }
+
+    public function store()
+    {
+        Tweet::create([
+            'body' => request('body')
+        ]);
+        
+        return redirect()->route('tweets.index');
+    }
 }

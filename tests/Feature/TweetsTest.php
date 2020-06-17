@@ -39,4 +39,21 @@ class TweetsTest extends TestCase
         // Then he should be redirected to the login page
         $response->assertRedirect('login');
     }
+
+    /** @test */
+    function an_authenticated_user_can_create_tweets()
+    {
+        // Given we are signed in
+        $user = factory('App\User')->create();
+        $this->actingAs($user);
+
+        $tweet = ['body' => 'test tweet'];
+
+        // When we hit the route to store a tweet
+        $response = $this->post('/tweets', $tweet)
+            ->assertRedirect('/tweets');
+
+        // Then we should see it saved to the database
+        $this->assertDatabaseHas('tweets', $tweet);
+    }
 }
