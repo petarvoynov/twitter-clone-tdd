@@ -56,4 +56,17 @@ class TweetsTest extends TestCase
         // Then we should see it saved to the database
         $this->assertDatabaseHas('tweets', $tweet);
     }
+
+    /** @test */
+    function guests_cannot_create_tweets()
+    {
+        // Given there is a guest
+
+        // When he hit the route to store a tweet
+        $tweet = ['body' => 'test tweet'];
+        $response = $this->post('/tweets', $tweet);
+
+        // Then he should be redirected to the login page
+        $response->assertRedirect('login');
+    }
 }

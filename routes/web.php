@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/tweets', 'TweetsController@index')->name('tweets.index')->middleware('auth');
-Route::post('/tweets', 'TweetsController@store')->name('tweets.store');
+Route::post('/tweets', 'TweetsController@store')->name('tweets.store')->middleware('auth');
 
 Auth::routes();
 
