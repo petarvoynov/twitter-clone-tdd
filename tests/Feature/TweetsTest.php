@@ -11,6 +11,18 @@ class TweetsTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
+    function guests_cannot_see_create_update_or_delete_tweets()
+    {
+        $this->get('/tweets')->assertRedirect('login');
+        $this->post('/tweets', [])->assertRedirect('login');
+
+        $tweet = factory('App\Tweet')->create();
+
+        $this->patch('/tweets/' . $tweet->id, [])->assertRedirect('login');
+        $this->delete('/tweets/' . $tweet->id)->assertRedirect('login');
+    }
+
+    /** @test */
     function an_authenticated_user_can_see_all_tweets()
     {   
         // Given we are sign in
@@ -25,19 +37,6 @@ class TweetsTest extends TestCase
             
         // Then he should be able to see the tweets
         $response->assertSee($tweet->body);
-    }
-
-    /** @test */
-    function guests_cannot_see_tweets()
-    {
-        // Given there is  a tweet
-        $tweet = factory('App\Tweet')->create();
-
-        // When a guest goes to the homepage
-        $response = $this->get('/tweets');
-
-        // Then he should be redirected to the login page
-        $response->assertRedirect('login');
     }
 
     /** @test */
@@ -58,31 +57,6 @@ class TweetsTest extends TestCase
     }
 
     /** @test */
-    function guests_cannot_create_tweets()
-    {
-        // Given there is a guest
-
-        // When he hit the route to store a tweet
-        $tweet = ['body' => 'test tweet'];
-        $response = $this->post('/tweets', $tweet);
-
-        // Then he should be redirected to the login page
-        $response->assertRedirect('login');
-    }
-
-    /** @test */
-    function a_tweet_requires_a_body()
-    {
-        $user = factory('App\User')->create();
-        
-        $this->actingAs($user);
-
-        $tweet = factory('App\Tweet')->raw(['body' => '']);
-
-        $this->post('/tweets', $tweet)->assertSessionHasErrors('body');
-    }
-
-    /** @test */
     function the_owner_of_the_tweet_can_update_it()
     {
         // Given we are sign in and we have a tweet
@@ -97,21 +71,6 @@ class TweetsTest extends TestCase
         // Then we should see the changes in the database
         $this->assertDatabaseHas('tweets', ['body' => 'changed']);
     }
-
-    /** @test */
-    function an_authenticated_user_cannot_update_the_tweet_of_others()
-    {
-        // Given we have a sign in user and a tweet not created by him
-        $user = factory('App\User')->create();
-        $this->actingAs($user);
-        $tweet = factory('App\Tweet')->create();
-
-        // When he hits the route to update the tweet
-        $response = $this->patch('/tweets/' . $tweet->id, ['body' => 'changed']);
-
-        // Then he should recieve a 403 response
-        $response->assertStatus(403);
-    }   
 
     /** @test */
     function an_authenticated_user_can_delete_his_own_tweet()
@@ -132,6 +91,21 @@ class TweetsTest extends TestCase
     }
 
     /** @test */
+    function an_authenticated_user_cannot_update_the_tweet_of_others()
+    {
+        // Given we have a sign in user and a tweet not created by him
+        $user = factory('App\User')->create();
+        $this->actingAs($user);
+        $tweet = factory('App\Tweet')->create();
+
+        // When he hits the route to update the tweet
+        $response = $this->patch('/tweets/' . $tweet->id, ['body' => 'changed']);
+
+        // Then he should recieve a 403 response
+        $response->assertStatus(403);
+    }   
+
+    /** @test */
     function an_authenticated_user_cannot_delete_tweet_of_others()
     {
         // Given we have a sing in user and a tweet that doesn't belongs to him
@@ -147,5 +121,15 @@ class TweetsTest extends TestCase
         $response->assertStatus(403);
     }
 
+    /** @test */
+    function a_tweet_requires_a_body()
+    {
+        $user = factory('App\User')->create();
+        
+        $this->actingAs($user);
 
+        $tweet = factory('App\Tweet')->raw(['body' => '']);
+
+        $this->post('/tweets', $tweet)->assertSessionHasErrors('body');
+    }
 }

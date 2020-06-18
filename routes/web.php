@@ -15,10 +15,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/tweets', 'TweetsController@index')->name('tweets.index')->middleware('auth');
-Route::post('/tweets', 'TweetsController@store')->name('tweets.store')->middleware('auth');
-Route::patch('/tweets/{tweet}' , 'TweetsController@update')->name('tweets.update');
-Route::delete('/tweets/{tweet}' , 'TweetsController@destroy')->name('tweets.destroy');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/tweets', 'TweetsController@index')->name('tweets.index');
+    Route::post('/tweets', 'TweetsController@store')->name('tweets.store');
+    Route::patch('/tweets/{tweet}' , 'TweetsController@update')->name('tweets.update');
+    Route::delete('/tweets/{tweet}' , 'TweetsController@destroy')->name('tweets.destroy');
+});
 
 Auth::routes();
 
