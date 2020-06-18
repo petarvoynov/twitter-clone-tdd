@@ -27,7 +27,7 @@ class TweetsController extends Controller
 
     public function update(Tweet $tweet)
     {
-        if(!auth()->id() == $tweet->user_id){
+        if(!auth()->id() != $tweet->user_id){
             abort(403);
         }
 

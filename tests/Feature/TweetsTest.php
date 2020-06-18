@@ -103,6 +103,7 @@ class TweetsTest extends TestCase
     {
         // Given we have a sign in user and a tweet not created by him
         $user = factory('App\User')->create();
+        $this->actingAs($user);
         $tweet = factory('App\Tweet')->create();
 
         // When he hits the route to update the tweet
