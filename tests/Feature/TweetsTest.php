@@ -130,5 +130,21 @@ class TweetsTest extends TestCase
         $response->assertRedirect('/tweets');
     }
 
+    /** @test */
+    function an_authenticated_user_cannot_delete_tweet_of_others()
+    {
+        // Given we have a sing in user and a tweet that doesn't belongs to him
+        $user = factory('App\User')->create();
+        $this->actingAs($user);
+
+        $tweet = factory('App\Tweet')->create();
+
+        // When he hits the route to delete this tweet
+        $response = $this->delete('/tweets/' . $tweet->id);
+
+        // Then he should recieve a 403 response
+        $response->assertStatus(403);
+    }
+
 
 }
