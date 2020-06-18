@@ -35,4 +35,11 @@ class TweetsController extends Controller
 
         return redirect()->route('tweets.index');
     }
+
+    public function destroy(Tweet $tweet)
+    {
+        $tweet->delete();
+
+        return redirect()->route('tweets.index');
+    }
 }

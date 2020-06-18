@@ -112,5 +112,23 @@ class TweetsTest extends TestCase
         $response->assertStatus(403);
     }   
 
+    /** @test */
+    function an_authenticated_user_can_delete_his_own_tweet()
+    {
+        // Given we have a sign in user and he has a tweet
+        $user = factory('App\User')->create();
+        $this->actingAs($user);
+
+        $tweet = factory('App\Tweet')->create(['user_id' => $user->id]);
+        
+        // When he hits the route to delete the tweet
+        $response = $this->delete('/tweets/' . $tweet->id);
+
+        // Then the tweet has to be removed from the database
+        $this->assertDeleted('tweets', $tweet->toArray());
+
+        $response->assertRedirect('/tweets');
+    }
+
 
 }
