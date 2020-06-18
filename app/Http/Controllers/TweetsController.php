@@ -16,9 +16,7 @@ class TweetsController extends Controller
 
     public function store()
     {
-        $data = request()->validate([
-            'body' => 'required'
-        ]);
+        $data = $this->validatedData();
 
         auth()->user()->tweets()->create($data);
         
@@ -27,11 +25,13 @@ class TweetsController extends Controller
 
     public function update(Tweet $tweet)
     {
+        $data = $this->validatedData();
+
         if(auth()->id() != $tweet->user_id){
             abort(403);
         }
 
-        $tweet->update(['body' => request('body')]);
+        $tweet->update($data);
 
         return redirect()->route('tweets.index');
     }
@@ -45,5 +45,12 @@ class TweetsController extends Controller
         $tweet->delete();
 
         return redirect()->route('tweets.index');
+    }
+
+    protected function validatedData()
+    {
+        return request()->validate([
+            'body' => 'required'
+        ]);
     }
 }

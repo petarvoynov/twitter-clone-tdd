@@ -128,8 +128,9 @@ class TweetsTest extends TestCase
         
         $this->actingAs($user);
 
-        $tweet = factory('App\Tweet')->raw(['body' => '']);
+        $tweet = factory('App\Tweet')->create(['body' => '']);
 
-        $this->post('/tweets', $tweet)->assertSessionHasErrors('body');
+        $this->post('/tweets', $tweet->toArray())->assertSessionHasErrors('body');
+        $this->patch('/tweets/' . $tweet->id, $tweet->toArray())->assertSessionHasErrors('body');
     }
 }
