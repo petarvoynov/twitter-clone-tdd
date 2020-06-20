@@ -1,0 +1,46 @@
+ul {
+    list-style-type: none;
+}
+
+li > a {
+    padding: 10px 25px 15px 7px;
+    text-decoration: none;
+    color: black;
+}
+
+li > a:hover {
+    color: #1DA1F2;
+    background-color: rgba(29, 161, 242, 0.1);
+    text-decoration:none; 
+    cursor:pointer; 
+    border-radius: 30px;
+}
+
+.menu-items {
+    font-size: 20px;
+    font-weight: bolder;
+    line-height: 3rem;
+}
+
+.button {
+    background-color: #1DA1F2;
+    color: white;
+    padding: 2px 15px;
+    border-radius: 30px;
+    font-size: 16px;
+}
+
+.button:hover {
+    background-color: #1c8bcf;
+    color: white;
+    cursor: pointer;
+}
+
+.icons {
+    font-size:28px;
+}
+
+.logo {
+    color :#1DA1F2; 
+    font-size:32px
+}
