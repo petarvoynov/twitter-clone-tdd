@@ -1,14 +1,15 @@
 ul {
     list-style-type: none;
+    padding: 0;
 }
 
-li > a {
+.menu-item > a {
     padding: 10px 25px 15px 7px;
     text-decoration: none;
     color: black;
 }
 
-li > a:hover {
+.menu-item > a:hover {
     color: #1DA1F2;
     background-color: rgba(29, 161, 242, 0.1);
     text-decoration:none; 
@@ -16,7 +17,7 @@ li > a:hover {
     border-radius: 30px;
 }
 
-.menu-items {
+.menu {
     font-size: 20px;
     font-weight: bolder;
     line-height: 3rem;
@@ -43,4 +44,15 @@ li > a:hover {
 .logo {
     color :#1DA1F2; 
     font-size:32px
+}
+
+.searchbar {
+    padding: 5px;
+    border: 1px solid #e5edf1;
+    background-color: #e5edf1;
+    text-align: center;
+    border-radius: 25px;
+    color: rgb(61, 61, 63);
+    font-weight: initial;
+    font-size: 16px;
 }
