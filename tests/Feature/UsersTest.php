@@ -28,4 +28,22 @@ class UsersTest extends TestCase
         // Then when we call the relationship we have to have it in the results
         $this->assertEquals($userToFollow->id, $user->followings->first()->id);
     }
+
+    /** @test */
+    function a_user_can_unfollow_a_followed_user()
+    {
+        $this->withoutExceptionHandling();
+        // Given are sign in and already followed a user
+        $user = factory('App\User')->create();
+        $this->be($user);
+
+        $userToFollow = factory('App\User')->create();
+        $this->post('/users/'. $userToFollow->id .'/follow');
+
+        // When we hit the route to unfollow this user
+        $this->post('/users/'. $userToFollow->id .'/unfollow');
+
+        //Then when we call the relationship we should have no records
+        $this->assertEquals(0, $user->followings->count());
+    }
 }

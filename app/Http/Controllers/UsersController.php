@@ -13,4 +13,11 @@ class UsersController extends Controller
 
         return back();
     }
+
+    public function unfollow(User $user)
+    {
+        auth()->user()->followings()->detach($user->id);
+
+        return back();
+    }
 }
