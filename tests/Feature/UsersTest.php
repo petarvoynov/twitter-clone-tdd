@@ -23,7 +23,7 @@ class UsersTest extends TestCase
         $this->post('/users/'. $userToFollow->id .'/follow');
 
         // Then when we call the relationship we should have one record
-        $this->assertEquals(1, $user->followings->count());
+        $this->assertCount(1, $user->followings);
 
         // Then when we call the relationship we have to have it in the results
         $this->assertEquals($userToFollow->id, $user->followings->first()->id);
@@ -44,6 +44,6 @@ class UsersTest extends TestCase
         $this->post('/users/'. $userToFollow->id .'/unfollow');
 
         //Then when we call the relationship we should have no records
-        $this->assertEquals(0, $user->followings->count());
+        $this->assertCount(0, $user->followings);
     }
 }

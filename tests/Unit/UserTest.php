@@ -46,7 +46,7 @@ class UserTest extends TestCase
 
         // When we call the method follow
         $user->follow($userToFollow);
-
+        
         // Then we should have one followed user
         $this->assertCount(1, $user->followings);
 
