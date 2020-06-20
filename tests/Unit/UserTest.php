@@ -34,4 +34,24 @@ class UserTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $user->followings);
     }
+
+    /** @test */
+    function a_user_can_call_a_method_follow()
+    {
+        // Given we are sign in and have a user to follow
+        $user = factory('App\User')->create();
+        $this->be($user);
+
+        $userToFollow = factory('App\User')->create();
+
+        // When we call the method follow
+        $user->follow($userToFollow);
+
+        // Then we should have one followed user
+        $this->assertCount(1, $user->followings);
+
+        // Then we should assert that we followed exactly this user
+        $this->assertTrue($user->followings->contains($userToFollow));
+        
+    }
 }
