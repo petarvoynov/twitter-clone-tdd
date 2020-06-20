@@ -18,7 +18,41 @@
                 </ul>
             </nav>    
         </div>
-        <div class="col-6"></div>
+        <div class="col-6 border">
+            <div class="card">
+                <div class="card-header font-weight-bold lead">
+                  Home
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title text-muted">What's happening?</h5>
+                  <div>
+                    <form action="{{ route('tweets.store') }}" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <textarea class="form-control" name="body" cols="15" rows="10"></textarea>
+                        </div>
+                        <button class="btn btn-primary float-right" type="submit">Tweet</button> 
+                      </form>
+                  </div>
+                </div>
+              </div>
+
+            @forelse ($tweets as $tweet)
+                <div class="card mt-2">
+                    <div class="card-header d-flex justify-content-between">
+                        <h5>{{ $tweet->user->name }}</h5> <small>{{ $tweet->created_at->diffForHumans() }}</small>
+                    </div>  
+                    <div class="card-body">
+                        <p class="card-text">{{ $tweet->body }}</p>
+                        <a href="#" class="btn btn-primary">Retweet</a>
+                    </div>
+                </div>
+            @empty
+                <p class="lead text-center mt-5">There are no tweets</p>
+            @endforelse
+            
+           
+        </div>
         <div class="col-3">
             <div class="mt-2">
                 <form action="#">
@@ -45,10 +79,6 @@
             <p></p>
         </div>
     </div>
-
-    @foreach ($tweets as $tweet)
-        {{ $tweet->body }}
-    @endforeach
 @endsection
 
 
