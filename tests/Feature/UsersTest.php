@@ -67,6 +67,21 @@ class UsersTest extends TestCase
 
         // Then we should not have anoter record of following this user
         $this->assertCount(1, $user->followings);
+    }
 
+    /** @test */
+    function a_user_cannot_unfollow_a_user_that_he_is_not_following()
+    {
+        // Given we are sign in and there is a user that we don't follow
+        $user = factory('App\User')->create();
+        $this->be($user);
+
+        $userWeDontFollow = factory('App\User')->create();
+        
+        // When we hit the route to unfollow him 
+        $response = $this->post('/users/' . $userWeDontFollow->id . '/unfollow');
+
+        // Then we should recieve a response 403
+        $response->assertStatus(403);
     }
 }

@@ -18,8 +18,12 @@ class UsersController extends Controller
 
     public function unfollow(User $user)
     {
-        auth()->user()->unfollow($user);
+        if(!auth()->user()->followings->contains($user)){
+            abort(403);
+        }
 
-        return back();
+        auth()->user()->unfollow($user);
+        
+        return;
     }
 }
