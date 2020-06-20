@@ -18,4 +18,20 @@ class UserTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $user->tweets);
     }
+
+    /** @test */
+    function a_user_has_followers()
+    {
+        $user = factory('App\User')->create();
+
+        $this->assertInstanceOf(Collection::class, $user->followers);
+    }
+
+    /** @test */
+    function a_user_has_followings()
+    {
+        $user = factory('App\User')->create();
+
+        $this->assertInstanceOf(Collection::class, $user->followings);
+    }
 }

@@ -20,6 +20,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/tweets', 'TweetsController@store')->name('tweets.store');
     Route::patch('/tweets/{tweet}' , 'TweetsController@update')->name('tweets.update');
     Route::delete('/tweets/{tweet}' , 'TweetsController@destroy')->name('tweets.destroy');
+
+    Route::post('/users/{user}/follow', 'UsersController@follow')->name('profiles.follow');
 });
 
 Auth::routes();
