@@ -51,4 +51,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(User::class, 'followers', 'follower_id', 'leader_id')->withTimestamps();
     }
+
+    public function follow($user)
+    {
+        return $this->followings()->attach($user->id);
+    }
+
+    public function unfollow($user)
+    {
+        return $this->followings()->detach($user->id);
+    }
 }
