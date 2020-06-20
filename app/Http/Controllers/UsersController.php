@@ -9,6 +9,9 @@ class UsersController extends Controller
 {
     public function follow(User $user)
     {
+        if(auth()->user()->contains($user)){
+            return back();
+        }
         auth()->user()->follow($user);
 
         return back();

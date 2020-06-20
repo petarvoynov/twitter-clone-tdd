@@ -46,4 +46,25 @@ class UsersTest extends TestCase
         //Then when we call the relationship we should have no records
         $this->assertCount(0, $user->followings);
     }
+    
+   
+    /** @test */
+    function a_user_cannot_follow_a_user_if_he_is_already_following_him()
+    {
+        // Given we are sign in and have followed a user
+        $user = factory('App\User')->create();
+        $this->be($user);
+
+        $userToFollow = factory('App\User')->create();
+
+        $user->follow($userToFollow);
+
+        // When we hit the route to follow him again
+
+        $this->post('/users/' . $userToFollow->id . '/follow');
+
+        // Then we should not have anoter record of following this user
+        $this->assertCount(1, $user->followings);
+
+    }
 }
