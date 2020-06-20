@@ -23,14 +23,17 @@ class TweetsTest extends TestCase
     }
 
     /** @test */
-    function an_authenticated_user_can_see_all_tweets()
+    function an_authenticated_user_can_see_all_tweets_of_users_he_follows()
     {   
         // Given we are sign in
         $user = factory('App\User')->create();
         $this->actingAs($user);
 
-        // Given there is a tweet
-        $tweet = factory('App\Tweet')->create();
+        // Given there is a tweet from a user that I follow
+        $userToFollow = factory('App\User')->create();
+        $user->follow($userToFollow);
+
+        $tweet = factory('App\Tweet')->create(['user_id' => $userToFollow->id]);
 
         // When a user goes to his homepage
         $response = $this->get('/tweets');
@@ -57,7 +60,7 @@ class TweetsTest extends TestCase
     }
 
     /** @test */
-    function the_owner_of_the_tweet_can_update_it()
+    function an_authenticated_user_can_update_his_own_tweet()
     {
         // Given we are sign in and we have a tweet
         $user = factory('App\User')->create();
