@@ -21,8 +21,8 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/tweets/{tweet}' , 'TweetsController@update')->name('tweets.update');
     Route::delete('/tweets/{tweet}' , 'TweetsController@destroy')->name('tweets.destroy');
 
-    Route::post('/users/{user}/follow', 'UsersController@follow')->name('profiles.follow');
-    Route::post('/users/{user}/unfollow', 'UsersController@unfollow')->name('profiles.unfollow');
+    Route::post('/users/{user}/follow', 'UsersController@follow')->name('users.follow');
+    Route::post('/users/{user}/unfollow', 'UsersController@unfollow')->name('users.unfollow');
 });
 
 Auth::routes();

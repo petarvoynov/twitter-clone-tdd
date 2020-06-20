@@ -53,8 +53,8 @@ class User extends Authenticatable
     }
 
     public function follow($user)
-    {
-        return $this->followings()->attach($user->id);
+    {    
+        $this->followings()->attach($user->id);
     }
 
     public function unfollow($user)
