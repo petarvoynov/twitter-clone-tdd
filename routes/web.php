@@ -23,6 +23,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/users/{user}/follow', 'UsersController@follow')->name('users.follow');
     Route::post('/users/{user}/unfollow', 'UsersController@unfollow')->name('users.unfollow');
+
+    Route::post('/tweets/{tweet}/comments', 'CommentsController@store')->name('comments.store');
 });
 
 Auth::routes();
