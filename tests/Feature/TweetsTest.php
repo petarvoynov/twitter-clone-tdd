@@ -43,6 +43,25 @@ class TweetsTest extends TestCase
     }
 
     /** @test */
+    function an_authenticated_user_cannot_see_tweets_of_users_he_doesnt_follow()
+    {   
+        // Given we are sign in
+        $user = factory('App\User')->create();
+        $this->actingAs($user);
+
+        // Given there is a tweet from a user that we don't follow
+        $userWeDontFollow = factory('App\User')->create();
+
+        $tweet = factory('App\Tweet')->create(['user_id' => $userWeDontFollow->id]);
+
+        // When we go to our homepage to see all tweets
+        $response = $this->get('/tweets');
+            
+        // Then we should not be able to see the tweet
+        $response->assertDontSee($tweet->body);
+    }
+
+    /** @test */
     function an_authenticated_user_can_create_tweets()
     {
         // Given we are signed in

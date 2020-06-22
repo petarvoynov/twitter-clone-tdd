@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Tweet;
+use DB;
 
 class TweetsController extends Controller
 {
     public function index()
-    {
-        $tweets = Tweet::all();
+    {   
+        $followings = auth()->user()->load('followings')->followings->pluck('id');
+        $followings[] = auth()->id();
+        
+        $tweets = Tweet::with('user')->whereIn('user_id', $followings)->get();
 
         return view('tweets.index', compact('tweets'));
     }
