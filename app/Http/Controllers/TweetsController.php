@@ -12,8 +12,8 @@ class TweetsController extends Controller
     {   
         $followings = auth()->user()->load('followings')->followings->pluck('id');
         $followings[] = auth()->id();
-        
-        $tweets = Tweet::with('user')->whereIn('user_id', $followings)->get();
+
+        $tweets = Tweet::with('user')->whereIn('user_id', $followings)->orderByDesc('created_at')->get();
 
         return view('tweets.index', compact('tweets'));
     }
