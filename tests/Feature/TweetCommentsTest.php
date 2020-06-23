@@ -13,7 +13,6 @@ class TweetCommentsTest extends TestCase
     /** @test */
     function a_tweet_can_have_comments()
     {
-        $this->withoutExceptionHandling();
         // Given we are sign in and have a tweet
         $user = factory('App\User')->create();
         $this->be($user);
@@ -42,6 +41,5 @@ class TweetCommentsTest extends TestCase
 
         //Then we should recieve an validation error
         $response->assertSessionHasErrors('body');
-
     }
 }

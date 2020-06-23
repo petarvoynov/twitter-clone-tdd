@@ -52,6 +52,13 @@ class UserTest extends TestCase
 
         // Then we should assert that we followed exactly this user
         $this->assertTrue($user->followings->contains($userToFollow));
-        
+    }
+
+    /** @test */
+    function a_user_has_comments()
+    {
+        $user = factory('App\User')->create();
+
+        $this->assertInstanceOf(Collection::class, $user->comments);
     }
 }
