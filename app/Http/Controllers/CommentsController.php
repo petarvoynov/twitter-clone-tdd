@@ -14,9 +14,10 @@ class CommentsController extends Controller
             'body' => 'required'
         ]);
 
-        $comment = Comment::create([
-            'tweet_id' => $tweet->id,
-            'body' => request('body')
+        auth()->user()->comments()->create([
+            'body' => request('body'),
+            'tweet_id' => $tweet->id
         ]);
+
     }
 }
