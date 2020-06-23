@@ -10,6 +10,10 @@ class CommentsController extends Controller
 {
     public function store(Tweet $tweet)
     {
+        request()->validate([
+            'body' => 'required'
+        ]);
+
         $comment = Comment::create([
             'tweet_id' => $tweet->id,
             'body' => request('body')
