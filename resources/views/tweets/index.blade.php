@@ -45,8 +45,19 @@
                     <div class="card-body">
                         <p class="card-text">{{ $tweet->body }}</p>
                         <a href="#" class="btn btn-primary btn-sm">Retweet</a>
-                        <button class="btn btn-primary btn-sm">Comment</button>
+                        <button id="{{ $tweet->id }}" class="btn btn-primary btn-sm comment-button">Comment</button>
                         <button class="btn btn-primary btn-sm">Like</button>
+                    </div>
+                    <div id="comment-area-{{ $tweet->id }}" class="comment-area">
+                        <form action="{{ route('comments.store', $tweet->id) }}" method="POST">
+                            @csrf
+                            <div class="form-group">
+                                <textarea class="form-control" name="body" id="" cols="30" rows="10"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary btn-sm form-control">Send</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <ul class="list-group">
@@ -86,6 +97,27 @@
             <p></p>
         </div>
     </div>
+
+    <script>
+        let textarea = document.querySelectorAll('.comment-area')
+        let commentButton = document.querySelectorAll('.comment-button');
+        
+        for(let i = 0; i < textarea.length; i++){
+            textarea[i].style.display = "none";
+        }
+        
+        for(let i = 0; i < commentButton.length; i++){
+            commentButton[i].addEventListener('click', function(e) {
+                let id = e.target.id;
+                let currentCommentAre = document.querySelector('#comment-area-' + id);
+                if(currentCommentAre.style.display === 'none'){
+                    currentCommentAre.style.display = 'block';
+                } else {
+                    currentCommentAre.style.display = 'none';
+                }
+            });
+        }
+    </script>
 @endsection
 
 

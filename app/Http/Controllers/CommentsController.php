@@ -19,5 +19,7 @@ class CommentsController extends Controller
             'tweet_id' => $tweet->id
         ]);
 
+        return redirect()->route('tweets.index');
+
     }
 }
