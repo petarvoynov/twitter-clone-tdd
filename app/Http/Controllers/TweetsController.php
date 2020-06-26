@@ -13,7 +13,7 @@ class TweetsController extends Controller
         $followings = auth()->user()->load('followings')->followings->pluck('id');
         $followings[] = auth()->id();
 
-        $tweets = Tweet::with('user')->whereIn('user_id', $followings)->orderByDesc('created_at')->get();
+        $tweets = Tweet::with(['user', 'comments'])->whereIn('user_id', $followings)->orderByDesc('created_at')->paginate(10);
 
         return view('tweets.index', compact('tweets'));
     }
