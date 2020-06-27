@@ -11,7 +11,7 @@ class LikesTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    /* function a_comment_can_be_liked()
+    function a_comment_can_be_liked()
     {
         $this->withoutExceptionHandling();
         // Given we are sing in and we have a comment
@@ -25,5 +25,5 @@ class LikesTest extends TestCase
 
         // Then this should be shown in the database
         $this->assertCount(1, $comment->likes);
-    } */
+    }
 }
