@@ -22,4 +22,9 @@ class Comment extends Model
     {
         return $this->morphMany('App\Like', 'likeable');
     }
+
+    public function like()
+    {
+        $this->likes()->create(['user_id' => auth()->id()]);
+    }
 }

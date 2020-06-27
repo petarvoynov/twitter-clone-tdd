@@ -36,4 +36,20 @@ class CommentTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $comment->likes);
     }
+
+    /** @test */
+    function a_comment_can_call_like_method()
+    {
+        // Given we are sign in and have a comment
+        $user = factory('App\User')->create();
+        $this->be($user);
+
+        $comment = factory('App\Comment')->create();
+
+        // When we call the method to like a comment 
+        $comment->like();
+
+        // Then there should be a result in the database
+        $this->assertCount(1, $comment->likes);
+    }
 }
