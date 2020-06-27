@@ -25,6 +25,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/users/{user}/unfollow', 'UsersController@unfollow')->name('users.unfollow');
 
     Route::post('/tweets/{tweet}/comments', 'CommentsController@store')->name('comments.store');
+
+    Route::post('/comments/{comment}/likes', 'LikesController@store')->name('likes.store');
 });
 
 Auth::routes();
