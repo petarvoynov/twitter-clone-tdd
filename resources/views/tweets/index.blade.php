@@ -41,12 +41,20 @@
                 <div class="card mt-3">
                     <div class="card-header d-flex justify-content-between">
                         <h5>{{ $tweet->user->name }}</h5> <small>{{ $tweet->created_at->diffForHumans() }}</small>
-                    </div>  
+                    </div>
                     <div class="card-body">
-                        <p class="card-text">{{ $tweet->body }}</p>
-                        <a href="#" class="btn btn-primary btn-sm">Retweet</a>
-                        <button id="{{ $tweet->id }}" class="btn btn-primary btn-sm comment-button">Comment</button>
-                        <button class="btn btn-primary btn-sm">Like</button>
+                        <div class="tweet-body">
+                            <a href="#">
+                               {{ $tweet->body }}
+                            </a>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-3">
+                            <ion-icon style="border: none; font-size:20px" class="comment-button" id="{{ $tweet->id }}" type="button" name="chatbubble-outline"></ion-icon>
+                            <ion-icon style="border: none; font-size:20px" class="my-ionicon" type="button" name="arrow-redo-outline"></ion-icon>
+                            <ion-icon style="border: none; font-size:20px" class="my-ionicon" type="button" name="heart-outline"></ion-icon>
+                            <ion-icon style="border: none; font-size:20px" class="my-ionicon" type="button" name="download-outline"></ion-icon>
+                        </div>
                     </div>
                     <div id="comment-area-{{ $tweet->id }}" class="comment-area">
                         <form action="{{ route('comments.store', $tweet->id) }}" method="POST">
@@ -60,11 +68,7 @@
                         </form>
                     </div>
                 </div>
-                <ul class="list-group">
-                @foreach($comments = getComments($tweet) as $comment)
-                    <li class="list-group-item d-flex justify-content-between"><span>{{ $comment->body }}</span><small class="text-secondary">{{ $comment->created_at->diffForHumans() }}</small></li>
-                @endforeach  
-                </ul>
+
             @empty
                 <p class="lead text-center mt-5">There are no tweets</p>
             @endforelse
