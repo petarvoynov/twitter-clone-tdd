@@ -19,6 +19,8 @@ class CreateLikesTable extends Migration
             $table->unsignedBigInteger('likeable_id');
             $table->string('likeable_type', 50);
             $table->timestamps();
+
+            $table->unique(['user_id', 'likeable_id', 'likeable_type']);
         });
     }
 

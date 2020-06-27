@@ -20,7 +20,6 @@ class LikesTest extends TestCase
     /** @test */
     function a_comment_can_be_liked()
     {
-        $this->withoutExceptionHandling();
         // Given we are sing in and we have a comment
         $user = factory('App\User')->create();
         $this->be($user);
@@ -31,6 +30,25 @@ class LikesTest extends TestCase
         $this->post('/comments/'. $comment->id .'/likes');
 
         // Then this should be shown in the database
+        $this->assertCount(1, $comment->likes);
+    }
+
+    /** @test */
+    function a_comment_cannot_be_liked_more_than_once()
+    {
+        $this->withoutExceptionHandling();
+        // Given we are sing in and we have a comment
+        $user = factory('App\User')->create();
+        $this->be($user);
+
+        $comment = factory('App\Comment')->create(['user_id' => $user->id]);
+
+        // When we hit the route to like that comment more than once
+        $this->post('/comments/'. $comment->id .'/likes');
+        $this->post('/comments/'. $comment->id .'/likes');
+        $this->post('/comments/'. $comment->id .'/likes');
+
+        // Then there should still be only one record in the database
         $this->assertCount(1, $comment->likes);
     }
 }
