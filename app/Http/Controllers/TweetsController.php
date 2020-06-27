@@ -27,6 +27,11 @@ class TweetsController extends Controller
         return redirect()->route('tweets.index');
     }
 
+    public function show(Tweet $tweet)
+    {
+        return view('tweets.show', compact('tweet'));
+    }
+
     public function update(Tweet $tweet)
     {
         $data = $this->validatedData();

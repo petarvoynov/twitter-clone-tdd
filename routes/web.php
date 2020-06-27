@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/tweets', 'TweetsController@index')->name('tweets.index');
+    Route::get('/tweets/{tweet}', 'TweetsController@show')->name('tweets.show');
     Route::post('/tweets', 'TweetsController@store')->name('tweets.store');
     Route::patch('/tweets/{tweet}' , 'TweetsController@update')->name('tweets.update');
     Route::delete('/tweets/{tweet}' , 'TweetsController@destroy')->name('tweets.destroy');

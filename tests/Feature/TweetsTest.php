@@ -43,6 +43,22 @@ class TweetsTest extends TestCase
     }
 
     /** @test */
+    function a_user_can_see_a_single_tweet()
+    {
+        // Given we are sign in and have a tweet
+        $user = factory('App\User')->create();
+        $this->be($user);
+
+        $tweet = factory('App\Tweet')->create(['user_id' => $user->id]);
+
+        // When we hit the route to see that tweet
+        $response = $this->get('/tweets/' . $tweet->id);
+
+        // Then we should see the tweet body
+        $response->assertSee($tweet->body);
+    }
+
+    /** @test */
     function an_authenticated_user_cannot_see_tweets_of_users_he_doesnt_follow()
     {   
         // Given we are sign in
