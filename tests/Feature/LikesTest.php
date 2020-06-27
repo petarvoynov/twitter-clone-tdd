@@ -11,6 +11,13 @@ class LikesTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
+    function guest_cannot_like_comments()
+    {
+        $this->post('/comments/1/likes')
+            ->assertRedirect('login');
+    }
+
+    /** @test */
     function a_comment_can_be_liked()
     {
         $this->withoutExceptionHandling();
