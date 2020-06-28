@@ -34,4 +34,20 @@ class TweetTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $tweet->likes);
     }
+
+    /** @test */
+    function a_tweet_can_call_like_method()
+    {
+        // Given we are sign in and have a tweet
+        $user = factory('App\User')->create();
+        $this->be($user);
+
+        $tweet = factory('App\Tweet')->create();
+
+        // When we call the method to like the tweet
+        $tweet->like();
+
+        // Then there should be record in the database
+        $this->assertCount(1, $tweet->likes);
+    }
 }
