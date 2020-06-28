@@ -53,11 +53,14 @@
     <li class="list-group-item mt-2">
         <div class="row">
             <div class="col-lg-11 d-flex flex-column">
-                <div>{{ $comment->user->name }} commented:</div>
-                <div>{{ $comment->body }}</div>
+                <div class="font-weight-bold">{{ $comment->user->name }}<small class="text-muted ml-2">commented:</small></div>
+                <div class="mt-2">{{ $comment->body }}</div>
                 <div>
                     <small class="text-secondary">{{ $comment->created_at->diffForHumans() }}</small>
-                    <small class="text-secondary">{{ $comment->likes_count }} {{ Str::plural('Like', $comment->likes_count) }}</small>
+                    <small>
+                        <span class="font-weight-bold ml-3">{{ $comment->likes_count }}</span> 
+                        <span class="text-secondary">{{ Str::plural('Like', $comment->likes_count) }}</span>
+                    </small>
                 </div>
             </div>
             <div class="col-lg-1 d-flex justify-content-center align-items-center"> 
