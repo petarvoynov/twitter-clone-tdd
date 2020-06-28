@@ -50,4 +50,22 @@ class TweetTest extends TestCase
         // Then there should be record in the database
         $this->assertCount(1, $tweet->likes);
     }
+
+    /** @test */
+    function a_tweet_can_call_unlike_method()
+    {
+        // Given we are sign in and have a tweet that we liked already
+        $user = factory('App\User')->create();
+        $this->be($user);
+
+        $tweet = factory('App\Tweet')->create(['user_id' => $user->id]);
+
+        $tweet->like();
+
+        // When we call the unlike method on the tweet
+        $tweet->unlike();
+
+        // Then there should not be records in the database
+        $this->assertCount(0, $tweet->likes);
+    }
 }

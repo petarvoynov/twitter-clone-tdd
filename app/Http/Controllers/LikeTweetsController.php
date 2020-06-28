@@ -9,7 +9,7 @@ class LikeTweetsController extends Controller
 {
     public function store(Tweet $tweet)
     {
-        if(!$tweet->likes()->where('user_id', auth()->id())->exists()){
+        if(!$tweet->isLiked()){
             $tweet->like();
         }
         
@@ -18,7 +18,7 @@ class LikeTweetsController extends Controller
 
     public function destroy(Tweet $tweet)
     {
-        $tweet->likes()->where('user_id', auth()->id())->delete();
+        $tweet->unlike();
 
         return back();
     }
