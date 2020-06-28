@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class LikesTest extends TestCase
+class LikeCommentsTest extends TestCase
 {
     use RefreshDatabase;
 
