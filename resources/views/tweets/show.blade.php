@@ -56,7 +56,7 @@
                 <div>{{ $comment->body }}</div>
                 <div>
                     <small class="text-secondary">{{ $comment->created_at->diffForHumans() }}</small>
-                    <small class="text-secondary">123 Likes</small>
+                    <small class="text-secondary">{{ $comment->likes_count }} {{ Str::plural('Like', $comment->likes_count) }}</small>
                 </div>
             </div>
             <div class="col-lg-1 d-flex justify-content-center align-items-center"> 
