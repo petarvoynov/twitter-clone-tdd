@@ -15,4 +15,11 @@ class LikeTweetsController extends Controller
         
          return back();
     }
+
+    public function destroy(Tweet $tweet)
+    {
+        $tweet->likes()->where('user_id', auth()->id())->delete();
+
+        return back();
+    }
 }

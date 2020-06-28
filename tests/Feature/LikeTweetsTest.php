@@ -49,4 +49,27 @@ class LikeTweetsTest extends TestCase
         // Then there should be only one record in the database
         $this->assertCount(1, $tweet->likes);
     }
+
+    /** @test */
+    function a_tweet_can_be_unliked()
+    {
+        $this->withoutExceptionHandling();
+        // Given we are sign in and have a tweet that we like
+        $user = factory('App\User')->create();
+        $this->be($user);
+
+        $tweet = factory('App\Tweet')->create(['user_id' => $user->id]);
+
+        $tweet->like();
+
+        // When we hit the route to unlike the tweet
+        $this->delete('/tweets/'. $tweet->id .'/unlike');
+
+        // Then there should not be records in the database
+        $this->assertDatabaseMissing('likes', [
+            'user_id' => $user->id,
+            'likeable_id' => $tweet->id,
+            'likeable_type' => 'App\Tweet'
+        ]);
+    }
 }
