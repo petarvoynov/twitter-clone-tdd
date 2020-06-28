@@ -89,15 +89,4 @@
 
 @section('javascript')
     <script src="{{ asset('js/toggle_tweet_comment_textarea.js') }}" defer></script>
-    <script>
-        window.onload = function(){
-            let form = document.querySelector('#like-form');
-            let heartButton = document.querySelectorAll('#heart-outline');
-
-            for
-            heartButton.addEventListener('click', function(){
-                form.submit();
-            }); 
-        };
-    </script>
 @endsection
