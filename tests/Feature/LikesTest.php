@@ -64,7 +64,7 @@ class LikesTest extends TestCase
         $comment->like();
 
         // When we hit the route to unlike that comment 
-        $this->post('/comments/' . $comment->id . '/unlike');
+        $this->delete('/comments/' . $comment->id . '/unlike');
 
         // Then there should not be any records in the database
         $this->assertCount(0, $comment->likes);

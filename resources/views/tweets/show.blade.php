@@ -60,20 +60,21 @@
                 </div>
             </div>
             <div class="col-lg-1 d-flex justify-content-center align-items-center"> 
-                @if($comment->likes()->where('user_id', auth()->id())->exists())
-                    <div>
-                        <form id="like-form"  action="#" method="POST">
-                            @csrf
-                            <button class="btn btn-primary btn-sm">Unlike</button>
-                        </form>
-                    </div>
-                @else
+                @if(!$comment->likes()->where('user_id', auth()->id())->exists())
                     <div>
                         <form id="like-form"  action="{{ route('likes.store', ['comment' => $comment->id]) }}" method="POST">
                             @csrf
                             <button class="btn btn-primary btn-sm">Like</button>
                         </form>
                     </div>
+                @else
+                    <div>
+                        <form id="like-form"  action="{{ route('likes.destroy', ['comment' => $comment->id]) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-secondary btn-sm">Unlike</button>
+                        </form>
+                    </div>  
                 @endif
             </div>
         </div>   
