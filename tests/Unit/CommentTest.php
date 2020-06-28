@@ -52,4 +52,22 @@ class CommentTest extends TestCase
         // Then there should be a result in the database
         $this->assertCount(1, $comment->likes);
     }
+
+    /** @test */
+    function a_comment_can_call_unlike_method()
+    {
+        // Given we are sign in and have a comment that we liked
+        $user = factory('App\User')->create();
+        $this->be($user);
+
+        $comment = factory('App\Comment')->create(['user_id' => $user->id]);
+
+        $comment->like();
+
+        // When we call the method to unlike the comment
+        $comment->unlike();
+
+        // Then there should not be record in the database
+        $this->assertCount(0, $comment->likes);
+    }
 }

@@ -27,4 +27,9 @@ class Comment extends Model
     {
         $this->likes()->create(['user_id' => auth()->id()]);
     }
+
+    public function unlike()
+    {
+        $this->likes()->where('user_id', auth()->id())->delete();
+    }
 }

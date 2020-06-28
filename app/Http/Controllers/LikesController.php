@@ -20,7 +20,7 @@ class LikesController extends Controller
     public function destroy(Comment $comment)
     {
         if($comment->likes()->where('user_id', auth()->id())->exists()){
-            $comment->likes()->where(['user_id' => auth()->id()])->delete();
+            $comment->unlike();
         }
 
         return back();
