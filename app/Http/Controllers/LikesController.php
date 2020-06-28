@@ -13,5 +13,7 @@ class LikesController extends Controller
         if(!$comment->likes()->where('user_id', auth()->id())->exists()){
             $comment->like();
         }
+
+        return back();
     }
 }
