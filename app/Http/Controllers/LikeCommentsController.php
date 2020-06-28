@@ -10,18 +10,14 @@ class LikeCommentsController extends Controller
 {
     public function store(Comment $comment)
     {
-        if(!$comment->isLiked()){
-            $comment->like();
-        }
+        if(!$comment->isLiked()) $comment->like();
 
         return back();
     }
 
     public function destroy(Comment $comment)
     {
-        if($comment->isLiked()){
-            $comment->unlike();
-        }
+        if($comment->isLiked()) $comment->unlike();
 
         return back();
     }
