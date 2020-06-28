@@ -31,4 +31,22 @@ class LikeTweetsTest extends TestCase
             'likeable_type' => get_class($tweet)
         ]);
     }
+
+    /** @test */
+    function a_tweet_cannot_be_liked_more_than_once()
+    {
+        $this->withoutExceptionHandling();
+        // Given we are sign in and have a tweet
+        $user = factory('App\User')->create();
+        $this->be($user);
+
+        $tweet = factory('App\Tweet')->create(['user_id' => $user->id]);
+
+        // When we hit the route to like the tweet more than once
+        $this->post('/tweets/'. $tweet->id .'/like');
+        $this->post('/tweets/'. $tweet->id .'/like');
+
+        // Then there should be only one record in the database
+        $this->assertCount(1, $tweet->likes);
+    }
 }
