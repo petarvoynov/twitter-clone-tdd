@@ -26,4 +26,12 @@ class TweetTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $tweet->comments);
     }
+
+    /** @test */
+    public function a_tweet_has_likes()
+    {
+        $tweet = factory('App\Tweet')->create();
+
+        $this->assertInstanceOf(Collection::class, $tweet->likes);
+    }
 }

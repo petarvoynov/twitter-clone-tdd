@@ -21,14 +21,15 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/tweets', 'TweetsController@store')->name('tweets.store');
     Route::patch('/tweets/{tweet}' , 'TweetsController@update')->name('tweets.update');
     Route::delete('/tweets/{tweet}' , 'TweetsController@destroy')->name('tweets.destroy');
+    Route::post('/tweets/{tweet}/like', 'LikeTweetsController@store')->name('tweets-like.store');
 
     Route::post('/users/{user}/follow', 'UsersController@follow')->name('users.follow');
     Route::post('/users/{user}/unfollow', 'UsersController@unfollow')->name('users.unfollow');
 
     Route::post('/tweets/{tweet}/comments', 'CommentsController@store')->name('comments.store');
 
-    Route::post('/comments/{comment}/like', 'LikesController@store')->name('likes.store');
-    Route::delete('/comments/{comment}/unlike', 'LikesController@destroy')->name('likes.destroy');
+    Route::post('/comments/{comment}/like', 'LikeCommentsController@store')->name('likes.store');
+    Route::delete('/comments/{comment}/unlike', 'LikeCommentsController@destroy')->name('likes.destroy');
 });
 
 Auth::routes();
