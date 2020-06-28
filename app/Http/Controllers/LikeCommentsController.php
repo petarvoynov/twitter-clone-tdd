@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Comment;
 use App\Like;
 
-class LikesController extends Controller
+class LikeCommentsController extends Controller
 {
     public function store(Comment $comment)
     {
