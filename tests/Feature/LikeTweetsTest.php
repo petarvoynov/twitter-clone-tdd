@@ -11,7 +11,7 @@ class LikeTweetsTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    /* function a_tweet_can_be_liked()
+    function a_tweet_can_be_liked()
     {
         $this->withoutExceptionHandling();
         // Given we are sign in and have a tweet
@@ -25,5 +25,10 @@ class LikeTweetsTest extends TestCase
 
         // Then there should be record in the database
         $this->assertCount(1, $tweet->likes);
-    } */
+        $this->assertDatabaseHas('likes', [
+            'user_id' => auth()->id(),
+            'likeable_id' => $tweet->id,
+            'likeable_type' => get_class($tweet)
+        ]);
+    }
 }
