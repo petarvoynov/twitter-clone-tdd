@@ -9,17 +9,15 @@ class LikeTweetsController extends Controller
 {
     public function store(Tweet $tweet)
     {
-        if(!$tweet->isLiked()){
-            $tweet->like();
-        }
-        
-         return back();
+        if(!$tweet->isLiked()) $tweet->like();
+            
+        return back();
     }
 
     public function destroy(Tweet $tweet)
     {
-        $tweet->unlike();
-
+        if($tweet->isLiked())  $tweet->unlike();
+        
         return back();
     }
 }
