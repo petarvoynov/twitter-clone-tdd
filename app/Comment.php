@@ -8,6 +8,10 @@ class Comment extends Model
 {
     protected $guarded = [];
 
+    protected $with = ['user', 'likes'];
+
+    protected $withCount = ['likes'];
+
     public function tweet()
     {
         return $this->belongsTo(Tweet::class);
@@ -25,11 +29,16 @@ class Comment extends Model
 
     public function like()
     {
-        $this->likes()->create(['user_id' => auth()->id()]);
+        return $this->likes()->create(['user_id' => auth()->id()]);
     }
 
     public function unlike()
     {
         $this->likes()->where('user_id', auth()->id())->delete();
+    }
+
+    public function isLiked()
+    {
+        return !! $this->likes->where('user_id', auth()->id())->count();
     }
 }

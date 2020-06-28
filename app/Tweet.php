@@ -15,6 +15,6 @@ class Tweet extends Model
 
     public function comments()
     {
-        return $this->hasMany(Comment::class)->withCount('likes');
+        return $this->hasMany(Comment::class);
     }
 }

@@ -10,7 +10,7 @@ class LikesController extends Controller
 {
     public function store(Comment $comment)
     {
-        if(!$comment->likes()->where('user_id', auth()->id())->exists()){
+        if(!$comment->isLiked()){
             $comment->like();
         }
 
@@ -19,7 +19,7 @@ class LikesController extends Controller
 
     public function destroy(Comment $comment)
     {
-        if($comment->likes()->where('user_id', auth()->id())->exists()){
+        if($comment->isLiked()){
             $comment->unlike();
         }
 

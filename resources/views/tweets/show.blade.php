@@ -53,6 +53,7 @@
     <li class="list-group-item mt-2">
         <div class="row">
             <div class="col-lg-11 d-flex flex-column">
+                <div>{{ $comment->user->name }} commented:</div>
                 <div>{{ $comment->body }}</div>
                 <div>
                     <small class="text-secondary">{{ $comment->created_at->diffForHumans() }}</small>
@@ -60,7 +61,7 @@
                 </div>
             </div>
             <div class="col-lg-1 d-flex justify-content-center align-items-center"> 
-                @if(!$comment->likes()->where('user_id', auth()->id())->exists())
+                @if(!$comment->isLiked())
                     <div>
                         <form id="like-form"  action="{{ route('likes.store', ['comment' => $comment->id]) }}" method="POST">
                             @csrf
