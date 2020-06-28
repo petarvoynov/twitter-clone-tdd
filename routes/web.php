@@ -27,7 +27,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/tweets/{tweet}/comments', 'CommentsController@store')->name('comments.store');
 
-    Route::post('/comments/{comment}/likes', 'LikesController@store')->name('likes.store');
+    Route::post('/comments/{comment}/like', 'LikesController@store')->name('likes.store');
+    Route::post('/comments/{comment}/unlike', 'LikesController@destroy')->name('likes.destroy');
 });
 
 Auth::routes();

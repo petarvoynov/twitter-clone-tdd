@@ -13,7 +13,7 @@ class LikesTest extends TestCase
     /** @test */
     function guest_cannot_like_comments()
     {
-        $this->post('/comments/1/likes')
+        $this->post('/comments/1/like')
             ->assertRedirect('login');
     }
 
@@ -27,7 +27,7 @@ class LikesTest extends TestCase
         $comment = factory('App\Comment')->create(['user_id' => $user->id]);
 
         // When we hit the route to like that comment
-        $this->post('/comments/'. $comment->id .'/likes');
+        $this->post('/comments/'. $comment->id .'/like');
 
         // Then this should be shown in the database
         $this->assertCount(1, $comment->likes);
@@ -44,11 +44,29 @@ class LikesTest extends TestCase
         $comment = factory('App\Comment')->create(['user_id' => $user->id]);
 
         // When we hit the route to like that comment more than once
-        $this->post('/comments/'. $comment->id .'/likes');
-        $this->post('/comments/'. $comment->id .'/likes');
-        $this->post('/comments/'. $comment->id .'/likes');
+        $this->post('/comments/'. $comment->id .'/like');
+        $this->post('/comments/'. $comment->id .'/like');
+        $this->post('/comments/'. $comment->id .'/like');
 
         // Then there should still be only one record in the database
         $this->assertCount(1, $comment->likes);
+    }
+
+    /** @test */
+    function a_comment_can_be_unliked()
+    {
+        $this->withoutExceptionHandling();
+        // Given we are sign in and have a comment that we liked
+        $user = factory('App\User')->create();
+        $this->be($user);
+
+        $comment = factory('App\Comment')->create(['user_id' => $user->id]);
+        $comment->like();
+
+        // When we hit the route to unlike that comment 
+        $this->post('/comments/' . $comment->id . '/unlike');
+
+        // Then there should not be any records in the database
+        $this->assertCount(0, $comment->likes);
     }
 }

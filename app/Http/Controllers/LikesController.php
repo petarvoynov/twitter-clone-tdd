@@ -16,4 +16,13 @@ class LikesController extends Controller
 
         return back();
     }
+
+    public function destroy(Comment $comment)
+    {
+        if($comment->likes()->where('user_id', auth()->id())->exists()){
+            $comment->likes()->where(['user_id' => auth()->id()])->delete();
+        }
+
+        return back();
+    }
 }
