@@ -29,9 +29,9 @@
                 <span class="text-muted"> Retweets</span>
             </p>
             <p class="ml-3">
-                <span class="font-weight-bold">20</span>
-                <span class="text-muted">Likes</span>
-                </p>
+                <span class="font-weight-bold">{{ $tweet->likes_count }}</span>
+                <span class="text-muted">{{ Str::plural('Like', $tweet->likes_count) }}</span>
+            </p>
         </div>
 
         @include('tweets.components.tweet_buttons')
