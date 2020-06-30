@@ -7,6 +7,11 @@ use App\User;
 
 class UsersController extends Controller
 {
+    public function show(User $user)
+    {
+        return view('users.show', compact('user'));
+    }
+
     public function follow(User $user)
     {
         if(!auth()->user()->followings->contains($user)){
@@ -24,6 +29,6 @@ class UsersController extends Controller
 
         auth()->user()->unfollow($user);
         
-        return;
+        return back();
     }
 }

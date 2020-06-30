@@ -10,7 +10,7 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     @yield('javascript')
 </head>
-<body>
+<body style="margin-bottom: 200px">
     <div class="container">
         <div class="row">
             <div class="col-3">
@@ -59,7 +59,6 @@
                 <p></p>
             </div>
         </div>
-
     </div>
     <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
 
