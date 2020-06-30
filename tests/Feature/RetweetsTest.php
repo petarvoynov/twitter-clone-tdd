@@ -25,7 +25,7 @@ class RetweetsTest extends TestCase
         $user->follow($userToFollow);
 
         // When we hit the route to retweet the tweet
-        $this->post('/tweets/'. $tweet->id .'/retweet');
+        $this->post('/retweets/'. $tweet->id);
 
         // Then there should be a record in the database
         $this->assertDatabaseHas('retweets', [
@@ -51,7 +51,7 @@ class RetweetsTest extends TestCase
         $tweet->retweet();
 
         //When we hit the route to destroy the retweet
-        $this->delete('/tweets/'. $tweet->id . '/unretweet');
+        $this->delete('/retweets/'. $tweet->id);
 
         // Then there should be no records in the database
         $this->assertDatabaseMissing('retweets', [

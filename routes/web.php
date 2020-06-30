@@ -24,8 +24,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/tweets/{tweet}/like', 'LikeTweetsController@store')->name('tweets-like.store');
     Route::delete('/tweets/{tweet}/unlike', 'LikeTweetsController@destroy')->name('tweets-unlike.destroy');
 
-    Route::post('/tweets/{tweet}/retweet', 'RetweetsController@store')->name('retweets.store');
-    Route::delete('/tweets/{tweet}/unretweet', 'RetweetsController@destroy')->name('retweets.destroy');
+    Route::post('/retweets/{tweet}', 'RetweetsController@store')->name('retweets.store');
+    Route::delete('/retweets/{tweet}', 'RetweetsController@destroy')->name('retweets.destroy');
 
     Route::post('/users/{user}/follow', 'UsersController@follow')->name('users.follow');
     Route::post('/users/{user}/unfollow', 'UsersController@unfollow')->name('users.unfollow');
