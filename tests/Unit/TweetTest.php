@@ -76,4 +76,23 @@ class TweetTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $tweet->retweets);
     }
+
+    /** @test */
+    function a_tweet_can_call_retweet_method()
+    {
+        // Given we are sign in and follow a user who has a tweet
+        $user = factory('App\User')->create();
+        $this->be($user);
+
+        $userToFollow = factory('App\User')->create();
+
+        $tweet = factory('App\Tweet')->create(['user_id' => $userToFollow->id]);
+
+        // When a tweet call the method retweet()
+        $tweet->retweet();
+
+        // Then there should be record in the database
+        $this->assertCount(1, $tweet->retweets);
+
+    }
 }
