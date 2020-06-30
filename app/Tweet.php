@@ -45,4 +45,9 @@ class Tweet extends Model
     {
         return $this->hasMany('App\Retweet');
     }
+
+    public function retweet()
+    {
+        $this->retweets()->create(['user_id' => auth()->id()]);
+    }
 }

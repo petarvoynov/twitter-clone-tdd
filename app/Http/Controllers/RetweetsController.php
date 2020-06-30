@@ -10,10 +10,7 @@ class RetweetsController extends Controller
 {
     public function store(Tweet $tweet)
     {
-        Retweet::create([
-            'user_id' => auth()->id(),
-            'tweet_id' => $tweet->id
-        ]);
+        $tweet->retweet();
 
         return back();
     }
