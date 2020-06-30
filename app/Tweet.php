@@ -40,4 +40,9 @@ class Tweet extends Model
     {
         return !! $this->likes->where('user_id', auth()->id())->count();
     }
+
+    public function retweets()
+    {
+        return $this->hasMany('App\Retweet');
+    }
 }

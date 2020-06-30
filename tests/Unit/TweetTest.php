@@ -68,4 +68,12 @@ class TweetTest extends TestCase
         // Then there should not be records in the database
         $this->assertCount(0, $tweet->likes);
     }
+
+    /** @test */
+    function a_tweet_has_retweets()
+    {
+        $tweet = factory('App\Tweet')->create();
+
+        $this->assertInstanceOf(Collection::class, $tweet->retweets);
+    }
 }
