@@ -58,6 +58,5 @@ class RetweetsTest extends TestCase
             'user_id' => $user->id,
             'tweet_id' => $tweet->id
         ]);
-
     }
 }

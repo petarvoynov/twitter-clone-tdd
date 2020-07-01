@@ -14,11 +14,13 @@ class CommentTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    function a_comment_belongs_to_a_tweet()
+    function a_comment_can_be_morped_to_a_tweet()
     {
-        $comment = factory('App\Comment')->create();
-
-        $this->assertInstanceOf(Tweet::class, $comment->tweet);
+        $comment = factory('App\Comment')->create([
+            'commentable_id' => factory('App\Tweet'),
+            'commentable_type' => 'App\Tweet'
+        ]);
+        $this->assertInstanceOf(Tweet::class, $comment->commentable);
     }
 
     /** @test */

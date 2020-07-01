@@ -12,14 +12,9 @@ class Comment extends Model
 
     protected $withCount = ['likes'];
 
-    public function tweet()
+    public function commentable()
     {
-        return $this->belongsTo(Tweet::class);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
+        return $this->morphTo();
     }
 
     public function likes()
@@ -40,5 +35,10 @@ class Comment extends Model
     public function isLiked()
     {
         return !! $this->likes->where('user_id', auth()->id())->count();
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
     }
 }

@@ -39,7 +39,7 @@ class TweetCommentsTest extends TestCase
         $this->be($user);
 
         $tweet = factory('App\Tweet')->create(['user_id' => $user->id]);
-
+        
         // When a user hit the route to post a comment
         $comment = factory('App\Comment')->create();
         $this->post('/tweets/' . $tweet->id . '/comments', $comment->toArray());
