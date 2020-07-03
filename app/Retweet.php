@@ -12,4 +12,9 @@ class Retweet extends Model
     {
         return $this->morphMany('App\Comment', 'commentable');
     }
+
+    public function tweet()
+    {
+        return $this->belongsTo('App\Tweet');
+    }
 }

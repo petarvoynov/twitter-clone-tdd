@@ -59,4 +59,35 @@ class RetweetsTest extends TestCase
             'tweet_id' => $tweet->id
         ]);
     }
+    
+    /** @test */
+    /* function a_retweet_can_be_seen_by_anyone_that_follows_the_persen_retweeting_the_tweet()
+    {
+        // Given we are sing in and followed a user
+        $user = factory('App\User')->create();
+        $this->be($user);
+
+        $userToFollow = factory('App\User')->create();
+        $user->follow($userToFollow);
+
+        // When this user retweet a tweet form a user that we don't follow
+        $userWeDontFollow = factory('App\User')->create();
+        $userToFollow->follow($userWeDontFollow);
+
+        $tweet = factory('App\Tweet')->create(['user_id' => $userWeDontFollow]);
+
+        $retweet = factory('App\Retweet')->create([
+            'user_id' => $userToFollow->id,
+            'tweet_id' => $tweet->id
+        ]);
+        
+
+        // When we hit the homepage /tweets
+
+        $response = $this->get('/tweets');
+
+        // Then we should be able to see the tweet from the person we don't follow as it is retweeted by a user that we follow
+        $response->assetSee($retweet->tweet->body);
+
+    } */
 }

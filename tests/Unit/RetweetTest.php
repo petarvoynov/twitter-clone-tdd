@@ -18,4 +18,12 @@ class RetweetTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $retweet->comments);
     }
+
+    /** @test */
+    function a_retweet_belongs_to_a_tweet()
+    {
+        $retweet = factory('App\Retweet')->create();
+
+        $this->assertInstanceOf('App\Tweet', $retweet->tweet);
+    }
 }

@@ -83,4 +83,22 @@ class UsersTest extends TestCase
         // Then we should recieve a response 403
         $response->assertStatus(403);
     }
+
+    /** @test */
+    function a_user_cannot_see_tweets_of_another_user_that_he_is_not_following()
+    {
+        // Given we are sign in and there is a user we don't follow and that has a tweet
+        $user = factory('App\User')->create();
+        $this->be($user);
+
+        $userWeDontFollow = factory('App\User')->create();
+
+        $tweet = factory('App\Tweet')->create(['user_id' => $userWeDontFollow]);
+
+        // When we hit the route to see his profile
+        $response = $this->get('/users/' . $userWeDontFollow->id);
+
+        // We should not be able to see the tweet
+        $response->assertDontSee($tweet->body);
+    }
 }

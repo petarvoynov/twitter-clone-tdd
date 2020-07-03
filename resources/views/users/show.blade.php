@@ -51,12 +51,13 @@
     </div>
 </div>
 
-@forelse ($user->tweets as $tweet)
-    @include('tweets.components.tweets_card')    
-@empty
-    <p class="lead text-center mt-5">There are no tweets</p>
-@endforelse
-
+@if(auth()->user()->followings()->where('leader_id', $user->id)->exists())
+    @forelse ($user->tweets as $tweet)
+        @include('tweets.components.tweets_card')    
+    @empty
+        <p class="lead text-center mt-5">There are no tweets</p>
+    @endforelse
+@endif
 @endsection
 
 @section('javascript')
