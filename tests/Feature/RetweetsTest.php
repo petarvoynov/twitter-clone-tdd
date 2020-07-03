@@ -87,7 +87,7 @@ class RetweetsTest extends TestCase
         $response = $this->get('/tweets');
 
         // Then we should be able to see the tweet from the person we don't follow as it is retweeted by a user that we follow
-        $response->assetSee($retweet->tweet->body);
+        $response->assertSee($retweet->tweet->body);
 
     } */
 }

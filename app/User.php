@@ -66,4 +66,9 @@ class User extends Authenticatable
     {
         return $this->followings()->detach($user->id);
     }
+
+    public function retweets()
+    {
+        return $this->hasMany('App\Retweet');
+    }
 }
