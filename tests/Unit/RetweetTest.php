@@ -26,4 +26,12 @@ class RetweetTest extends TestCase
 
         $this->assertInstanceOf('App\Tweet', $retweet->tweet);
     }
+
+    /** @test */
+    function it_belongs_to_a_user()
+    {
+        $retweet = factory('App\Retweet')->create();
+
+        $this->assertInstanceOf('App\User', $retweet->user);
+    }
 }
