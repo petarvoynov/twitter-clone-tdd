@@ -28,7 +28,7 @@ class RetweetTest extends TestCase
     }
 
     /** @test */
-    function a_retweet_belongs_to_a_user()
+    function it_belongs_to_a_user()
     {
         $retweet = factory('App\Retweet')->create();
 
