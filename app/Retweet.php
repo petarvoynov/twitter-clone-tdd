@@ -17,4 +17,9 @@ class Retweet extends Model
     {
         return $this->belongsTo('App\Tweet');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }
