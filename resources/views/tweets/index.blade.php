@@ -18,13 +18,17 @@
           </div>
         </div>
     </div>
-
-    @forelse ($tweets as $tweet)
-        @include('tweets.components.tweets_card')
-    @empty
+    
+    @if(count($tweets) > 0)
+        @foreach ($tweets as $tweet)
+            @include('tweets.components.tweets_card')
+        @endforeach
+        {{ $tweets->links() }}
+    @else
         <p class="lead text-center mt-5">There are no tweets</p>
-    @endforelse
-
+    @endif
+        
+    
 @endsection
 
 @section('javascript')

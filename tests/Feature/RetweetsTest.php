@@ -61,7 +61,7 @@ class RetweetsTest extends TestCase
     }
     
     /** @test */
-    /* function a_retweet_can_be_seen_by_anyone_that_follows_the_persen_retweeting_the_tweet()
+    function a_retweet_can_be_seen_by_anyone_that_follows_the_person_retweeting_the_tweet()
     {
         // Given we are sing in and followed a user
         $user = factory('App\User')->create();
@@ -89,5 +89,5 @@ class RetweetsTest extends TestCase
         // Then we should be able to see the tweet from the person we don't follow as it is retweeted by a user that we follow
         $response->assertSee($retweet->tweet->body);
 
-    } */
+    }
 }

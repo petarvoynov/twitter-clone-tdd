@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Tweet;
+use App\Retweet;
 use DB;
 
 class TweetsController extends Controller
@@ -13,7 +14,18 @@ class TweetsController extends Controller
         $followings = auth()->user()->load('followings')->followings->pluck('id');
         $followings[] = auth()->id();
 
-        $tweets = Tweet::with(['user', 'comments'])->whereIn('user_id', $followings)->orderByDesc('created_at')->paginate(10);
+        $tweets = Tweet::with(['user', 'comments'])->whereIn('user_id', $followings)->orderByDesc('created_at')->get();
+
+        $retweets = Retweet::with(['user', 'comments'])->whereIn('user_id', $followings)->get();
+
+        $retweets = $retweets->map(function($retweet){
+            $tweet = $retweet->tweet;
+            $tweet['retweet'] = 1;
+
+            return $tweet;
+        });
+        
+        $tweets = $tweets->merge($retweets)->sortByDesc('created_at')->paginate(10);
 
         return view('tweets.index', compact('tweets'));
     }
