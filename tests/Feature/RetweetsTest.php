@@ -61,7 +61,7 @@ class RetweetsTest extends TestCase
     }
     
     /** @test */
-    function a_retweet_can_be_seen_by_anyone_that_follows_the_person_retweeting_the_tweet()
+    function a_retweet_can_be_seen_by_anyone_who_follows_the_user_who_is_retweeting()
     {
         // Given we are sing in and followed a user
         $user = factory('App\User')->create();
