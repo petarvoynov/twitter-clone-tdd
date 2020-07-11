@@ -16,7 +16,7 @@ class TweetsController extends Controller
 
         $tweets = Tweet::with(['user', 'comments'])->whereIn('user_id', $followings)->orderByDesc('created_at')->get();
 
-        $retweets = Retweet::with(['user', 'comments'])->whereIn('user_id', $followings)->get();
+        $retweets = Retweet::with('tweet')->whereIn('user_id', $followings)->get();
 
         $retweets = $retweets->map(function($retweet){
             $tweet = $retweet->tweet;
