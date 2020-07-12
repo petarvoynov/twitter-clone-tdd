@@ -12,14 +12,6 @@ class RetweetTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    function a_retweet_has_comments()
-    {
-        $retweet = factory('App\Retweet')->create();
-
-        $this->assertInstanceOf(Collection::class, $retweet->comments);
-    }
-
-    /** @test */
     function a_retweet_belongs_to_a_tweet()
     {
         $retweet = factory('App\Retweet')->create();
