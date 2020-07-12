@@ -16,11 +16,13 @@ class TweetsController extends Controller
 
         $tweets = Tweet::with(['user', 'comments'])->whereIn('user_id', $followings)->orderByDesc('created_at')->get();
 
-        $retweets = Retweet::with('tweet')->whereIn('user_id', $followings)->get();
+        $retweets = Retweet::with(['tweet', 'user'])->whereIn('user_id', $followings)->get();
 
         $retweets = $retweets->map(function($retweet){
             $tweet = $retweet->tweet;
-            $tweet['retweet'] = 1;
+            $tweet['is_retweet'] = 1;
+            $tweet['retweet_user_name'] = $retweet->user->name;
+            $tweet['retweeted_at'] = $retweet->created_at;
 
             return $tweet;
         });
