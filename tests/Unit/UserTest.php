@@ -69,4 +69,12 @@ class UserTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $user->retweets);
     }
+
+    /** @test */
+    function a_user_has_activities()
+    {
+        $user = factory('App\User')->create();
+
+        $this->assertInstanceOf(Collection::class, $user->activities);
+    }
 }

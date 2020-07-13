@@ -71,4 +71,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Retweet');
     }
+
+    public function activities()
+    {
+        return $this->hasMany('App\Activity');
+    }
 }
