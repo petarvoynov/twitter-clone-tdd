@@ -103,7 +103,7 @@ class UsersTest extends TestCase
     }
 
     /** @test */
-    function a_user_records_activities_when_he_likes_a_tweet()
+    function a_user_records_activity_when_he_likes_a_tweet()
     {
         // Given we are sing in and have a tweet
         $user = factory('App\User')->create();
