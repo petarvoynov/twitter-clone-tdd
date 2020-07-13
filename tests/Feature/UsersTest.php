@@ -101,4 +101,21 @@ class UsersTest extends TestCase
         // We should not be able to see the tweet
         $response->assertDontSee($tweet->body);
     }
+
+    /** @test */
+    function a_user_records_activities_when_he_likes_a_tweet()
+    {
+        // Given we are sing in and have a tweet
+        $user = factory('App\User')->create();
+        $this->be($user);
+
+        $tweet = factory('App\Tweet')->create(['user_id' => $user->id]);
+        
+        // When we hit the route to like the tweet
+        $this->post('/tweets/'. $tweet->id .'/like');
+
+        // Then there should be one activity in the database for liking the tweet
+        $this->assertCount(1, $user->activities);
+        $this->assertEquals('like', $user->activities->first()->description);
+    }
 }
