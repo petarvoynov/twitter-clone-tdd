@@ -27,7 +27,14 @@ class LikeTweetsController extends Controller
 
     public function destroy(Tweet $tweet)
     {
-        if($tweet->isLiked())  $tweet->unlike();
+        if($tweet->isLiked()) {
+            
+            $like = $tweet->likes()->where('user_id', auth()->id())->first();
+
+            $like->activities()->delete();
+
+            $tweet->unlike();
+        } 
         
         return back();
     }

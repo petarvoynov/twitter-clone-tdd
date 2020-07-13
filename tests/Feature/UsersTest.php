@@ -118,4 +118,24 @@ class UsersTest extends TestCase
         $this->assertCount(1, $user->activities);
         $this->assertEquals('like', $user->activities->first()->description);
     }
+
+    /** @test */
+    function a_user_destroys_activity_when_he_unlikes_a_tweet()
+    {
+        $this->withoutExceptionHandling();
+        // Given we are sing in and have a tweet that we like
+        $user = factory('App\User')->create();
+        $this->be($user);
+
+        $tweet = factory('App\Tweet')->create(['user_id' => $user->id]);
+        $this->post('/tweets/'. $tweet->id .'/like');
+
+        // When we hit the route to unlike the tweet
+        $this->delete('/tweets/'. $tweet->id .'/unlike');
+
+        // Then there should not be activity in the database
+        $this->assertCount(0, $user->activities);
+
+
+    }
 }
