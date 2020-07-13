@@ -122,7 +122,6 @@ class UsersTest extends TestCase
     /** @test */
     function a_user_destroys_activity_when_he_unlikes_a_tweet()
     {
-        $this->withoutExceptionHandling();
         // Given we are sing in and have a tweet that we like
         $user = factory('App\User')->create();
         $this->be($user);
@@ -135,7 +134,26 @@ class UsersTest extends TestCase
 
         // Then there should not be activity in the database
         $this->assertCount(0, $user->activities);
+    }
 
+    /** @test */
+    function a_user_records_activity_when_he_comment_a_tweet()
+    {
+        // Given we are sing in and have a tweet
+        $user = factory('App\User')->create();
+        $this->be($user);
 
+        $tweet = factory('App\Tweet')->create(['user_id' => $user->id]);
+
+        // When we hit the route to comment the tweet
+        $comment = factory('App\Comment')->create([
+            'commentable_id' => $tweet->id,
+            'commentable_type' => 'App\Tweet',
+        ]);
+        $this->post('/tweets/'. $tweet->id .'/comments', $comment->toArray());
+
+        // Then there should be records in the activity table for commenting the tweet
+        $this->assertCount(1, $user->activities);
+        $this->assertEquals('comment', $user->activities->first()->description);
     }
 }
