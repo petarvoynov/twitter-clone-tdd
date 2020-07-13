@@ -12,12 +12,12 @@ class LikeTweetsController extends Controller
     {
         if(!$tweet->isLiked()) {
             
-            $tweet->like();
+            $like = $tweet->like();
             
             Activity::create([
                 'user_id' => auth()->id(),
-                'subject_id' => $tweet->id,
-                'subject_type' => get_class($tweet),
+                'subject_id' => $like->id,
+                'subject_type' => get_class($like),
                 'description' => 'like'
             ]);
         }
