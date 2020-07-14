@@ -12,9 +12,9 @@ class Comment extends Model
 
     protected $withCount = ['likes'];
 
-    public function commentable()
+    public function tweet()
     {
-        return $this->morphTo();
+        return $this->belongsTo('App\Tweet');
     }
 
     public function likes()

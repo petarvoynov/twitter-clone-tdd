@@ -147,8 +147,8 @@ class UsersTest extends TestCase
 
         // When we hit the route to comment the tweet
         $comment = factory('App\Comment')->create([
-            'commentable_id' => $tweet->id,
-            'commentable_type' => 'App\Tweet',
+            'tweet_id' => $tweet->id,
+            'user_id' => $user->id
         ]);
         $this->post('/tweets/'. $tweet->id .'/comments', $comment->toArray());
 

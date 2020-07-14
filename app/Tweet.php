@@ -18,7 +18,7 @@ class Tweet extends Model
 
     public function comments()
     {
-        return $this->morphMany(Comment::class, 'commentable')->latest();
+        return $this->hasMany(Comment::class)->latest();
     }
 
     public function likes()

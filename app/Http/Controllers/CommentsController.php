@@ -17,8 +17,7 @@ class CommentsController extends Controller
         
         $comment = auth()->user()->comments()->create([
             'body' => request('body'),
-            'commentable_id' => $tweet->id,
-            'commentable_type' => get_class($tweet)
+            'tweet_id' => $tweet->id,
         ]);
 
         $comment->activities()->create([
