@@ -63,4 +63,20 @@ class TweetCommentsTest extends TestCase
         //Then we should recieve an validation error
         $response->assertSessionHasErrors('body');
     }
+
+    /** @test */
+    function a_comment_can_be_destroyed()
+    {
+        // Given we are sign in and and a comment
+        $user = factory('App\User')->create();
+        $this->be($user);
+
+        $comment = factory('App\Comment')->create(['user_id' => $user->id]);
+
+        // When we hit the route to delete this comment
+        $this->delete('/tweets/' . $comment->tweet->id .'/comments/'. $comment->id); 
+        
+        // Then there should not be record in the database for that comment
+        $this->assertDatabaseMissing('comments', ['body' => $comment->body]);
+    }
 }

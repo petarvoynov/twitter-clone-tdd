@@ -28,4 +28,9 @@ class CommentsController extends Controller
         return back();
 
     }
+
+    public function destroy(Tweet $tweet, Comment $comment)
+    {
+        $comment->delete();
+    }
 }
