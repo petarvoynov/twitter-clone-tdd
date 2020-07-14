@@ -62,7 +62,7 @@ class DatabaseSeeder extends Seeder
                 foreach($usersToComment as $u) {
                     factory('App\Comment')->create([
                         'user_id' => $u->id,
-                        'commentable_id' => $tweets->random()->id,
+                        'tweet_id' => $tweets->random()->id,
                     ]);
                 }
             }
