@@ -40,6 +40,8 @@ class CommentsController extends Controller
         ]);
         
         $comment->update(request(['body']));
+
+        return back();
     }
 
     public function destroy(Tweet $tweet, Comment $comment)

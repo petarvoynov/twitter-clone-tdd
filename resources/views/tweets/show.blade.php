@@ -55,6 +55,20 @@
             <div class="col-lg-11 d-flex flex-column">
                 <div class="font-weight-bold">{{ $comment->user->name }}<small class="text-muted ml-2">commented:</small></div>
                 <div class="mt-2">{{ $comment->body }}</div>
+                
+                @if(auth()->id() == $comment->user_id)
+                    <button id="{{ $comment->id }}" class="btn btn-secondary btn-sm button-to-show-edit-form">Edit</button>
+                    <div id="edit-comment-{{ $comment->id }}" class="mt-2 edit-comment">
+                        <form action="{{ route('comments.update', ['tweet' => $tweet->id, 'comment' => $comment->id]) }}" method="POST">
+                            @csrf
+                            @method('PATCH')
+                            <div class="form-group">
+                                <textarea class="form-control" name="body" id="" cols="30" rows="10">{{ $comment->body }}</textarea>
+                            </div>
+                            <button class="btn btn-primary mb-2">Update</button>
+                        </form>
+                    </div>
+                @endif
                 <div>
                     <small class="text-secondary">{{ $comment->created_at->diffForHumans() }}</small>
                     <small>
@@ -63,7 +77,7 @@
                     </small>
                 </div>
             </div>
-            <div class="col-lg-1 d-flex justify-content-center align-items-center"> 
+            <div class="col-lg-1 d-flex justify-content-center align-items-start"> 
                 @if(!$comment->isLiked())
                     <div>
                         <form id="like-form"  action="{{ route('likes.store', ['comment' => $comment->id]) }}" method="POST">
@@ -83,7 +97,33 @@
             </div>
         </div>   
     </li>
-@endforeach  
+@endforeach
+
+<script>
+        let editForm = document.querySelectorAll('.edit-comment');
+        let button = document.querySelectorAll('.button-to-show-edit-form')
+
+        for(let i = 0; i < editForm.length; i++) {
+            editForm[i].style.display = 'none';
+        }
+        
+        for(let i = 0; i < button.length; i++){
+            button[i].addEventListener('click', function(e) {
+                let id = e.target.id;
+                let currentEditForm = document.querySelector('#edit-comment-' + id);
+                console.log();
+
+                if(currentEditForm.style.display === 'none'){
+                    currentEditForm.style.display = 'block';
+                    e.target.textContent = 'Close';
+                } else {
+                    currentEditForm.style.display = 'none';
+                    e.target.textContent = 'Edit';
+                }
+            });
+        }
+
+</script>
    
 @endsection
 
