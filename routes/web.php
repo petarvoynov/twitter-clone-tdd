@@ -31,6 +31,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/users/{user}/unfollow', 'UsersController@unfollow')->name('users.unfollow');
 
     Route::post('/tweets/{tweet}/comments', 'CommentsController@store')->name('comments.store');
+    Route::patch('/tweets/{tweet}/comments/{comment}', 'CommentsController@update')->name('comments.update');
     Route::delete('/tweets/{tweet}/comments/{comment}', 'CommentsController@destroy')->name('comments.destroy');
 
     Route::post('/comments/{comment}/like', 'LikeCommentsController@store')->name('likes.store');

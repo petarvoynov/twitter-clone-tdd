@@ -81,7 +81,7 @@ class TweetCommentsTest extends TestCase
     }
 
     /** @test */
-    function a_comment_can_be_derstoryed_only_by_its_owner()
+    function a_comment_can_be_destroyed_only_by_its_owner()
     {
         // Given we are sign in and there is a comment not created by us
         $user = factory('App\User')->create();
@@ -94,5 +94,21 @@ class TweetCommentsTest extends TestCase
 
         // Then there should still be a record in the database for that comment
         $this->assertDatabaseHas('comments', ['body' => $comment->body]);
+    }
+
+    /** @test */
+    function a_comment_can_be_updated()
+    {
+        // Given we are sign in and we have a comment
+        $user = factory('App\User')->create();
+        $this->be($user);
+
+        $comment = factory('App\Comment')->create(['user_id' => $user->id]);
+
+        // When we hit the route to update the comment 
+        $this->patch('/tweets/'. $comment->tweet->id. '/comments/'. $comment->id, ['body' => 'Changed']);
+
+        // Then the changed has to be reflected in the database
+        $this->assertDatabaseHas('comments', ['body' => 'Changed']);
     }
 }

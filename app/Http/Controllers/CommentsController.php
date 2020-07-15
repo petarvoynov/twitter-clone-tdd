@@ -29,6 +29,11 @@ class CommentsController extends Controller
 
     }
 
+    public function update(Tweet $tweet, Comment $comment)
+    {
+        $comment->update(request(['body']));
+    }
+
     public function destroy(Tweet $tweet, Comment $comment)
     {
         if($comment->user_id != auth()->id()){
