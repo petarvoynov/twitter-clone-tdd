@@ -67,7 +67,7 @@ class TweetCommentsTest extends TestCase
     /** @test */
     function a_comment_can_be_destroyed()
     {
-        // Given we are sign in and and a comment
+        // Given we are sign in and have a comment
         $user = factory('App\User')->create();
         $this->be($user);
 
@@ -78,5 +78,21 @@ class TweetCommentsTest extends TestCase
         
         // Then there should not be record in the database for that comment
         $this->assertDatabaseMissing('comments', ['body' => $comment->body]);
+    }
+
+    /** @test */
+    function a_comment_can_be_derstoryed_only_by_its_owner()
+    {
+        // Given we are sign in and there is a comment not created by us
+        $user = factory('App\User')->create();
+        $this->be($user);
+
+        $comment = factory('App\Comment')->create();
+
+        // When we hit the route to delete this comment
+        $this->delete('/tweets/' . $comment->tweet->id .'/comments/'. $comment->id); 
+
+        // Then there should still be a record in the database for that comment
+        $this->assertDatabaseHas('comments', ['body' => $comment->body]);
     }
 }

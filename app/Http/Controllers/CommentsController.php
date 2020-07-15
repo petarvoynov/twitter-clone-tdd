@@ -31,6 +31,10 @@ class CommentsController extends Controller
 
     public function destroy(Tweet $tweet, Comment $comment)
     {
+        if($comment->user_id != auth()->id()){
+            abort(403);
+        }
+
         $comment->delete();
     }
 }
