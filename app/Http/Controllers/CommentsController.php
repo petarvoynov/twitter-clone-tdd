@@ -31,6 +31,10 @@ class CommentsController extends Controller
 
     public function update(Tweet $tweet, Comment $comment)
     {
+        if($comment->user_id != auth()->id()){
+            abort(403);
+        } 
+
         $data = request()->validate([
             'body' => 'required'
         ]);

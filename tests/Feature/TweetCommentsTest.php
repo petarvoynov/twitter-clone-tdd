@@ -119,4 +119,21 @@ class TweetCommentsTest extends TestCase
         // Then the changed has to be reflected in the database
         $this->assertDatabaseHas('comments', ['body' => 'Changed']);
     }
+
+    /** @test */
+    function a_comment_can_be_updated_only_by_its_owner()
+    {
+        // Given we are sign in and a random comment that does not belongs to us
+        $user = factory('App\User')->create();
+        $this->be($user);
+
+        $comment = factory('App\Comment')->create();
+
+        // When we hit the route to update it
+        $response = $this->patch('/tweets/'. $comment->tweet->id .'/comments/'. $comment->id, ['body' => 'Changed']);
+
+        // Then we should return 403 response and the body should not be updated
+        $response->assertStatus(403);
+        $this->assertDatabaseHas('comments', ['body' => $comment->body]);
+    }
 }
