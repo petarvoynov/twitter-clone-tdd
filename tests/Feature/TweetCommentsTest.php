@@ -49,7 +49,7 @@ class TweetCommentsTest extends TestCase
     }
 
     /** @test */
-    function a_comment_requires_a_body()
+    function a_comment_requires_a_body_when_is_created_or_updated()
     {
         // Given we are sign in and have a tweet 
         $user = factory('App\User')->create();
@@ -60,8 +60,16 @@ class TweetCommentsTest extends TestCase
         $comment = factory('App\Comment')->create(['body' => '']);
         $response = $this->post('/tweets/' . $tweet->id . '/comments', $comment->toArray());
 
-        //Then we should recieve an validation error
+        // Then we should recieve an validation error
         $response->assertSessionHasErrors('body');
+
+        // When we create a comment and hit the route to update it
+        $commentToUpdate = factory('App\Comment')->create(['user_id' => $user->id]);
+        $this->patch('/tweets/'. $comment->tweet->id .'/comments/'. $commentToUpdate->id);
+
+        // Then we should recieve an validation error
+        $response->assertSessionHasErrors('body');
+        
     }
 
     /** @test */

@@ -31,6 +31,10 @@ class CommentsController extends Controller
 
     public function update(Tweet $tweet, Comment $comment)
     {
+        $data = request()->validate([
+            'body' => 'required'
+        ]);
+        
         $comment->update(request(['body']));
     }
 
