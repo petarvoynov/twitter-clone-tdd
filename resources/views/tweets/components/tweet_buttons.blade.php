@@ -9,7 +9,10 @@
         <small>
             <span class="font-weight-bold mr-1">2755</span>Retweets
         </small>
-        <button class="btn btn-primary btn-sm">Retweet</button>
+        <form action="{{ route('retweets.store', ['tweet' => $tweet->id]) }}" method="POST">
+            @csrf
+            <button class="btn btn-primary btn-sm">Retweet</button>
+        </form>   
     </div>
     <div class="col-lg-3 d-flex flex-column justify-content-between">
         <small>
