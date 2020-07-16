@@ -48,6 +48,6 @@ class Tweet extends Model
 
     public function retweet()
     {
-        $this->retweets()->create(['user_id' => auth()->id()]);
+        return $this->retweets()->create(['user_id' => auth()->id()]);
     }
 }

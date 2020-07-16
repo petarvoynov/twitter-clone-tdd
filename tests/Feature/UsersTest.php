@@ -156,4 +156,30 @@ class UsersTest extends TestCase
         $this->assertCount(1, $user->activities);
         $this->assertEquals('comment', $user->activities->first()->description);
     }
+
+    /** @test */
+    function a_user_records_activity_when_he_retweet_a_tweet()
+    {
+        $this->withoutExceptionHandling();
+        // Given we are sign in 
+        $user = factory('App\User')->create();
+        $this->be($user);
+
+        // And there is a user that we follow and has a tweet
+        $userToFollow = factory('App\User')->create();
+        $tweet = factory('App\Tweet')->create(['user_id' => $userToFollow->id]);
+
+        $user->follow($userToFollow);
+
+        // When we hit the route to retweet that tweet
+        $this->post('/retweets/' . $tweet->id);
+
+        // Then there should be retweet activity for us in the database
+        $this->assertCount(1, $user->activities);
+        $this->assertDatabaseHas('activities', [
+            'user_id' => $user->id,
+            'description' => 'retweet'
+        ]);
+
+    }
 }
