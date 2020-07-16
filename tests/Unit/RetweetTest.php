@@ -26,4 +26,12 @@ class RetweetTest extends TestCase
 
         $this->assertInstanceOf('App\User', $retweet->user);
     }
+
+    /** @test */
+    function a_retweet_has_morhp_many_activities()
+    {
+        $retweet = factory('App\Retweet')->create();
+
+        $this->assertInstanceOf(Collection::class, $retweet->activities);
+    }
 }
