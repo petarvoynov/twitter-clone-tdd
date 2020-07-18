@@ -222,4 +222,25 @@ class UsersTest extends TestCase
             'description' => 'retweet'
         ]);
     }
+
+    /** @test */
+    function a_user_records_activity_when_he_likes_comment()
+    {
+        // Given we are sign in and have a comment
+        $user = $this->signIn();
+        
+        $comment = factory('App\Comment')->create(['user_id' => $user->id]);
+
+        // When we hit the route to like that comment
+        $this->post('/comments/'. $comment->id .'/like');
+
+        // Then there should be a record in the activity table for liking this comment
+        $this->assertCount(1, $user->activities);
+        $this->assertDatabaseHas('activities', [
+            'user_id' => $user->id,
+            'subject_id' => $comment->id,
+            'subject_type' => get_class($comment),
+            'description' => 'like'
+        ]);
+    }
 }
