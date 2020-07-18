@@ -158,6 +158,34 @@ class UsersTest extends TestCase
     }
 
     /** @test */
+    function a_user_destroys_activity_when_he_deletes_his_comment()
+    {
+        // Given we are sign in and have a comment
+        $user = factory('App\User')->create();
+        $this->be($user);
+
+        $tweet = factory('App\Tweet')->create(['user_id' => $user->id]);
+
+        // When we hit the route to comment the tweet
+        $comment = factory('App\Comment')->make([
+            'tweet_id' => $tweet->id,
+            'user_id' => $user->id
+        ]);
+
+        $this->post('/tweets/'. $tweet->id .'/comments', $comment->toArray());
+        $comment = \App\Comment::first();
+
+        // When we hit the route to delete this comment
+        $this->delete('/tweets/'. $comment->tweet->id .'/comments/'. $comment->id);
+
+        // Then there shouldn't be a record in activities table for creating the comment
+        $this->assertDatabaseMissing('activities', [
+            'user_id' => $user->id,
+            'description' => 'comment'
+        ]);
+    }
+
+    /** @test */
     function a_user_records_activity_when_he_retweet_a_tweet()
     {
         $this->withoutExceptionHandling();

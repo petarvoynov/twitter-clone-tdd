@@ -50,6 +50,8 @@ class CommentsController extends Controller
             abort(403);
         }
 
+        $comment->activities()->delete();
+
         $comment->delete();
     }
 }
