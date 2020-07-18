@@ -22,6 +22,11 @@ class RetweetsController extends Controller
 
     public function destroy(Tweet $tweet)
     {
+        
+        $retweet = $tweet->retweets()->where('user_id', auth()->id())->first();
+
+        $retweet->activities()->delete();
+
         $tweet->retweets()->where('user_id', auth()->id())->delete();
 
         return back();

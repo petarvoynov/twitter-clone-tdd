@@ -210,4 +210,30 @@ class UsersTest extends TestCase
         ]);
 
     }
+
+    /** @test */
+    function a_user_destroys_activity_when_here_remove_his_retweet()
+    {
+        $this->withoutExceptionHandling();
+        // Given we are sign in 
+        $user = factory('App\User')->create();
+        $this->be($user);
+
+        // And there is a user that we follow and has a tweet that we retweet
+        $userToFollow = factory('App\User')->create();
+        $tweet = factory('App\Tweet')->create(['user_id' => $userToFollow->id]);
+
+        $user->follow($userToFollow); 
+
+        $this->post('/retweets/' . $tweet->id);
+
+        // When we hit the route to delete this retweet
+        $this->delete('/retweets/' . $tweet->id);
+
+        // Then there shouldn't be a record in activities table for retweeting the tweet
+        $this->assertDatabaseMissing('activities', [
+            'user_id' => $user->id,
+            'description' => 'retweet'
+        ]);
+    }
 }
