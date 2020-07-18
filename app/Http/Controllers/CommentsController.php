@@ -15,14 +15,14 @@ class CommentsController extends Controller
             'body' => 'required'
         ]);
         
+        $tweet->activities()->create([
+            'user_id' => auth()->id(),
+            'description' => 'comment'
+        ]);
+
         $comment = auth()->user()->comments()->create([
             'body' => request('body'),
             'tweet_id' => $tweet->id,
-        ]);
-
-        $comment->activities()->create([
-            'user_id' => auth()->id(),
-            'description' => 'comment'
         ]);
 
         return back();
@@ -50,7 +50,7 @@ class CommentsController extends Controller
             abort(403);
         }
 
-        $comment->activities()->delete();
+        $tweet->activities()->where('user_id', auth()->id())->where('description', 'comment')->first()->delete();
 
         $comment->delete();
     }

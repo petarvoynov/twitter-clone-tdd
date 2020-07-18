@@ -10,12 +10,13 @@ class RetweetsController extends Controller
 {
     public function store(Tweet $tweet)
     {
-        $retweet = $tweet->retweet();
+        $tweet->retweet();
 
-        $retweet->activities()->create([
+        $tweet->activities()->create([
             'user_id' => auth()->id(),
             'description' => 'retweet'
         ]);
+       
 
         return back();
     }
@@ -23,9 +24,7 @@ class RetweetsController extends Controller
     public function destroy(Tweet $tweet)
     {
         
-        $retweet = $tweet->retweets()->where('user_id', auth()->id())->first();
-
-        $retweet->activities()->delete();
+        $tweet->activities()->where('user_id', auth()->id())->where('description', 'retweet')->delete();
 
         $tweet->retweets()->where('user_id', auth()->id())->delete();
 

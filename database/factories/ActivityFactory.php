@@ -8,8 +8,7 @@ use Faker\Generator as Faker;
 $factory->define(Activity::class, function (Faker $faker) {
     return [
         'user_id' => factory('App\User'),
-        'subject_id' => factory('App\Tweet'),
-        'subject_type' => 'App\Tweet',
+        'tweet_id' => factory('App\Tweet'),
         'description' => 'like'
     ];
 });

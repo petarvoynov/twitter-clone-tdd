@@ -53,6 +53,6 @@ class Tweet extends Model
 
     public function activities()
     {
-        return $this->morphMany('App\Activity', 'subject');
+        return $this->hasMany('App\Activity');
     }
 }

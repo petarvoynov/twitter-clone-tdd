@@ -70,13 +70,4 @@ class CommentTest extends TestCase
         // Then there should not be record in the database
         $this->assertCount(0, $comment->likes);
     }
-
-    /** @test */
-    function a_comment_has_morph_many_activities()
-    {
-        $comment = factory('App\Comment')->create();
-
-        $this->assertInstanceOf(Collection::class, $comment->activities);
-    }
-
 }
