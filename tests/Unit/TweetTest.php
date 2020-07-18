@@ -95,4 +95,12 @@ class TweetTest extends TestCase
         $this->assertCount(1, $tweet->retweets);
 
     }
+
+    /** @test */
+    function a_tweet_has_morph_many_activities()
+    {
+        $tweet = factory('App\Tweet')->create();
+
+        $this->assertInstanceOf(Collection::class, $tweet->activities);
+    }
 }

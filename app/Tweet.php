@@ -50,4 +50,9 @@ class Tweet extends Model
     {
         return $this->retweets()->create(['user_id' => auth()->id()]);
     }
+
+    public function activities()
+    {
+        return $this->morphMany('App\Activity', 'subject');
+    }
 }
