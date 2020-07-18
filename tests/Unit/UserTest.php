@@ -71,7 +71,7 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    function a_user_has_many_activities()
+    function a_user_has_activities()
     {
         $user = factory('App\User')->create();
 

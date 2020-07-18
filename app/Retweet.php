@@ -17,4 +17,9 @@ class Retweet extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function activities()
+    {
+        return $this->morphMany('App\Activity', 'subject');
+    }
 }

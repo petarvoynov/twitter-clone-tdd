@@ -75,20 +75,11 @@ class TweetCommentsTest extends TestCase
     /** @test */
     function a_comment_can_be_destroyed()
     {
-        $this->withoutExceptionHandling();
         // Given we are sign in and have a comment
         $user = factory('App\User')->create();
         $this->be($user);
 
         $comment = factory('App\Comment')->create(['user_id' => $user->id]);
-
-        // We create an activity since creating the comment from a factory doesn't create the activity (we don't have observers)
-        // If we don't have the activity it throws an error
-        \App\Activity::create([
-            'user_id' => $user->id,
-            'tweet_id' => $comment->tweet_id,
-            'description' => 'comment'
-        ]);
 
         // When we hit the route to delete this comment
         $this->delete('/tweets/' . $comment->tweet->id .'/comments/'. $comment->id); 

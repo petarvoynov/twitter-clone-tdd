@@ -97,7 +97,7 @@ class TweetTest extends TestCase
     }
 
     /** @test */
-    function a_tweet_has_many_activities()
+    function a_tweet_has_morph_many_activities()
     {
         $tweet = factory('App\Tweet')->create();
 
