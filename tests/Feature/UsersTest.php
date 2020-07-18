@@ -243,4 +243,27 @@ class UsersTest extends TestCase
             'description' => 'like'
         ]);
     }
+
+    /** @test */
+    function a_user_destroys_activity_when_he_unlikes_a_comment()
+    {
+        // Given we are sign in and have a comment that we liked
+        $user = $this->signIn();
+        
+        $comment = factory('App\Comment')->create(['user_id' => $user->id]);
+
+        $this->post('/comments/'. $comment->id .'/like');
+
+        // When we hit the route ot unlike the comment
+        $this->delete('/comments/'. $comment->id .'/unlike');
+
+        // Then there shouldn't be records in activity table for liking the comment
+        $this->assertCount(0, $user->activities);
+        $this->assertDatabaseMissing('activities', [
+            'user_id' => $user->id,
+            'subject_id' => $comment->id,
+            'subject_type' => get_class($comment),
+            'description' => 'like'
+        ]);
+    }
 }
