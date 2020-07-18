@@ -212,9 +212,8 @@ class UsersTest extends TestCase
     }
 
     /** @test */
-    function a_user_destroys_activity_when_here_remove_his_retweet()
+    function a_user_destroys_activity_when_he_remove_his_retweet()
     {
-        $this->withoutExceptionHandling();
         // Given we are sign in 
         $user = factory('App\User')->create();
         $this->be($user);
