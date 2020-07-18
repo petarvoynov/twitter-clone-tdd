@@ -13,10 +13,8 @@ class UsersTest extends TestCase
     /** @test */
     function a_user_can_follow_another_user()
     {
-        $this->withoutExceptionHandling();
         // Given are sign in and we have a user to follow
-        $user = factory('App\User')->create();
-        $this->be($user);
+        $user = $this->signIn();
 
         $userToFollow = factory('App\User')->create();
 
@@ -35,8 +33,7 @@ class UsersTest extends TestCase
     function a_user_can_unfollow_a_followed_user()
     {
         // Given are sign in and already followed a user
-        $user = factory('App\User')->create();
-        $this->be($user);
+        $user = $this->signIn();
 
         $userToFollow = factory('App\User')->create();
         $this->post('/users/'. $userToFollow->id .'/follow');
@@ -53,8 +50,7 @@ class UsersTest extends TestCase
     function a_user_cannot_follow_a_user_if_he_is_already_following_him()
     {
         // Given we are sign in and have followed a user
-        $user = factory('App\User')->create();
-        $this->be($user);
+        $user = $this->signIn();
 
         $userToFollow = factory('App\User')->create();
 
@@ -72,8 +68,7 @@ class UsersTest extends TestCase
     function a_user_cannot_unfollow_a_user_that_he_is_not_following()
     {
         // Given we are sign in and there is a user that we don't follow
-        $user = factory('App\User')->create();
-        $this->be($user);
+        $user = $this->signIn();
 
         $userWeDontFollow = factory('App\User')->create();
         
@@ -88,8 +83,7 @@ class UsersTest extends TestCase
     function a_user_cannot_see_tweets_of_another_user_that_he_is_not_following()
     {
         // Given we are sign in and there is a user we don't follow and that has a tweet
-        $user = factory('App\User')->create();
-        $this->be($user);
+        $user = $this->signIn();
 
         $userWeDontFollow = factory('App\User')->create();
 
@@ -106,8 +100,7 @@ class UsersTest extends TestCase
     function a_user_records_activity_when_he_likes_a_tweet()
     {
         // Given we are sing in and have a tweet
-        $user = factory('App\User')->create();
-        $this->be($user);
+        $user = $this->signIn();
 
         $tweet = factory('App\Tweet')->create(['user_id' => $user->id]);
         
@@ -123,8 +116,7 @@ class UsersTest extends TestCase
     function a_user_destroys_activity_when_he_unlikes_a_tweet()
     {
         // Given we are sing in and have a tweet that we like
-        $user = factory('App\User')->create();
-        $this->be($user);
+        $user = $this->signIn();
 
         $tweet = factory('App\Tweet')->create(['user_id' => $user->id]);
         $this->post('/tweets/'. $tweet->id .'/like');
@@ -140,8 +132,7 @@ class UsersTest extends TestCase
     function a_user_records_activity_when_he_comment_a_tweet()
     {
         // Given we are sing in and have a tweet
-        $user = factory('App\User')->create();
-        $this->be($user);
+        $user = $this->signIn();
 
         $tweet = factory('App\Tweet')->create(['user_id' => $user->id]);
 
@@ -161,8 +152,7 @@ class UsersTest extends TestCase
     function a_user_destroys_activity_when_he_deletes_his_comment()
     {
         // Given we are sign in and have a comment
-        $user = factory('App\User')->create();
-        $this->be($user);
+        $user = $this->signIn();
 
         $tweet = factory('App\Tweet')->create(['user_id' => $user->id]);
 
@@ -188,10 +178,8 @@ class UsersTest extends TestCase
     /** @test */
     function a_user_records_activity_when_he_retweet_a_tweet()
     {
-        $this->withoutExceptionHandling();
         // Given we are sign in 
-        $user = factory('App\User')->create();
-        $this->be($user);
+        $user = $this->signIn();
 
         // And there is a user that we follow and has a tweet
         $userToFollow = factory('App\User')->create();
@@ -215,8 +203,7 @@ class UsersTest extends TestCase
     function a_user_destroys_activity_when_he_remove_his_retweet()
     {
         // Given we are sign in 
-        $user = factory('App\User')->create();
-        $this->be($user);
+        $user = $this->signIn();
 
         // And there is a user that we follow and has a tweet that we retweet
         $userToFollow = factory('App\User')->create();

@@ -76,9 +76,7 @@ class TweetCommentsTest extends TestCase
     function a_comment_can_be_destroyed()
     {
         // Given we are sign in and have a comment
-        $user = factory('App\User')->create();
-        $this->be($user);
-
+        $user = $this->signIn();
         $comment = factory('App\Comment')->create(['user_id' => $user->id]);
 
         // When we hit the route to delete this comment
@@ -92,8 +90,7 @@ class TweetCommentsTest extends TestCase
     function a_comment_can_be_destroyed_only_by_its_owner()
     {
         // Given we are sign in and there is a comment not created by us
-        $user = factory('App\User')->create();
-        $this->be($user);
+        $user = $this->signIn();
 
         $comment = factory('App\Comment')->create();
 
@@ -108,8 +105,7 @@ class TweetCommentsTest extends TestCase
     function a_comment_can_be_updated()
     {
         // Given we are sign in and we have a comment
-        $user = factory('App\User')->create();
-        $this->be($user);
+        $user = $this->signIn();
 
         $comment = factory('App\Comment')->create(['user_id' => $user->id]);
 
@@ -124,8 +120,7 @@ class TweetCommentsTest extends TestCase
     function a_comment_can_be_updated_only_by_its_owner()
     {
         // Given we are sign in and a random comment that does not belongs to us
-        $user = factory('App\User')->create();
-        $this->be($user);
+        $user = $this->signIn();
 
         $comment = factory('App\Comment')->create();
 

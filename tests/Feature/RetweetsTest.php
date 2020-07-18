@@ -13,10 +13,8 @@ class RetweetsTest extends TestCase
      /** @test */
     function a_tweet_can_be_retweeted()
     {
-        $this->withoutExceptionHandling();
         // Given we are sign in and follow a user who has a tweet
-        $user = factory('App\User')->create();
-        $this->be($user);
+        $user = $this->signIn();
 
         $userToFollow = factory('App\User')->create();
 
@@ -37,10 +35,8 @@ class RetweetsTest extends TestCase
     /** @test */
     function a_retweet_can_be_destroyed()
     {
-        $this->withoutExceptionHandling();
         // Given we are sign in and follow a user who has a tweet that we retweeted
-        $user = factory('App\User')->create();
-        $this->be($user);
+        $user = $this->signIn();
 
         $userToFollow = factory('App\User')->create();
 
@@ -64,8 +60,7 @@ class RetweetsTest extends TestCase
     function a_retweet_can_be_seen_by_anyone_who_follows_the_user_who_is_retweeting()
     {
         // Given we are sing in and followed a user
-        $user = factory('App\User')->create();
-        $this->be($user);
+        $user = $this->signIn();
 
         $userToFollow = factory('App\User')->create();
         $user->follow($userToFollow);

@@ -21,8 +21,7 @@ class LikeCommentsTest extends TestCase
     function a_comment_can_be_liked()
     {
         // Given we are sing in and we have a comment
-        $user = factory('App\User')->create();
-        $this->be($user);
+        $user = $this->signIn();
 
         $comment = factory('App\Comment')->create(['user_id' => $user->id]);
 
@@ -36,10 +35,8 @@ class LikeCommentsTest extends TestCase
     /** @test */
     function a_comment_cannot_be_liked_more_than_once()
     {
-        $this->withoutExceptionHandling();
         // Given we are sing in and we have a comment
-        $user = factory('App\User')->create();
-        $this->be($user);
+        $user = $this->signIn();
 
         $comment = factory('App\Comment')->create(['user_id' => $user->id]);
 
@@ -55,10 +52,8 @@ class LikeCommentsTest extends TestCase
     /** @test */
     function a_comment_can_be_unliked()
     {
-        $this->withoutExceptionHandling();
         // Given we are sign in and have a comment that we liked
-        $user = factory('App\User')->create();
-        $this->be($user);
+        $user = $this->signIn();
 
         $comment = factory('App\Comment')->create(['user_id' => $user->id]);
         $comment->like();
