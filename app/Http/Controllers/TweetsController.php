@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Tweet;
 use App\Retweet;
+use App\Activity;
 use DB;
 
 class TweetsController extends Controller
@@ -13,6 +14,26 @@ class TweetsController extends Controller
     {   
         $followings = auth()->user()->load('followings')->followings->pluck('id');
         $followings[] = auth()->id();
+        
+        $activities = Activity::whereIn('user_id', $followings)->get();
+
+        $tweets = $activities->map(function($activity) {  
+            return $activity->subject;
+        });
+        /* 
+        
+        
+        
+        Huge comment
+
+        we need to make our subject the comment, retweet and like models and save the activities throught their relationship
+        
+        
+        
+        
+        */
+
+        dd($tweets);
 
         $tweets = Tweet::with(['user', 'comments'])->whereIn('user_id', $followings)->orderByDesc('created_at')->get();
 
@@ -36,7 +57,12 @@ class TweetsController extends Controller
     {
         $data = $this->validatedData();
 
-        auth()->user()->tweets()->create($data);
+        $tweet = auth()->user()->tweets()->create($data);
+
+        $tweet->activities()->create([
+            'user_id' => auth()->id(),
+            'description' => 'created'
+        ]);
         
         return redirect()->route('tweets.index');
     }

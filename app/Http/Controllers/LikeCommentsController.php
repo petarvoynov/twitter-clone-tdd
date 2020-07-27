@@ -11,11 +11,11 @@ class LikeCommentsController extends Controller
     public function store(Comment $comment)
     {
         if(!$comment->isLiked()){
-            $comment->like();
+            $like = $comment->like();
 
-            $comment->activities()->create([
+            $like->activities()->create([
                 'user_id' => auth()->id(),
-                'description' => 'like'
+                'description' => 'comment'
             ]);
         } 
        

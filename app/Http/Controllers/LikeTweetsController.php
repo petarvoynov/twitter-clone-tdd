@@ -14,11 +14,9 @@ class LikeTweetsController extends Controller
             
             $like = $tweet->like();
             
-            Activity::create([
+            $like->activities()->create([
                 'user_id' => auth()->id(),
-                'subject_id' => $like->id,
-                'subject_type' => get_class($like),
-                'description' => 'like'
+                'description' => 'tweet'
             ]);
         }
 
@@ -29,9 +27,7 @@ class LikeTweetsController extends Controller
     {
         if($tweet->isLiked()) {
             
-            $like = $tweet->likes()->where('user_id', auth()->id())->first();
-
-            $like->activities()->delete();
+            $tweet->activities()->where('user_id', auth()->id())->where('description', 'like')->delete();
 
             $tweet->unlike();
         } 

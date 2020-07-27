@@ -22,7 +22,7 @@ class CommentsController extends Controller
 
         $comment->activities()->create([
             'user_id' => auth()->id(),
-            'description' => 'comment'
+            'description' => 'tweet'
         ]);
 
         return back();

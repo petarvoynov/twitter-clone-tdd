@@ -14,7 +14,7 @@ class RetweetsController extends Controller
 
         $retweet->activities()->create([
             'user_id' => auth()->id(),
-            'description' => 'retweet'
+            'description' => 'tweet'
         ]);
 
         return back();

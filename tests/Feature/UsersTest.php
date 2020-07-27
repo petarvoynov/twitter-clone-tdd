@@ -97,6 +97,25 @@ class UsersTest extends TestCase
     }
 
     /** @test */
+    function a_user_records_activity_when_he_makes_a_tweet()
+    {
+        $this->withoutExceptionHandling();
+        // Given we are sing in
+        $user = $this->signIn();
+
+        // When we post a tweet
+        $tweet = factory('App\Tweet')->raw(['user_id' => $user->id]);
+        $this->post('/tweets', $tweet);
+
+        // Then there should be record in the activity table for posting that tweet
+        $this->assertCount(1, $user->activities);
+        $this->assertDatabaseHas('activities', [
+            'user_id' => $user->id,
+            'description' => 'created'
+        ]);
+    }
+
+    /** @test */
     function a_user_records_activity_when_he_likes_a_tweet()
     {
         // Given we are sing in and have a tweet
