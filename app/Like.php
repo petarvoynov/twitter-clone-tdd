@@ -12,4 +12,14 @@ class Like extends Model
     {
         return $this->morphMany('App\Activity', 'subject');
     }
+
+    public function likeable()
+    {
+        return $this->morphTo();
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

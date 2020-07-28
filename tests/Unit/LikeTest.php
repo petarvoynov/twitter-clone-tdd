@@ -18,4 +18,12 @@ class LikeTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $like->activities);
    }
+
+   /** @test */
+   function a_like_belongs_to_a_user()
+   {
+       $like = factory('App\Like')->create();
+
+       $this->assertInstanceOf('App\User', $like->user);
+   }
 }
