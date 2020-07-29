@@ -1,5 +1,9 @@
-@if(is_null($tweet->is_retweet))
-    <div class="card mt-3">
+@php
+    $tweet = $activity->subject;
+@endphp
+
+@if($activity->description == 'created a tweet')
+    <div class="card mt-4">
         <div class="card-header d-flex justify-content-between">
             <h5>{{ $tweet->user->name }}</h5> <small>{{ $tweet->created_at->diffForHumans() }}</small>
         </div>
@@ -24,17 +28,17 @@
             </form>
         </div>
     </div>
-@else
-    <div class="card mt-3">
-        
+@elseif($activity->description == 'this tweet is being retweeted')
+    <div class="card mt-4">
         <div class="card-header">
             <div class="d-flex justify-content-between">
-                <small>{{ $tweet->retweet_user_name }} retweeted</small>
-                <small>{{ $tweet->retweeted_at->diffForHumans() }}</small>
+                <small>{{ $activity->user->name }} retweeted:</small>
+                <small>{{ $activity->created_at->diffForHumans() }}</small>
             </div>
-            <hr>
-            <div class="d-flex justify-content-between">
-                <h4>{{ $tweet->user->name }}</h4> <small>{{ $tweet->created_at->diffForHumans() }}</small>
+
+            <div class="d-flex justify-content-between mt-3">
+                <h5>{{ $tweet->user->name }}</h5> 
+                <small>{{ $tweet->created_at->diffForHumans() }}</small> 
             </div>
         </div>
         <div class="card-body">
@@ -59,4 +63,3 @@
         </div>
     </div>
 @endif
-

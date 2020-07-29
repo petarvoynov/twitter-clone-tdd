@@ -12,11 +12,11 @@ class LikeTweetsController extends Controller
     {
         if(!$tweet->isLiked()) {
             
-            $like = $tweet->like();
+            $tweet->like();
             
-            $like->activities()->create([
+            $tweet->activities()->create([
                 'user_id' => auth()->id(),
-                'description' => 'tweet'
+                'description' => 'this tweet is being liked'
             ]);
         }
 
@@ -27,7 +27,7 @@ class LikeTweetsController extends Controller
     {
         if($tweet->isLiked()) {
             
-            $tweet->activities()->where('user_id', auth()->id())->where('description', 'like')->delete();
+            $tweet->activities()->where('user_id', auth()->id())->where('description', 'this tweet is being liked')->delete();
 
             $tweet->unlike();
         } 

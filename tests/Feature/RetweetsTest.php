@@ -75,6 +75,11 @@ class RetweetsTest extends TestCase
             'user_id' => $userToFollow->id,
             'tweet_id' => $tweet->id
         ]);
+
+        $tweet->activities()->create([
+            'user_id' => $userToFollow->id,
+            'description' => 'this tweet is being retweeted'
+        ]);
         
 
         // When we hit the homepage /tweets

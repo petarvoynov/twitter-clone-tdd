@@ -34,7 +34,7 @@
             </p>
         </div>
 
-        @include('tweets.components.tweet_buttons')
+        @include('tweets.components.tweet_buttons', ['activity' => $tweet])
     </div>
     <div id="comment-area-{{ $tweet->id }}" class="comment-area">
         <form action="{{ route('comments.store', $tweet->id) }}" method="POST">

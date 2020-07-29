@@ -22,7 +22,7 @@ class CommentsController extends Controller
 
         $comment->activities()->create([
             'user_id' => auth()->id(),
-            'description' => 'tweet'
+            'description' => 'commented a tweet'
         ]);
 
         return back();
@@ -50,7 +50,7 @@ class CommentsController extends Controller
             abort(403);
         }
 
-        $comment->activities()->delete();
+        $comment->activities()->where('user_id', auth()->id())->where('description', 'commented a tweet')->delete();
 
         $comment->delete();
     }

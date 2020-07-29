@@ -17,40 +17,7 @@ class TweetsController extends Controller
         
         $activities = Activity::whereIn('user_id', $followings)->get();
 
-        $tweets = $activities->map(function($activity) {  
-            return $activity->subject;
-        });
-        /* 
-        
-        
-        
-        Huge comment
-
-        we need to make our subject the comment, retweet and like models and save the activities throught their relationship
-        
-        
-        
-        
-        */
-
-        dd($tweets);
-
-        $tweets = Tweet::with(['user', 'comments'])->whereIn('user_id', $followings)->orderByDesc('created_at')->get();
-
-        $retweets = Retweet::with(['tweet', 'user'])->whereIn('user_id', $followings)->get();
-
-        $retweets = $retweets->map(function($retweet){
-            $tweet = $retweet->tweet;
-            $tweet['is_retweet'] = 1;
-            $tweet['retweet_user_name'] = $retweet->user->name;
-            $tweet['retweeted_at'] = $retweet->created_at;
-
-            return $tweet;
-        });
-        
-        $tweets = $tweets->merge($retweets)->sortByDesc('created_at')->paginate(10);
-
-        return view('tweets.index', compact('tweets'));
+        return view('tweets.index', compact('activities'));
     }
 
     public function store()
@@ -61,7 +28,7 @@ class TweetsController extends Controller
 
         $tweet->activities()->create([
             'user_id' => auth()->id(),
-            'description' => 'created'
+            'description' => 'created a tweet'
         ]);
         
         return redirect()->route('tweets.index');
@@ -90,6 +57,8 @@ class TweetsController extends Controller
         if(auth()->id() != $tweet->user_id){
             abort(403);
         }
+
+        /* NEED TO DELETE THE ACTIVITY FOR CREATING THE TWEET */
 
         $tweet->delete();
 

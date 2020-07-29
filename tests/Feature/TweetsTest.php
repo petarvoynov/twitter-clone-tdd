@@ -33,7 +33,11 @@ class TweetsTest extends TestCase
         $user->follow($userToFollow);
 
         $tweet = factory('App\Tweet')->create(['user_id' => $userToFollow->id]);
-
+        $tweet->activities()->create([
+            'user_id' => $userToFollow->id,
+            'description' => 'created a tweet'
+        ]);
+        
         // When a user goes to his homepage
         $response = $this->get('/tweets');
             

@@ -10,11 +10,11 @@ class RetweetsController extends Controller
 {
     public function store(Tweet $tweet)
     {
-        $retweet = $tweet->retweet();
+        $tweet->retweet();
 
-        $retweet->activities()->create([
+        $tweet->activities()->create([
             'user_id' => auth()->id(),
-            'description' => 'tweet'
+            'description' => 'this tweet is being retweeted'
         ]);
 
         return back();
@@ -22,10 +22,9 @@ class RetweetsController extends Controller
 
     public function destroy(Tweet $tweet)
     {
-        
-        $retweet = $tweet->retweets()->where('user_id', auth()->id())->first();
+        $tweet->activities()->where('user_id', auth()->id())->where('description', 'this tweet is being retweeted')->delete();
 
-        $retweet->activities()->delete();
+        /* WE PROBABLY DOESN'T NEED A RETWEET MODEL AND MIGRATION JUST CONTROLLER */
 
         $tweet->retweets()->where('user_id', auth()->id())->delete();
 

@@ -11,11 +11,11 @@ class LikeCommentsController extends Controller
     public function store(Comment $comment)
     {
         if(!$comment->isLiked()){
-            $like = $comment->like();
+            $comment->like();
 
-            $like->activities()->create([
+            $comment->activities()->create([
                 'user_id' => auth()->id(),
-                'description' => 'comment'
+                'description' => 'this comment is being liked'
             ]);
         } 
        
@@ -25,7 +25,7 @@ class LikeCommentsController extends Controller
     public function destroy(Comment $comment)
     {
         if($comment->isLiked()){
-            $comment->activities()->where('user_id', auth()->id())->where('description', 'like')->delete();
+            $comment->activities()->where('user_id', auth()->id())->where('description', 'this comment is being liked')->delete();
 
             $comment->unlike();
         }

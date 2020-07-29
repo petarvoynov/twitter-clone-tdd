@@ -111,7 +111,7 @@ class UsersTest extends TestCase
         $this->assertCount(1, $user->activities);
         $this->assertDatabaseHas('activities', [
             'user_id' => $user->id,
-            'description' => 'created'
+            'description' => 'created a tweet'
         ]);
     }
 
@@ -128,7 +128,7 @@ class UsersTest extends TestCase
 
         // Then there should be one activity in the database for liking the tweet
         $this->assertCount(1, $user->activities);
-        $this->assertEquals('like', $user->activities->first()->description);
+        $this->assertEquals('this tweet is being liked', $user->activities->first()->description);
     }
 
     /** @test */
@@ -164,7 +164,7 @@ class UsersTest extends TestCase
 
         // Then there should be records in the activity table for commenting the tweet
         $this->assertCount(1, $user->activities);
-        $this->assertEquals('comment', $user->activities->first()->description);
+        $this->assertEquals('commented a tweet', $user->activities->first()->description);
     }
 
     /** @test */
@@ -213,7 +213,7 @@ class UsersTest extends TestCase
         $this->assertCount(1, $user->activities);
         $this->assertDatabaseHas('activities', [
             'user_id' => $user->id,
-            'description' => 'retweet'
+            'description' => 'this tweet is being retweeted'
         ]);
 
     }
@@ -259,7 +259,7 @@ class UsersTest extends TestCase
             'user_id' => $user->id,
             'subject_id' => $comment->id,
             'subject_type' => get_class($comment),
-            'description' => 'like'
+            'description' => 'this comment is being liked'
         ]);
     }
 
@@ -275,7 +275,7 @@ class UsersTest extends TestCase
 
         // When we hit the route ot unlike the comment
         $this->delete('/comments/'. $comment->id .'/unlike');
-
+        
         // Then there shouldn't be records in activity table for liking the comment
         $this->assertCount(0, $user->activities);
         $this->assertDatabaseMissing('activities', [
