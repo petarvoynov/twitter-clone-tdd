@@ -34,4 +34,12 @@ class ActivityTest extends TestCase
 
         $this->assertInstanceOf(Comment::class, $activity->subject); 
     }
+
+    /** @test */
+    function an_activity_belongs_to_a_user()
+    {
+        $activity = factory('App\Activity')->create();
+
+        $this->assertInstanceOf('App\User', $activity->user);
+    }
 }
