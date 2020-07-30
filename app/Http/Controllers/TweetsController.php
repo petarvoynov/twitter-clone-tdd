@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Tweet;
 use App\Retweet;
+use App\Comment;
 use App\Activity;
 use DB;
 
@@ -15,7 +16,10 @@ class TweetsController extends Controller
         $followings = auth()->user()->load('followings')->followings->pluck('id');
         $followings[] = auth()->id();
         
-        $activities = Activity::whereIn('user_id', $followings)->get();
+        $activities = Activity::whereIn('user_id', $followings)->with('subject')->get()->loadMorph('subject', [
+            Tweet::class => ['user'],
+            Comment::class => ['tweet.user']
+        ]);;
 
         return view('tweets.index', compact('activities'));
     }
