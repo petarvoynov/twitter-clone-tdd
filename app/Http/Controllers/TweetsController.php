@@ -19,7 +19,7 @@ class TweetsController extends Controller
         $activities = Activity::whereIn('user_id', $followings)->with('subject')->get()->loadMorph('subject', [
             Tweet::class => ['user'],
             Comment::class => ['tweet.user']
-        ]);
+        ])->paginate(15);
 
         return view('tweets.index', compact('activities'));
     }
@@ -40,7 +40,9 @@ class TweetsController extends Controller
 
     public function show(Tweet $tweet)
     {
-        return view('tweets.show', compact('tweet'));
+        $comments = $tweet->comments()->paginate(10);
+
+        return view('tweets.show', compact('tweet', 'comments'));
     }
 
     public function update(Tweet $tweet)

@@ -38,7 +38,7 @@
     </div>
 </div>
 
-@foreach($tweet->comments as $comment)
+@foreach($comments as $comment)
     <li class="list-group-item mt-2">
         <div class="row">
             <div class="col-lg-11 d-flex flex-column">
@@ -87,6 +87,7 @@
         </div>   
     </li>
 @endforeach
+{{ $comments->links() }}
 
 <script>
         let editForm = document.querySelectorAll('.edit-comment');

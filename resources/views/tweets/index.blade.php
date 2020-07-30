@@ -27,6 +27,7 @@
                 @include('tweets.components.comment_card')
             @endif
         @endforeach
+        {{ $activities->links() }}
     @endif
         
     
