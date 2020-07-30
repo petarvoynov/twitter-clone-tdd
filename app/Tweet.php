@@ -9,7 +9,7 @@ class Tweet extends Model
     protected $guarded = [];
 
     protected $with = ['likes'];
-    protected $withCount = ['likes'];
+    protected $withCount = ['likes', 'comments', 'retweets'];
 
     public function user()
     {

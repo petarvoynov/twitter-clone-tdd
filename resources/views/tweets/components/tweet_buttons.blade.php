@@ -1,13 +1,13 @@
 <div class="row mt-3">
     <div class="col-lg-3 d-flex flex-column justify-content-between">
         <small>
-            <span class="font-weight-bold mr-1">3255</span>Comments
+            <span class="font-weight-bold mr-1">{{ $tweet->comments_count }}</span>Comments
         </small>
         <button id="{{ $tweet->id }}" class="btn btn-primary btn-sm comment-button">Comment</button>
     </div>
     <div class="col-lg-3 d-flex flex-column justify-content-between">
         <small>
-            <span class="font-weight-bold mr-1">2755</span>Retweets
+            <span class="font-weight-bold mr-1">{{ $tweet->retweets_count }}</span>Retweets
         </small>
         <form action="{{ route('retweets.store', ['tweet' => $tweet->id]) }}" method="POST">
             @csrf
@@ -16,7 +16,7 @@
     </div>
     <div class="col-lg-3 d-flex flex-column justify-content-between">
         <small>
-            <span class="font-weight-bold mr-1">12705</span>Likes
+            <span class="font-weight-bold mr-1">{{ $tweet->likes_count }}</span>Likes
         </small>
         <div>
             @if(!$tweet->isLiked())

@@ -19,7 +19,7 @@ class TweetsController extends Controller
         $activities = Activity::whereIn('user_id', $followings)->with('subject')->get()->loadMorph('subject', [
             Tweet::class => ['user'],
             Comment::class => ['tweet.user']
-        ]);;
+        ]);
 
         return view('tweets.index', compact('activities'));
     }
