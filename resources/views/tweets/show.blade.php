@@ -23,17 +23,6 @@
             <small>{{ $tweet->created_at->isoFormat('HH:mm A MMM D, Y') }}</small>
         </div>
 
-        <div class="mt-2 border-bottom d-flex">
-            <p>
-                <span class="font-weight-bold">10</span>
-                <span class="text-muted"> Retweets</span>
-            </p>
-            <p class="ml-3">
-                <span class="font-weight-bold">{{ $tweet->likes_count }}</span>
-                <span class="text-muted">{{ Str::plural('Like', $tweet->likes_count) }}</span>
-            </p>
-        </div>
-
         @include('tweets.components.tweet_buttons', ['activity' => $tweet])
     </div>
     <div id="comment-area-{{ $tweet->id }}" class="comment-area">
