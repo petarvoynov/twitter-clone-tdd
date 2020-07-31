@@ -38,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/comments/{comment}/unlike', 'LikeCommentsController@destroy')->name('likes.destroy');
 
     Route::get('/users/{user}', 'UsersController@show')->name('users.show');
+    Route::post('/users/{user}/profile-picture', 'UserProfilePictureController@store')->name('user-profile-picture.store');
 });
 
 Auth::routes();
