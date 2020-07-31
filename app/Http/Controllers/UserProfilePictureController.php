@@ -8,6 +8,8 @@ class UserProfilePictureController extends Controller
 {
     public function store()
     {
-        
+        request()->validate([
+            'profile_picture' => 'required|image'
+        ]);
     }
 }
