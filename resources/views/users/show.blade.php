@@ -15,7 +15,10 @@
 <div class="row">
     <div class="col-12">
         <div class="card img-fluid mx-auto" style="width: 36rem;">
-            <img class="card-img-top" src="https://www.talkwalker.com/images/2020/blog-headers/image-analysis.png" alt="Card image cap">
+            <img class="card-img-top" src="{{ $user->profilePicture()}}" alt="profile picture">
+            @if(auth()->id() == $user->id)
+                <a class="position-absolute btn btn-secondary mt-2 ml-2" href="{{ route('user-profile-picture.edit', ['user' => $user->id]) }}">Edit Image</a>
+            @endif
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <h5 class="card-title">{{ $user->name }}</h5>
@@ -51,13 +54,22 @@
     </div>
 </div>
 
-@if(auth()->user()->followings()->where('leader_id', $user->id)->exists())
-    @forelse ($user->tweets as $tweet)
-        @include('tweets.components.tweets_card')    
-    @empty
-        <p class="lead text-center mt-5">There are no tweets</p>
-    @endforelse
+@if(auth()->user()->followings()->where('leader_id', $user->id)->exists() || auth()->id() === $user->id)
+    @if(count($activities) > 0)
+        @foreach ($activities as $activity)
+            @if($activity->subject_type == 'App\\Tweet')    
+                @include('tweets.components.tweet_card')
+            @elseif($activity->subject_type == 'App\\Comment')
+                @include('tweets.components.comment_card')
+            @endif
+        @endforeach
+        {{ $activities->links() }}
+    @else
+        <p class="lead text-center mt-5">There are no activities for this user.</p>    
+    @endif
 @endif
+
+
 @endsection
 
 @section('javascript')

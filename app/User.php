@@ -76,4 +76,14 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Activity');
     }
+
+    public function profilePicture()
+    {
+        if($this->profile_picture !== 'noimage.jpg'){
+            return  "/storage/{$this->profile_picture}";
+        } else {
+            return "/default-image/noimage.jpg";
+        }
+        
+    }
 }

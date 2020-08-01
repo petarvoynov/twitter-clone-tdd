@@ -39,6 +39,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/users/{user}', 'UsersController@show')->name('users.show');
     Route::post('/users/{user}/profile-picture', 'UserProfilePictureController@store')->name('user-profile-picture.store');
+    Route::get('/users/{user}/profile-picture/edit', 'UserProfilePictureController@edit')->name('user-profile-picture.edit');
 });
 
 Auth::routes();

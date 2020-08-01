@@ -9,7 +9,9 @@ class UsersController extends Controller
 {
     public function show(User $user)
     {
-        return view('users.show', compact('user'));
+        $activities = $user->activities->paginate(15);
+
+        return view('users.show', compact(['user', 'activities']));
     }
 
     public function follow(User $user)
