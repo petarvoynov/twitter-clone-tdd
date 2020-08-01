@@ -5,7 +5,7 @@
 @if($activity->description == 'created a tweet')
     <div class="card mt-4">
         <div class="card-header d-flex justify-content-between">
-            <h5><a href="{{ route('users.show', ['user' => $tweet->user_id]) }}"><img class="rounded-circle mr-2" src="/storage/{{ $tweet->user->profilePicture() }}" alt="profile picture" width="40px" height="40px">{{ $tweet->user->name }}</a></h5> <small>{{ $tweet->created_at->diffForHumans() }}</small>
+            <h5><a href="{{ route('users.show', ['user' => $tweet->user_id]) }}"><img class="rounded-circle mr-2" src="{{ $tweet->user->profilePicture() }}" alt="profile picture" width="40px" height="40px">{{ $tweet->user->name }}</a></h5> <small>{{ $tweet->created_at->diffForHumans() }}</small>
         </div>
         <div class="card-body">
             <div class="tweet-body border-bottom">
@@ -37,7 +37,7 @@
             </div>
 
             <div class="d-flex justify-content-between mt-3">
-                <h5><a href="{{ route('users.show', ['user' => $tweet->user_id]) }}"><img class="rounded-circle mr-2" src="/storage/{{ $tweet->user->profilePicture() }}" alt="profile picture" width="40px" height="40px">{{ $tweet->user->name }}</a></h5> 
+                <h5><a href="{{ route('users.show', ['user' => $tweet->user_id]) }}"><img class="rounded-circle mr-2" src="{{ $tweet->user->profilePicture() }}" alt="profile picture" width="40px" height="40px">{{ $tweet->user->name }}</a></h5> 
                 <small>{{ $tweet->created_at->diffForHumans() }}</small> 
             </div>
         </div>

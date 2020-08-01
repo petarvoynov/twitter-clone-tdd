@@ -11,7 +11,7 @@
             </div>
 
             <div class="d-flex justify-content-between mt-3">
-                <h5><a href="{{ route('users.show', ['user' => $comment->tweet->user_id]) }}"><img class="rounded-circle mr-2" src="/storage/{{ $comment->tweet->user->profilePicture() }}" alt="profile picture" width="40px" height="40px">{{ $comment->tweet->user->name }}</a></h5> 
+                <h5><a href="{{ route('users.show', ['user' => $comment->tweet->user_id]) }}"><img class="rounded-circle mr-2" src="{{ $comment->tweet->user->profilePicture() }}" alt="profile picture" width="40px" height="40px">{{ $comment->tweet->user->name }}</a></h5> 
                 <small>{{ $comment->created_at->diffForHumans() }}</small>
             </div>
         </div>
