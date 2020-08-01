@@ -14,6 +14,19 @@ class UsersController extends Controller
         return view('users.show', compact(['user', 'activities']));
     }
 
+    public function update(User $user)
+    {
+        $validatedData = request()->validate([
+            'name' => 'required',
+            'description' => 'nullable',
+            'location' => 'nullable'
+        ]);
+    
+        $user->update($validatedData);
+
+        return redirect()->route('users.show', ['user' => $user->id]);
+    }
+
     public function follow(User $user)
     {
         if(!auth()->user()->followings->contains($user)){

@@ -285,4 +285,24 @@ class UsersTest extends TestCase
             'description' => 'like'
         ]);
     }
+
+    /** @test */
+    function a_user_can_update_their_profile()
+    {
+        // Given we are sing in
+        $user = $this->signIn();
+        
+        // When we hit the route to update our profile
+        $this->patch('/users/' . $user->id, [
+            'name' => $user->name,
+            'description' => 'fake description',
+            'location' => 'fake location'
+        ]);
+
+        // Then the profile should be updated in the database
+        $this->assertDatabaseHas('users', [
+            'description' => 'fake description',
+            'location' => 'fake location'
+        ]);
+    }
 }

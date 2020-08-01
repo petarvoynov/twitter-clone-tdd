@@ -31,7 +31,7 @@
                         @else
                             <form action="{{ route('users.unfollow', ['user' => $user->id]) }}" method="POST">
                                 @csrf
-                                <button class="btn btn-primary" type="submit">Unfollow</button>
+                                <button class="btn btn-primary btn-sm" type="submit">Unfollow</button>
                             </form>
                         @endif
                     @endif
