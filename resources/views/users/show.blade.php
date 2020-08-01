@@ -34,15 +34,15 @@
                                 <button class="btn btn-primary btn-sm" type="submit">Unfollow</button>
                             </form>
                         @endif
+                    @else
+                        <a class="btn btn-primary btn-sm" href="{{ route('users.edit', ['user' => $user->id]) }}">Edit</a>
                     @endif
                 </div>
                 
-                <h6 class="card-subtitle mt-1 mb-2 text-muted">{{ $user->email }}</h6>
-                <p class="card-text">Fake Description</p>
+                <p class="card-text">{{ $user->description }}</p>
                 <div class="d-flex row">
-                    <p class="card-text col-lg-4">Fake Joined April 2009</p>
-                    <p class="card-text col-lg-4">Fake Location</p>
-                    <p class="card-text col-lg-4">Fake Description</p>
+                    <p class="card-text col-lg-6">Joined {{ $user->created_at }}</p>
+                    <p class="card-text col-lg-6">{{ $user->location }}</p>
                 </div>
                 <div class="row d-flex">
                     <p class="col-md-6"><span class="font-weight-bold mr-1">166</span>Following</p>
