@@ -14,13 +14,20 @@
 
 <div class="card mt-3">
     <div class="card-header d-flex justify-content-between">
-        <h5>{{ $tweet->user->name }}</h5> <small>{{ $tweet->created_at->diffForHumans() }}</small>
+        <h5><a href="{{ route('users.show', ['user' => $tweet->user_id]) }}">{{ $tweet->user->name }}</a></h5> <small>{{ $tweet->created_at->diffForHumans() }}</small>
     </div>
     <div class="card-body">
         <p>{{ $tweet->body }}</p>
     
-        <div class="mt-2 text-muted border-bottom">
+        <div class="mt-2 text-muted border-bottom d-flex justify-content-between align-items-center">
             <small>{{ $tweet->created_at->isoFormat('HH:mm A MMM D, Y') }}</small>
+            @if($tweet->user_id == auth()->id()) 
+                <form action="{{ route('tweets.destroy', ['tweet' => $tweet]) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                </form>
+            @endif
         </div>
 
         @include('tweets.components.tweet_buttons', ['activity' => $tweet])
@@ -37,6 +44,8 @@
         </form>
     </div>
 </div>
+
+
 
 @foreach($comments as $comment)
     <li class="list-group-item mt-2">

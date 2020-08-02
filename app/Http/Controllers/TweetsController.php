@@ -40,6 +40,13 @@ class TweetsController extends Controller
 
     public function show(Tweet $tweet)
     {
+        $followings = auth()->user()->followings->pluck('id');
+        $followings[] = auth()->id();
+
+        if(!$followings->contains($tweet->user_id)){
+            abort(403);
+        }
+
         $comments = $tweet->comments()->paginate(10);
 
         return view('tweets.show', compact('tweet', 'comments'));
@@ -64,7 +71,14 @@ class TweetsController extends Controller
             abort(403);
         }
 
-        /* NEED TO DELETE THE ACTIVITY FOR CREATING THE TWEET */
+        // Deleting all the activities for the given tweet
+        $tweet->activities()->delete();
+
+        // Deleting all the likes 
+        $tweet->likes()->delete();
+
+        // Deleting all the retweets
+        $tweet->retweets()->delete();
 
         $tweet->delete();
 
