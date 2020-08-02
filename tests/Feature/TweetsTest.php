@@ -167,4 +167,41 @@ class TweetsTest extends TestCase
         $this->post('/tweets', $tweet->toArray())->assertSessionHasErrors('body');
         $this->patch('/tweets/' . $tweet->id, $tweet->toArray())->assertSessionHasErrors('body');
     }
+
+    /** @test */
+    function deleting_a_tweet_deletes_all_the_activities_and_relationships_that_are_associated_with_it()
+    {
+        // Given we are sign in and have a tweet
+        $user = $this->signIn();
+
+        $this->post('/tweets', [
+            'user_id' => $user->id,
+            'body' => 'tweet body'
+        ]);
+
+        $tweet = \App\Tweet::first();
+
+        $tweet_id = $tweet->id;
+
+        // When we like and retweet it and then delete it
+        $this->post("/tweets/{$tweet->id}/like");
+        $this->post("/retweets/{$tweet->id}");
+
+        // Then when we hit the route to delete the tweet
+        $this->delete("/tweets/{$tweet->id}");
+
+        // Then there should not be any activities for this tweet 
+        $this->assertDatabaseMissing('activities', [
+            'subject_id' => $tweet_id
+        ]);
+
+        // and also the shouldn't be any records in the likes and retweets table for this tweet
+        $this->assertDatabaseMissing('likes', [
+            'likeable_id' => $tweet_id
+        ]);
+
+        $this->assertDatabaseMissing('retweets', [
+            'tweet_id' => $tweet_id
+        ]);
+    }
 }
