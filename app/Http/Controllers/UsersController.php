@@ -11,7 +11,9 @@ class UsersController extends Controller
     {
         $activities = $user->activities->paginate(15);
 
-        return view('users.show', compact(['user', 'activities']));
+        $followedBy = $user->followers->take(3)->implode('name', ', ');
+
+        return view('users.show', compact(['user', 'activities', 'followedBy']));
     }
 
     public function edit(User $user)

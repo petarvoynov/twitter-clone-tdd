@@ -41,14 +41,14 @@
                 
                 <p class="card-text">{{ $user->description }}</p>
                 <div class="d-flex row">
-                    <p class="card-text col-lg-6">Joined {{ $user->created_at }}</p>
+                    <p class="card-text col-lg-6">Joined {{ $user->created_at->toFormattedDateString() }}</p>
                     <p class="card-text col-lg-6">{{ $user->location }}</p>
                 </div>
                 <div class="row d-flex">
-                    <p class="col-md-6"><span class="font-weight-bold mr-1">166</span>Following</p>
-                    <p class="col-md-6"><span class="font-weight-bold mr-1">90.6k</span>Followers</p>
+                    <p class="col-md-6"><span class="font-weight-bold mr-1">{{ $user->followings_count }}</span>Following</p>
+                    <p class="col-md-6"><span class="font-weight-bold mr-1">{{ $user->followers_count }}</span>Followers</p>
                 </div>
-                <p>Fake Followed by Adam Wathan, Laravel, and 2 others you follow</p>
+                <p>Followed by {{ $followedBy }} and {{ $user->followers_count - 3 }} others.</p>
             </div>
         </div>
     </div>
