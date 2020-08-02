@@ -19,7 +19,7 @@ class UsersController extends Controller
         return view('users.edit', compact('user'));
     }
 
-    public function update(User $user)
+    public function update()
     {
         $validatedData = request()->validate([
             'name' => 'required',
@@ -27,7 +27,7 @@ class UsersController extends Controller
             'location' => 'nullable'
         ]);
     
-        $user->update($validatedData);
+        auth()->user()->update($validatedData);
 
         return redirect()->route('users.show', ['user' => $user->id]);
     }

@@ -325,4 +325,38 @@ class UsersTest extends TestCase
             'profile_picture' => 'changed.jpg'
         ]);
     }
+
+    /** @test */
+    function an_authenticated_user_cannot_update_the_profile_of_another_user()
+    {
+        // When we try to update someone else profile we change ours
+        
+        // Given we are sing in
+        $user = $this->signIn();
+
+        // When we hit the route to update the profile of another user
+        $anotherUser = factory('App\User')->create([
+            'description' => 'description',
+            'location' => 'location'
+        ]);
+        $this->patch("/users/{$anotherUser->id}", [
+            'name' => 'name',
+            'description' => 'changed description',
+            'location' => 'changed location'
+        ]);
+
+        // Then there should not be records in the database for changing his profile
+        $this->assertDatabaseMissing('users', [
+            'id' => $anotherUser->id,
+            'description' => 'changed description',
+            'location' => 'changed location'
+        ]);
+
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+            'description' => 'changed description',
+            'location' => 'changed location'
+        ]);
+
+    }
 }
