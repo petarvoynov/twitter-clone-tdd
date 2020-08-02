@@ -8,7 +8,7 @@
     @csrf
     <div class="form-group">
       <label for="profile_picture">Profile Picture</label>
-      <input type="file" class="form-control" id="profile_picture" name="profile_picture" aria-describedby="profilePictureHelp">
+      <input type="file" class="form-control" id="profile_picture" name="profile_picture" aria-describedby="profilePictureHelp" accept="image/*">
       <small id="profilePictureHelp" class="form-text text-muted">Chose your profile picture</small>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
