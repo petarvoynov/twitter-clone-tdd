@@ -14,7 +14,8 @@ class TweetsController extends Controller
     public function index()
     {   
         $followings = auth()->user()->load('followings')->followings->pluck('id');
-        $followings[] = auth()->id();
+        // Commented the code below so we wont see our activities in the /tweets page
+        /* $followings[] = auth()->id(); */
         
         $activities = Activity::whereIn('user_id', $followings)->with('subject')->get()->loadMorph('subject', [
             Tweet::class => ['user'],

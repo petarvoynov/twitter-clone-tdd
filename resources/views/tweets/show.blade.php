@@ -50,7 +50,7 @@
 @foreach($comments as $comment)
     <li class="list-group-item mt-2">
         <div class="row">
-            <div class="col-lg-11 d-flex flex-column">
+            <div class="col-lg-10 d-flex flex-column">
                 <div class="font-weight-bold">{{ $comment->user->name }}<small class="text-muted ml-2">commented:</small></div>
                 <div class="mt-2">{{ $comment->body }}</div>
                 
@@ -75,7 +75,16 @@
                     </small>
                 </div>
             </div>
-            <div class="col-lg-1 d-flex justify-content-center align-items-start"> 
+            <div class="col-lg-2 d-flex justify-content-center align-items-start">
+                @if(auth()->id() === $comment->user_id)
+                    <div>
+                        <form action="{{ route('comments.destroy', ['comment' => $comment->id, 'tweet' => $comment->tweet_id]) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </div>
+                @endif 
                 @if(!$comment->isLiked())
                     <div>
                         <form id="like-form"  action="{{ route('likes.store', ['comment' => $comment->id]) }}" method="POST">
