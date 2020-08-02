@@ -305,4 +305,24 @@ class UsersTest extends TestCase
             'location' => 'fake location'
         ]);
     }
+
+    /** @test */
+    function an_authenticated_user_cannot_update_the_profile_picture_of_another_user()
+    {
+        // Given we are sign in
+        $user = $this->signIn();
+
+        // When we try to update the image of another user
+        $anotherUser = factory('App\User')->create(['profile_picture' => 'default.jpg']);
+
+        $this->post("/users/{$anotherUser->id}/profile-picture", [
+            'profile_picture' => 'changed.jpg'
+        ]);
+
+        // Then there shouldn't be a record for having an profile picture in the database for the other user
+        $this->assertDatabaseMissing('users', [
+            'id' => $anotherUser->id,
+            'profile_picture' => 'changed.jpg'
+        ]);
+    }
 }
