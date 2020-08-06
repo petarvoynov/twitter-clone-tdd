@@ -162,7 +162,7 @@ class TweetsTest extends TestCase
     {
         $user = $this->signIn();
 
-        $tweet = factory('App\Tweet')->create(['body' => '']);
+        $tweet = factory('App\Tweet')->make(['body' => '']);
 
         $this->post('/tweets', $tweet->toArray())->assertSessionHasErrors('body');
         $this->patch('/tweets/' . $tweet->id, $tweet->toArray())->assertSessionHasErrors('body');

@@ -41,25 +41,18 @@ class TweetsController extends Controller
 
     public function show(Tweet $tweet)
     {
-        $followings = auth()->user()->followings->pluck('id');
-        $followings[] = auth()->id();
+        $this->authorize('view', $tweet);
 
-        if(!$followings->contains($tweet->user_id)){
-            abort(403);
-        }
-
-        $comments = $tweet->comments()->paginate(10);
+        $comments = $tweet->comments->paginate(10);
 
         return view('tweets.show', compact('tweet', 'comments'));
     }
 
     public function update(Tweet $tweet)
     {
-        $data = $this->validatedData();
+        $this->authorize('update', $tweet);
 
-        if(auth()->id() != $tweet->user_id){
-            abort(403);
-        }
+        $data = $this->validatedData();
 
         $tweet->update($data);
 
@@ -68,10 +61,8 @@ class TweetsController extends Controller
 
     public function destroy(Tweet $tweet)
     {
-        if(auth()->id() != $tweet->user_id){
-            abort(403);
-        }
-
+        $this->authorize('delete', $tweet);
+        
         // Deleting all the activities for the given tweet
         $tweet->activities()->delete();
 
