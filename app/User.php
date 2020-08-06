@@ -96,4 +96,9 @@ class User extends Authenticatable
     {
         return $this->followings->count();
     }
+
+    public function isFollowing($user)
+    {
+        return auth()->user()->followings()->where('leader_id', $user->id)->exists();
+    }
 }

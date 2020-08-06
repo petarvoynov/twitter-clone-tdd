@@ -23,7 +23,7 @@
                 <div class="d-flex justify-content-between">
                     <h5 class="card-title">{{ $user->name }}</h5>
                     @if(auth()->id() != $user->id)
-                        @if(!auth()->user()->followings()->where('leader_id', $user->id)->exists())
+                        @if(!auth()->user()->isFollowing($user))
                             <form action="{{ route('users.follow', ['user' => $user->id]) }}"  method="POST">
                                 @csrf
                                 <button class="btn btn-primary btn-sm" type="submit">Follow</button>
@@ -54,7 +54,7 @@
     </div>
 </div>
 
-@if(auth()->user()->followings()->where('leader_id', $user->id)->exists() || auth()->id() === $user->id)
+@if(auth()->user()->isFollowing($user) || auth()->id() === $user->id)
     @if(count($activities) > 0)
         @foreach ($activities as $activity)
             @if($activity->subject_type == 'App\\Tweet')    
