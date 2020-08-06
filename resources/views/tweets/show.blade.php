@@ -21,13 +21,13 @@
     
         <div class="mt-2 text-muted border-bottom d-flex justify-content-between align-items-center">
             <small>{{ $tweet->created_at->isoFormat('HH:mm A MMM D, Y') }}</small>
-            @if($tweet->user_id == auth()->id()) 
+            @can('delete', $tweet) 
                 <form action="{{ route('tweets.destroy', ['tweet' => $tweet]) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button class="btn btn-danger btn-sm" type="submit">Delete</button>
                 </form>
-            @endif
+            @endcan
         </div>
 
         @include('tweets.components.tweet_buttons', ['activity' => $tweet])
@@ -54,7 +54,7 @@
                 <div class="font-weight-bold">{{ $comment->user->name }}<small class="text-muted ml-2">commented:</small></div>
                 <div class="mt-2">{{ $comment->body }}</div>
                 
-                @if(auth()->id() == $comment->user_id)
+                @can('update', $comment)
                     <button id="{{ $comment->id }}" class="btn btn-secondary btn-sm button-to-show-edit-form">Edit</button>
                     <div id="edit-comment-{{ $comment->id }}" class="mt-2 edit-comment">
                         <form action="{{ route('comments.update', ['tweet' => $tweet->id, 'comment' => $comment->id]) }}" method="POST">
@@ -66,7 +66,7 @@
                             <button class="btn btn-primary mb-2">Update</button>
                         </form>
                     </div>
-                @endif
+                @endcan
                 <div>
                     <small class="text-secondary">{{ $comment->created_at->diffForHumans() }}</small>
                     <small>
@@ -76,7 +76,7 @@
                 </div>
             </div>
             <div class="col-lg-2 d-flex justify-content-center align-items-start">
-                @if(auth()->id() === $comment->user_id)
+                @can('delete', $comment)
                     <div>
                         <form action="{{ route('comments.destroy', ['comment' => $comment->id, 'tweet' => $comment->tweet_id]) }}" method="POST">
                             @csrf
@@ -84,7 +84,7 @@
                             <button class="btn btn-danger btn-sm">Delete</button>
                         </form>
                     </div>
-                @endif 
+                @endcan
                 @if(!$comment->isLiked())
                     <div>
                         <form id="like-form"  action="{{ route('likes.store', ['comment' => $comment->id]) }}" method="POST">
