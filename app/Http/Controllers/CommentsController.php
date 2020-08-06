@@ -31,9 +31,7 @@ class CommentsController extends Controller
 
     public function update(Tweet $tweet, Comment $comment)
     {
-        if($comment->user_id != auth()->id()){
-            abort(403);
-        } 
+        $this->authorize('update', $comment);
 
         $data = request()->validate([
             'body' => 'required'
@@ -46,10 +44,8 @@ class CommentsController extends Controller
 
     public function destroy(Tweet $tweet, Comment $comment)
     {
-        if($comment->user_id != auth()->id()){
-            abort(403);
-        }
-
+        $this->authorize('delete', $comment);
+        
         $comment->activities()->where('user_id', auth()->id())->where('description', 'commented a tweet')->delete();
 
         $comment->delete();
