@@ -9,7 +9,7 @@
     </div>
     <div class="col-11">
         <h2>Tweet</h2>
-        <p>30k Tweets</p>
+        <p>{{ $user->created_tweets_count }} {{ Str::plural('Tweet', $user->created_tweets_count) }}</p>
     </div>
 </div>
 <div class="row">
