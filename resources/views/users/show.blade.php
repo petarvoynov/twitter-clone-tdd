@@ -48,7 +48,13 @@
                     <p class="col-md-6"><span class="font-weight-bold mr-1">{{ $user->followings_count }}</span>Following</p>
                     <p class="col-md-6"><span class="font-weight-bold mr-1">{{ $user->followers_count }}</span>Followers</p>
                 </div>
-                <p>Followed by {{ $followedBy }} and {{ $user->followers_count - 3 }} others.</p>
+                @if($user->followers_count == 0)
+                    <p>This user isn't followed by anyone yet.</p>
+                @elseif($user->followers_count <= 3)    
+                   <p>Followed by {{ $followedBy }}</p>
+                @else
+                    <p>Followed by {{ $followedBy }} and {{ $user->followers_count - 3 }} {{ Str::plural('other', $user->followers_count - 3) }}.</p>
+                @endif
             </div>
         </div>
     </div>
