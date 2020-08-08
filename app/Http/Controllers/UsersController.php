@@ -49,6 +49,10 @@ class UsersController extends Controller
             abort(403);
         }
 
+        if(auth()->user()->isSubscribedTo($user)){
+            auth()->user()->unsubscribe($user);
+        }
+
         auth()->user()->unfollow($user);
         
         return back();
