@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\TweetCreated;
 use App\Tweet;
 use App\Retweet;
 use App\Comment;
@@ -30,6 +32,8 @@ class TweetsController extends Controller
         $data = $this->validatedData();
 
         $tweet = auth()->user()->tweets()->create($data);
+
+        auth()->user()->notifySubscribers($tweet);
 
         $tweet->activities()->create([
             'user_id' => auth()->id(),

@@ -400,4 +400,27 @@ class UsersTest extends TestCase
             'subscribed_to' => $userToFollowAndSubscribe->id
         ]);
     }
+
+    /** @test */
+    function an_authenticated_user_receives_a_notification_when_a_user_that_he_follows_create_a_tweet()
+    {
+        // Given we are sing in and follow and subcribe to a user
+        $user = factory('App\User')->create();
+
+        $userToFollowAndSubscribe = factory('App\User')->create();
+
+        $user->follow($userToFollowAndSubscribe);
+
+        $user->subscribe($userToFollowAndSubscribe);
+
+        // When this user creates a tweet
+        $this->actingAs($userToFollowAndSubscribe)->post('/tweets', [
+            'body' => 'This tweet should generate a notification'
+        ]);
+
+        // Then there should be a record in the database that we have a notification
+        $this->assertDatabaseHas('notifications',[
+            'notifiable_id' => $user->id
+        ]);
+    }
 }

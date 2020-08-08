@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\TweetCreated;
 
 class User extends Authenticatable
 {
@@ -132,5 +134,14 @@ class User extends Authenticatable
     public function subscribers()
     {
         return $this->hasMany('App\Subscription', 'subscribed_to');
+    }
+
+    public function notifySubscribers($tweet)
+    {
+        $subscribersIDs = $this->subscribers->pluck('user_id');
+
+        $subscribers = User::whereIn('id', $subscribersIDs)->get();
+
+        Notification::send($subscribers, new TweetCreated($tweet));
     }
 }
