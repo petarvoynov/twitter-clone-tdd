@@ -42,6 +42,8 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/users/{user}', 'UsersController@update')->name('users.update');
     Route::post('/users/{user}/profile-picture', 'UserProfilePictureController@store')->name('user-profile-picture.store');
     Route::get('/users/{user}/profile-picture/edit', 'UserProfilePictureController@edit')->name('user-profile-picture.edit');
+
+    Route::post('/users/{user}/subscribe', 'UserSubscribesController@store')->name('user-subscribes.store');
 });
 
 Auth::routes();

@@ -111,4 +111,11 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Subscription');
     }
+
+    public function subscribe($user)
+    {
+        $this->subscriptions()->create([
+            'subscribed_to' => $user->id
+        ]);
+    }
 }

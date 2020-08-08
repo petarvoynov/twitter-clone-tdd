@@ -357,6 +357,25 @@ class UsersTest extends TestCase
             'description' => 'changed description',
             'location' => 'changed location'
         ]);
+    }
 
+    /** @test */
+    function an_authenticated_user_can_subscribe_for_notifications_about_tweets_being_created_by_a_user_he_follows()
+    {
+        $this->withoutExceptionHandling();
+        // Given we are sign in and follow a user
+        $user = $this->signIn();
+        $userToFollow = factory('App\User')->create();
+
+        $user->follow($userToFollow);
+
+        // When we hit the route to subscribe for notifications for this user's tweets
+        $this->post("/users/{$userToFollow->id}/subscribe");
+
+        // Then there should be a record in the database
+        $this->assertDatabaseHas('subscriptions', [
+            'user_id' => $user->id,
+            'subscribed_to' => $userToFollow->id
+        ]);
     }
 }
