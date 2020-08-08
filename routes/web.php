@@ -44,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/users/{user}/profile-picture/edit', 'UserProfilePictureController@edit')->name('user-profile-picture.edit');
 
     Route::post('/users/{user}/subscribe', 'UserSubscribesController@store')->name('user-subscribes.store');
+    Route::delete('/users/{user}/unsubscribe', 'UserSubscribesController@destroy')->name('user-unsubscribes.destroy');
 });
 
 Auth::routes();

@@ -378,4 +378,26 @@ class UsersTest extends TestCase
             'subscribed_to' => $userToFollow->id
         ]);
     }
+
+    /** @test */
+    function an_authenticated_user_can_unsubscribe_for_notifications()
+    {
+        // Given we are sing in and follow and subscribe to a user
+        $user = $this->signIn();
+
+        $userToFollowAndSubscribe = factory('App\User')->create();
+
+        $user->follow($userToFollowAndSubscribe);
+
+        $user->subscribe($userToFollowAndSubscribe);
+        
+        // When we hit the route to unsubscribe for the user
+        $this->delete("/users/{$userToFollowAndSubscribe->id}/unsubscribe");
+
+        // Then there shouldn't be a record in the database
+        $this->assertDatabaseMissing('subscriptions', [
+            'user_id' => $user->id,
+            'subscribed_to' => $userToFollowAndSubscribe->id
+        ]);
+    }
 }

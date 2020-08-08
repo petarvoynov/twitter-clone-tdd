@@ -123,4 +123,9 @@ class User extends Authenticatable
     {
         return $this->subscriptions()->where('subscribed_to', $user->id)->exists();
     }
+
+    public function unsubscribe($user)
+    {
+        $this->subscriptions()->where('subscribed_to', $user->id)->delete();
+    }
 }

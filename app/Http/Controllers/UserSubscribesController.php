@@ -13,4 +13,11 @@ class UserSubscribesController extends Controller
 
         return back();
     }
+
+    public function destroy(User $user)
+    {
+        auth()->user()->unsubscribe($user);
+
+        return back();
+    }
 }
