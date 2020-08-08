@@ -29,10 +29,21 @@
                                 <button class="btn btn-primary btn-sm" type="submit">Follow</button>
                             </form>
                         @else
-                            <form action="{{ route('users.unfollow', ['user' => $user->id]) }}" method="POST">
-                                @csrf
-                                <button class="btn btn-primary btn-sm" type="submit">Unfollow</button>
-                            </form>
+                            <div class="d-flex">
+                                <form action="{{ route('users.unfollow', ['user' => $user->id]) }}" method="POST">
+                                    @csrf
+                                    <button class="btn btn-primary btn-sm" type="submit">Unfollow</button>
+                                </form>
+                                @if(!auth()->user()->isSubscribedTo($user))
+                                    <form class="ml-1" action="{{ route('user-subscribes.store', ['user' => $user->id]) }}" method="POST">
+                                        @csrf
+                                        <button class="btn btn-primary btn-sm">Subscribe</button>
+                                    </form>
+                                @else
+                                    {{-- We need to add a form to unsubscribe --}}
+                                @endif
+                            </div>
+                            
                         @endif
                     @else
                         <a class="btn btn-primary btn-sm" href="{{ route('users.edit', ['user' => $user->id]) }}">Edit</a>

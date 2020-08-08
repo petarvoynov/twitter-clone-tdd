@@ -118,4 +118,9 @@ class User extends Authenticatable
             'subscribed_to' => $user->id
         ]);
     }
+
+    public function isSubscribedTo($user)
+    {
+        return $this->subscriptions()->where('subscribed_to', $user->id)->exists();
+    }
 }
