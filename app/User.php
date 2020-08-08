@@ -106,4 +106,9 @@ class User extends Authenticatable
     {
         return $this->activities->where('description', 'created a tweet')->count();
     }
+
+    public function subscriptions()
+    {
+        return $this->hasMany('App\Subscription');
+    }
 }
