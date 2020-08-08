@@ -40,10 +40,13 @@
                                         <button class="btn btn-primary btn-sm">Subscribe</button>
                                     </form>
                                 @else
-                                    {{-- We need to add a form to unsubscribe --}}
+                                <form class="ml-1" action="{{ route('user-unsubscribes.destroy', ['user' => $user->id]) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-primary btn-sm">Unsubscribe</button>
+                                </form>
                                 @endif
                             </div>
-                            
                         @endif
                     @else
                         <a class="btn btn-primary btn-sm" href="{{ route('users.edit', ['user' => $user->id]) }}">Edit</a>
