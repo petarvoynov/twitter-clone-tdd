@@ -85,4 +85,12 @@ class UserTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $user->subscriptions);
     }
+
+    /** @test */
+    function a_user_has_many_subscribers()
+    {
+        $user = factory('App\User')->create();
+
+        $this->assertInstanceOf(Collection::class, $user->subscribers);
+    }
 }

@@ -128,4 +128,9 @@ class User extends Authenticatable
     {
         $this->subscriptions()->where('subscribed_to', $user->id)->delete();
     }
+
+    public function subscribers()
+    {
+        return $this->hasMany('App\Subscription', 'subscribed_to');
+    }
 }
