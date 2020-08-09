@@ -12,4 +12,11 @@ class NotificationsController extends Controller
 
         return view('notifications.index', compact('notifications'));
     }
+
+    public function unread()
+    {
+        $unreadNotifications = auth()->user()->unreadNotifications;
+
+        return view('notifications.unread', compact('unreadNotifications'));
+    }
 }

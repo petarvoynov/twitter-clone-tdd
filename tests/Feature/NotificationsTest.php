@@ -103,4 +103,33 @@ class NotificationsTest extends TestCase
             $tweet->body
         ]);
     }
+
+    /** @test */
+    function user_can_see_all_his_unread_notifications()
+    {
+        $this->withoutExceptionHandling();
+        // Given we are sing in and follow and subscribe to a user
+        $user = factory('App\User')->create();
+
+        $userToFollowAndSubscribe = factory('App\User')->create();
+
+        $user->follow($userToFollowAndSubscribe);
+
+        $user->subscribe($userToFollowAndSubscribe);
+
+        $tweet = factory('App\Tweet')->make(['user_id' => $userToFollowAndSubscribe]);
+
+        // When this user post a tweet and generate us a notification
+        $this->actingAs($userToFollowAndSubscribe)->post('/tweets', $tweet->toArray());
+
+        // and we hit the route to see all of our notification
+        $response = $this->actingAs($user)->get('/unread-notifications');
+
+        // Then we should be able to see them
+        $response->assertSeeInOrder([
+            $userToFollowAndSubscribe->name,
+            'tweeted:',
+            $tweet->body
+        ]);
+    }
 }

@@ -47,6 +47,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/users/{user}/unsubscribe', 'UserSubscribesController@destroy')->name('user-unsubscribes.destroy');
 
     Route::get('/notifications', 'NotificationsController@index')->name('notifications.index');
+    Route::get('/unread-notifications', 'NotificationsController@unread')->name('notifications.unread');
 });
 
 Auth::routes();
