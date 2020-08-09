@@ -78,14 +78,11 @@ ul {
 
 .buttons:hover {
     background-color: #eaeff1;
+    text-decoration: none;
 }
 
 .buttons.active {
     background-color: #eaeff1;
-}
-
-.buttons > a {
-    text-decoration: none;
 }
 
 .notification {

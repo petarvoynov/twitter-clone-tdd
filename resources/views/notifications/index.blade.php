@@ -2,17 +2,8 @@
 
 @section('content')
     <h2 class="text-center">Notifications</h2>
-    <div class="row d-flex justify-content-between text-center">
-        <div class="col-xl-4 buttons {{ (url()->current() == url('/notifications')) ? 'active' : '' }}">
-            <a href="{{ route('notifications.index') }}">All notifications</a>
-        </div>
-        <div class="col-xl-4 buttons">
-            <a href="">Unread notifications</a>
-        </div>
-        <div class="col-xl-4 buttons">
-            <a href="">Read notifications</a>
-        </div>
-    </div>
+    @include('notifications.components.navigation')
+
     @foreach($notifications as $notification)
         <div  class="row">
             <div id="{{ $notification->data['tweet_id'] }}" class="col-12 notification alert {{ is_null($notification->read_at) ? 'alert-primary' : 'alert-light' }}" role="alert">
@@ -22,21 +13,9 @@
                 <div>{{ Str::limit($notification->data['tweet_body'], 230) }}</div>
             </div>
         </div>
-    @endforeach
+    @endforeach   
+@endsection
 
-<script>
-    window.onload = function(){
-        let notifications = document.querySelectorAll('.notification');
-
-        for(let i = 0; i < notifications.length; i++){
-            notifications[i].addEventListener('click', function(e){
-                if(e.target.id){
-                    location.href = "/tweets/" + e.target.id;
-                } else {
-                    location.href = "/tweets/" + e.target.parentNode.id;
-                }
-            });
-        }
-    };
-</script>    
+@section('scripts')
+    <script src="{{ asset('js/openNotification.js') }}"></script>
 @endsection
