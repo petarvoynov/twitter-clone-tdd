@@ -48,6 +48,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/notifications', 'NotificationsController@index')->name('notifications.index');
     Route::get('/unread-notifications', 'NotificationsController@unread')->name('notifications.unread');
+    Route::get('/read-notifications', 'NotificationsController@read')->name('notifications.read');
 });
 
 Auth::routes();

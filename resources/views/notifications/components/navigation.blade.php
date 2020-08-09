@@ -9,7 +9,7 @@
             Unread notifications
         </div>
     </a>
-    <a class="col-xl-4 buttons" href="">
+    <a class="col-xl-4 buttons {{ (url()->current() == url('/read-notifications')) ? 'active' : '' }}"" href="{{ route('notifications.read') }}">
         <div>
             Read notifications
         </div>
