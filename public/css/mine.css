@@ -61,6 +61,8 @@ ul {
     text-decoration: none;
     color: #1a2125;
     display: block;
+    padding: 20px;
+    text-align: justify;
 }
 .tweet-body:hover {
     text-decoration: none;
