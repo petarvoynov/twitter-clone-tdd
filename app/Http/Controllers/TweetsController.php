@@ -47,6 +47,10 @@ class TweetsController extends Controller
     {
         $this->authorize('view', $tweet);
 
+        if(url()->previous() == url('/notifications')){
+            auth()->user()->notifications()->where('data','LIKE','%"tweet_id":'. $tweet->id .'%')->first()->markAsRead();
+        }
+
         $comments = $tweet->comments->paginate(10);
 
         return view('tweets.show', compact('tweet', 'comments'));
