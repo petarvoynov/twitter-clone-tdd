@@ -23,7 +23,7 @@
                         <li class="menu-item mt-2"><a href="#"><ion-icon class="mr-3 icons align-middle" name="mail-outline"></ion-icon>Messages</a></li>
                         <li class="menu-item mt-2"><a href="#"><ion-icon class="mr-3 icons align-middle" name="bookmark-outline"></ion-icon>Bookmarks</a></li>
                         <li class="menu-item mt-2"><a href="#"><ion-icon class="mr-3 icons align-middle" name="document-text-outline"></ion-icon>Lists</a></li>
-                        <li class="menu-item mt-2"><a href="#"><ion-icon class="mr-3 icons align-middle" name="person-outline"></ion-icon>Profile</a></li>
+                        <li class="menu-item mt-2"><a href="{{ route('users.show', ['user' => auth()->id()]) }}"><ion-icon class="mr-3 icons align-middle" name="person-outline"></ion-icon>Profile</a></li>
                         <li class="menu-item mt-2"><a href="#"><ion-icon class="mr-3 icons align-middle" name="ellipsis-horizontal-circle-outline"></ion-icon>More</a></li>
                         <li class="mt-2"><div class="button text-center mt-4">Tweet</div></li>
                     </ul>
