@@ -39,4 +39,19 @@ class TwitterListsTest extends TestCase
         // Then the lists should be in the database
         $this->assertDatabaseHas('twitter_lists', $list->toArray());
     }
+
+    /** @test */
+    function a_list_requires_a_name()
+    {
+        // Given we are sign in and have prepared a list
+        $user = $this->signIn();
+
+        $list = factory('App\TwitterList')->make(['name' => '']);
+
+        // When we try to create it without a name
+        $response = $this->post('/lists', $list->toArray());
+
+        // Then there should be an error that the name is required
+        $response->assertSessionHasErrors('name');
+    }
 }

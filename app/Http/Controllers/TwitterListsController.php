@@ -16,6 +16,10 @@ class TwitterListsController extends Controller
 
     public function store()
     {
+        request()->validate([
+            'name' => 'required'
+        ]);
+
         auth()->user()->lists()->create([
             'name' => request('name'),
             'description' => request('description'),
