@@ -16,14 +16,13 @@ class TwitterListsController extends Controller
 
     public function store()
     {
-        request()->validate([
-            'name' => 'required'
+        $data = request()->validate([
+            'name' => 'required',
+            'description' => '',
+            'is_private' => '',
+            'cover_image' => 'image'
         ]);
 
-        auth()->user()->lists()->create([
-            'name' => request('name'),
-            'description' => request('description'),
-            'is_private' => request('is_private')
-        ]);
+        auth()->user()->lists()->create($data);
     }
 }

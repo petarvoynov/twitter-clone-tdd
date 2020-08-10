@@ -54,4 +54,20 @@ class TwitterListsTest extends TestCase
         // Then there should be an error that the name is required
         $response->assertSessionHasErrors('name');
     }
+
+    /** @test */
+    function a_lists_cover_image_filed_accepts_only_image_files()
+    {
+        // Given we are sign in and have prepared a list with non image
+        $user = $this->signIn();
+
+        $list = factory('App\TwitterList')->make(['cover_image' => 'no-image']);
+
+        // When we try to create it with that non-image
+        $response = $this->post('/lists', $list->toArray());
+
+        // Then there should be an error that the cover_image field should contain only image files
+        $response->assertSessionHasErrors('cover_image');
+
+    }
 }
