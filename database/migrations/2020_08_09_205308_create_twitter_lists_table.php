@@ -19,7 +19,7 @@ class CreateTwitterListsTable extends Migration
             $table->string('name');
             $table->mediumText('description');
             $table->string('cover_image')->default('default.jpg');
-            $table->tinyInteger('is_private');
+            $table->tinyInteger('is_private')->default(0);
             $table->timestamps();
         });
     }

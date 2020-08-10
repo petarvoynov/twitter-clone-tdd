@@ -25,4 +25,18 @@ class TwitterListsTest extends TestCase
         // Then we should see the lists
         $response->assertSee($lists[0]->name, $lists[1]->name);
     }
+
+    /** @test */
+    function a_list_can_be_created()
+    {
+        // Given we are sing in and prepared a lists to create
+        $user = $this->signIn();
+
+        $list = factory('App\TwitterList')->make(['user_id' => $user->id]);
+        // When we hit the route to create a list
+        $this->post('/lists', $list->toArray());
+
+        // Then the lists should be in the database
+        $this->assertDatabaseHas('twitter_lists', $list->toArray());
+    }
 }

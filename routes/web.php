@@ -51,6 +51,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/read-notifications', 'NotificationsController@read')->name('notifications.read');
 
     Route::get('/lists', 'TwitterListsController@index')->name('twitter-lists.index');
+    Route::post('/lists', 'TwitterListsController@store')->name('twitter-lists.store');
 });
 
 Auth::routes();

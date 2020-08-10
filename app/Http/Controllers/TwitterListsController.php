@@ -13,4 +13,13 @@ class TwitterListsController extends Controller
 
         return view('twitter-lists.index', compact('lists'));
     }
+
+    public function store()
+    {
+        auth()->user()->lists()->create([
+            'name' => request('name'),
+            'description' => request('description'),
+            'is_private' => request('is_private')
+        ]);
+    }
 }
