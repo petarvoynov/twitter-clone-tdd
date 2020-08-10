@@ -9,7 +9,7 @@ class TwitterListsController extends Controller
 {
     public function index()
     {
-        $lists = TwitterList::where('user_id', auth()->id())->get();
+        $lists = auth()->user()->lists;
 
         return view('twitter-lists.index', compact('lists'));
     }
