@@ -144,4 +144,9 @@ class User extends Authenticatable
 
         Notification::send($subscribers, new TweetCreated($tweet));
     }
+
+    public function lists()
+    {
+        return $this->hasMany('App\TwitterList');
+    }
 }
