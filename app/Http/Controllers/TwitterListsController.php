@@ -33,4 +33,9 @@ class TwitterListsController extends Controller
         /* Need to make a redirect to the twitter-lists.show  when you create it*/
         return back();
     }
+
+    public function show(TwitterList $list)
+    {
+        return view('twitter-lists.show', compact('list'));
+    }
 }

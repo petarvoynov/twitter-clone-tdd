@@ -97,4 +97,20 @@ class TwitterListsTest extends TestCase
             'cover_image' => 'cover_images/'. $cover_image->hashName()
         ]);
     }
+
+    /** @test */
+    function a_user_can_view_his_single_list()
+    {
+        $this->withoutExceptionHandling();
+        // Given we are sing in and have a lists
+        $user = $this->signIn();
+
+        $list = factory('App\TwitterList')->create(['user_id' => $user->id]);
+
+        // When we hit the route to see the list
+        $response = $this->get('/lists/'. $list->id);
+
+        // Then we should see the list
+        $response->assertSee($list->name, $list->description);
+    }
 }
