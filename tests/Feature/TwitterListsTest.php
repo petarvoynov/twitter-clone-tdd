@@ -4,7 +4,10 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
+use App\TwitterList;
 
 class TwitterListsTest extends TestCase
 {
@@ -68,6 +71,30 @@ class TwitterListsTest extends TestCase
 
         // Then there should be an error that the cover_image field should contain only image files
         $response->assertSessionHasErrors('cover_image');
+    }
 
+    /** @test */
+    function a_list_can_be_created_with_an_cover_image()
+    {
+        // Given we are sign in and have prepared a list with an image
+        $user = $this->signIn();
+
+        Storage::fake('public');
+
+        $list = factory('App\TwitterList')->make(['cover_image' => $cover_image = UploadedFile::fake()->image('cover_image.jpg')]);
+
+        // When we hit the route to create the list
+        $this->post('/lists', $list->toArray());
+
+        $list = TwitterList::first();
+
+        // Then there should be a record in the database
+        $this->assertEquals('cover_images/' . $cover_image->hashName(), $list->cover_image);
+
+        Storage::disk('public')->assertExists('cover_images/' . $cover_image->hashName());
+
+        $this->assertDatabaseHas('twitter_lists', [
+            'cover_image' => 'cover_images/'. $cover_image->hashName()
+        ]);
     }
 }

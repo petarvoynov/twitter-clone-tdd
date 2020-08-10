@@ -17,7 +17,7 @@ class CreateTwitterListsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->string('name');
-            $table->mediumText('description');
+            $table->mediumText('description')->default('This list has no description.');
             $table->string('cover_image')->default('default.jpg');
             $table->tinyInteger('is_private')->default(0);
             $table->timestamps();

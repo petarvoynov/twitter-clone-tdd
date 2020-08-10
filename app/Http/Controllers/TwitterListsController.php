@@ -23,6 +23,14 @@ class TwitterListsController extends Controller
             'cover_image' => 'image'
         ]);
 
+        if(request()->hasFile('cover_image')){
+            $path = request()->file('cover_image')->store('cover_images', 'public');
+            $data['cover_image'] = $path;
+        }
+        
         auth()->user()->lists()->create($data);
+
+        /* Need to make a redirect to the twitter-lists.show  when you create it*/
+        return back();
     }
 }
