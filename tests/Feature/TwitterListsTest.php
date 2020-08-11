@@ -113,4 +113,12 @@ class TwitterListsTest extends TestCase
         // Then we should see the list
         $response->assertSee($list->name, $list->description);
     }
+
+    /** @test */
+    function only_auth_users_can_create_lists()
+    {
+        $this->get('/lists/create')->assertRedirect('login');
+
+        $this->post('/lists', [])->assertRedirect('login');
+    }
 }
