@@ -11,7 +11,7 @@ class TwitterListsController extends Controller
     {
         $lists = auth()->user()->lists;
 
-        $pinnedLists = auth()->user()->lists;
+        $pinnedLists = auth()->user()->lists->where('is_pinned', 1);
 
         return view('twitter-lists.index', compact('lists', 'pinnedLists'));
     }

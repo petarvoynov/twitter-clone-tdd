@@ -13,8 +13,8 @@
         @forelse($pinnedLists as $list)
             <div class="d-flex align-items-center py-2">
                 <svg style="width:24px" viewBox="0 0 20 20" fill="currentColor" class="bookmark-alt w-6 h-6"><path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5zm11 1H6v8l4-2 4 2V6z" clip-rule="evenodd"></path></svg>
-                <img style="width: 40px; height:40px;" src="" alt="list cover image">
-                <div>YOU NEED TO GET CORRECT DATA FORM THE INDEX METHOD</div>
+                <img class="ml-2" style="width: 40px; height:40px;" src="{{ $list->coverImage() }}" alt="list cover image">
+                <div class="ml-2">{{ $list->name }}</div>
             </div>
         @empty
             <div class="py-2">
@@ -64,7 +64,7 @@
             <div class="row">
         @endif
     @empty  
-        <div class="text-center mt-4">
+        <div class="text-center mt-4 col-12">
             <div class="lead font-weight-bold">You haven’t created any Lists yet</div>
             <div class="text-muted">When you do, it’ll show up here.</div>
             <a href="{{ route('twitter-lists.create') }}" class="btn btn-primary rounded-pill font-weight-bold mt-3 text-white">Create a List</a>

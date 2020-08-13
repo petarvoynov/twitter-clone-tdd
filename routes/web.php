@@ -54,6 +54,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/lists', 'TwitterListsController@store')->name('twitter-lists.store');
     Route::get('/lists/create', 'TwitterListsController@create')->name('twitter-lists.create');
     Route::get('/lists/{list}', 'TwitterListsController@show')->name('twitter-lists.show');
+
+    Route::post('/pinned-lists/{list}', 'PinnedListsController@store')->name('pinned-lists.store');
 });
 
 Auth::routes();

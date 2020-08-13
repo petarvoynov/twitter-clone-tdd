@@ -16,4 +16,13 @@ class TwitterList extends Model
 
         return '/default-image/default.jpg';
     }
+
+    public function pin()
+    {
+        $this->update([
+            'is_pinned' => 1
+        ]);
+
+        return $this;
+    }
 }
