@@ -11,7 +11,9 @@ class TwitterListsController extends Controller
     {
         $lists = auth()->user()->lists;
 
-        return view('twitter-lists.index', compact('lists'));
+        $pinnedLists = auth()->user()->lists;
+
+        return view('twitter-lists.index', compact('lists', 'pinnedLists'));
     }
 
     public function store()
@@ -28,14 +30,18 @@ class TwitterListsController extends Controller
             $data['cover_image'] = $path;
         }
         
-        auth()->user()->lists()->create($data);
+        $list = auth()->user()->lists()->create($data);
 
-        /* Need to make a redirect to the twitter-lists.show  when you create it*/
-        return back();
+        return redirect()->route('twitter-lists.show', ['list' => $list->id]);
     }
 
     public function show(TwitterList $list)
     {
         return view('twitter-lists.show', compact('list'));
+    }
+
+    public function create()
+    {
+        return view('twitter-lists.create');
     }
 }

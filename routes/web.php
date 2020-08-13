@@ -52,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/lists', 'TwitterListsController@index')->name('twitter-lists.index');
     Route::post('/lists', 'TwitterListsController@store')->name('twitter-lists.store');
+    Route::get('/lists/create', 'TwitterListsController@create')->name('twitter-lists.create');
     Route::get('/lists/{list}', 'TwitterListsController@show')->name('twitter-lists.show');
 });
 

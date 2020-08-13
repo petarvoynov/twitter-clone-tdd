@@ -90,3 +90,15 @@ ul {
 .notification {
     cursor: pointer;
 }
+
+.list-image{
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.list-card, .list-card:hover{
+    cursor: pointer;
+    color: #1a2125;
+    text-decoration: none;
+}
