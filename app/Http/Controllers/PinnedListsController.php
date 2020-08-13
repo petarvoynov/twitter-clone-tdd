@@ -9,6 +9,8 @@ class PinnedListsController extends Controller
 {
     public function store(TwitterList $list)
     {
+        $this->authorize('update', $list);
+
         $list->pin();
 
         return back();

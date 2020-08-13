@@ -31,6 +31,25 @@ class PinnedTwitterListsTest extends TestCase
             'user_id' => $user->id,
             'is_pinned' => 1
         ]); 
+    }
 
+    /** @test */
+    function a_twitter_list_can_be_pinned_only_by_its_owner()
+    {
+        // Given we are sing in and there is a list created by someone else
+        $user = $this->signIn();
+
+        $list = factory('App\TwitterList')->create();
+
+        // When we hit the route to mark it as pinned
+        $response = $this->post("/pinned-lists/{$list->id}");
+
+        // Then we should recieve 403 page
+        $response->assertStatus(403);
+
+        // and shouldn't have a list that is pinned
+        $this->assertDatabaseMissing('twitter_lists', [
+            'is_pinned' => 1
+        ]); 
     }
 }

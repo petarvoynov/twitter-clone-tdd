@@ -7,8 +7,8 @@ use Faker\Generator as Faker;
 
 $factory->define(TwitterList::class, function (Faker $faker) {
     return [
+        'user_id' => factory('App\User'),
         'name' => $faker->name,
         'description' => $faker->paragraph,
-        'is_private' => 1 
     ];
 });
