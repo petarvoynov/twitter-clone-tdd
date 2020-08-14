@@ -121,4 +121,27 @@ class TwitterListsTest extends TestCase
 
         $this->post('/lists', [])->assertRedirect('login');
     }
+
+    /** @test */
+    function a_twitter_list_can_contain_users()
+    {
+        $this->withoutExceptionHandling();
+        // Given we are sing in and have a list
+        $user = $this->signIn();
+
+        $userToAdd = factory('App\User')->create();
+
+        $list = factory('App\TwitterList')->create(['user_id' => $user->id]);
+  
+        // When we hit the route to add users to that list
+        $this->post("/lists/{$list->id}/users", [
+            'user_id' => $userToAdd->id
+        ]);
+
+        // Then there should be record/records in the database
+        $this->assertDatabaseHas('list_users', [
+            'list_id' => $list->id,
+            'user_id' => $userToAdd->id
+        ]);
+    }
 }
