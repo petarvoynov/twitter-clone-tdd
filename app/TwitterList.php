@@ -25,4 +25,9 @@ class TwitterList extends Model
 
         return $this;
     }
+
+    public function listUsers()
+    {
+        return $this->hasMany('App\ListUser', 'list_id');
+    }
 }
