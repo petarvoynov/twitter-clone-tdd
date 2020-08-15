@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\TwitterList;
+use App\User;
+use App\Activity;
 
 class TwitterListsController extends Controller
 {
@@ -37,7 +39,13 @@ class TwitterListsController extends Controller
 
     public function show(TwitterList $list)
     {
-        return view('twitter-lists.show', compact('list'));
+        $user_ids = $list->listUsers->pluck('user_id');
+
+        $listUsers = User::whereIn('id', $user_ids)->get();
+
+        $activities = Activity::whereIn('user_id', $user_ids)->paginate(15);
+
+        return view('twitter-lists.show', compact('listUsers', 'list', 'activities'));
     }
 
     public function create()

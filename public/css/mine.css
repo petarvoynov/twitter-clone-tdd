@@ -102,3 +102,9 @@ ul {
     color: #1a2125;
     text-decoration: none;
 }
+
+.list-cover-image img {
+    width: 100%; 
+    height:250px; 
+    object-fit: cover;
+}

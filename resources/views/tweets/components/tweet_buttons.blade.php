@@ -1,4 +1,4 @@
-<div class="row mt-3">
+<div class="row mt-3 text-center">
     <div class="col-lg-3 d-flex flex-column justify-content-between">
         <small>
             <span class="font-weight-bold mr-1">{{ $tweet->comments_count }}</span>Comments
