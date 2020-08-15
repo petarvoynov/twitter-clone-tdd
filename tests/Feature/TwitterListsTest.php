@@ -123,9 +123,8 @@ class TwitterListsTest extends TestCase
     }
 
     /** @test */
-    function a_twitter_list_can_contain_users()
+    function the_creator_of_the_twitter_list_can_add_users_to_it()
     {
-        $this->withoutExceptionHandling();
         // Given we are sing in and have a list
         $user = $this->signIn();
 
@@ -143,5 +142,32 @@ class TwitterListsTest extends TestCase
             'list_id' => $list->id,
             'user_id' => $userToAdd->id
         ]);
+    }
+
+    /** @test */
+    function user_cannot_add_users_to_a_list_that_doesnt_belongs_to_them()
+    {
+       // Given we are sing in and there is a list that doesn't belongs to us
+       $user = $this->signIn();
+
+       $creatorOfTheList = factory('App\User')->create();
+
+       $userToAdd = factory('App\User')->create();
+
+       $list = factory('App\TwitterList')->create(['user_id' => $creatorOfTheList->id]);
+ 
+       // When we hit the route to add users to that list
+       $response = $this->post("/lists/{$list->id}/users", [
+           'user_id' => $userToAdd->id
+       ]);
+
+       // Then there should be a 403 response
+       $response->assertStatus(403);
+
+       // And there shouldn't be record/records in the database
+       $this->assertDatabaseMissing('list_users', [
+           'list_id' => $list->id,
+           'user_id' => $userToAdd->id
+       ]);
     }
 }
