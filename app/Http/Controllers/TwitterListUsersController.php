@@ -8,6 +8,13 @@ use App\ListUser;
 
 class TwitterListUsersController extends Controller
 {
+    public function create(TwitterList $list)
+    {
+        $followings = auth()->user()->followings;
+
+        return view('list-users.create', compact('list', 'followings'));
+    }
+
     public function store(TwitterList $list)
     {
         if(auth()->id() != $list->user_id){
@@ -18,5 +25,7 @@ class TwitterListUsersController extends Controller
             'user_id' => request('user_id'),
             'list_id' => $list->id
         ]);
+        
+        return back();
     }
 }

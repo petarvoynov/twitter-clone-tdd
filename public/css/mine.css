@@ -108,3 +108,8 @@ ul {
     height:250px; 
     object-fit: cover;
 }
+
+#buttons a {
+    text-decoration: none;
+    color: white;
+}

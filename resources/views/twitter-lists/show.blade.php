@@ -1,9 +1,10 @@
 @extends('layouts.master')
 
 @section('content')
-    <div class="d-flex justify-content-end my-2">
-        <button class="btn btn-sm btn-primary">All Members</button>
-        <button class="btn btn-sm btn-primary ml-2">Edit List</button>
+    <div id="buttons" class="d-flex justify-content-end my-2">
+        <a href="#" class="btn btn-sm btn-primary">All Members</a>
+        <a href="{{ route('twitter-list-users.create', ['list' => $list->id]) }}" class="btn btn-sm btn-primary ml-2">Add Members</a>
+        <a href="#" class="btn btn-sm btn-primary ml-2">Edit List</a>
     </div>
     <div class="border-bottom">
         <div class="list-cover-image">
