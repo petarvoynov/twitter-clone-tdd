@@ -43,6 +43,10 @@ class TwitterListUsersController extends Controller
         
         $list->listUsers()->where('user_id', request('user_id'))->delete();
 
-        return back();
+        $user = \App\User::find(request('user_id'));
+
+        return response()->json([
+            'message' => 'User ' . $user->name . ' has been removed from the list'
+        ]);
     }
 }
