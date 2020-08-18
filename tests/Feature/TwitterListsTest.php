@@ -170,4 +170,33 @@ class TwitterListsTest extends TestCase
            'user_id' => $userToAdd->id
        ]);
     }
+
+    /** @test */
+    function the_owner_of_the_list_can_remove_users_that_are_already_added_to_the_list()
+    {
+        $this->withoutExceptionHandling();
+        // Given we are sing in and have a list with a user in it
+        $user = $this->signIn();
+
+        $list = factory('App\TwitterList')->create(['user_id' => $user->id]);
+
+        $userToRemoveFromTheList = factory('App\User')->create();
+
+        $user->follow($userToRemoveFromTheList);
+
+        $this->post("/lists/{$list->id}/users", [
+            'user_id' => $userToRemoveFromTheList->id
+        ]);
+
+        // When we hit the route to remove that user form the list
+        $this->delete("/lists/{$list->id}/users", [
+            'user_id' => $userToRemoveFromTheList->id
+        ]);
+
+        // Then there should not be a record for this user in the database
+        $this->assertDatabaseMissing('list_users', [
+            'user_id' => $userToRemoveFromTheList->id,
+            'list_id' => $list->id
+        ]);
+    }
 }

@@ -58,6 +58,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/pinned-lists/{list}', 'PinnedListsController@store')->name('pinned-lists.store');
 
     Route::post('/lists/{list}/users', 'TwitterListUsersController@store')->name('twitter-list-users.store');
+    Route::delete('/lists/{list}/users', 'TwitterListUsersController@destroy')->name('twitter-list-users.destroy');
     Route::get('/lists/{list}/users/create', 'TwitterListUsersController@create')->name('twitter-list-users.create');
 });
 

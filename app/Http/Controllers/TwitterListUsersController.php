@@ -21,11 +21,24 @@ class TwitterListUsersController extends Controller
             abort(403);
         }
 
+        $user = \App\User::find(request('user_id'));
+
         ListUser::create([
             'user_id' => request('user_id'),
             'list_id' => $list->id
         ]);
+
+        return response()->json([
+            'message' => 'User ' . $user->name . ' has been added to the list'
+        ]);
         
+        /* return back(); */
+    }
+
+    public function destroy(TwitterList $list)
+    {
+        $list->listUsers()->where('user_id', request('user_id'))->delete();
+
         return back();
     }
 }
