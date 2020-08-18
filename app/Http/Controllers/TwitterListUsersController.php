@@ -37,6 +37,10 @@ class TwitterListUsersController extends Controller
 
     public function destroy(TwitterList $list)
     {
+        if(auth()->id() != $list->user_id){
+            abort(403);
+        }
+        
         $list->listUsers()->where('user_id', request('user_id'))->delete();
 
         return back();

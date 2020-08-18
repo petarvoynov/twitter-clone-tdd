@@ -199,4 +199,35 @@ class TwitterListsTest extends TestCase
             'list_id' => $list->id
         ]);
     }
+
+    /** @test */
+    function users_that_dont_own_a_list_cannot_remove_users_from_it()
+    {
+        // Given we are sing in
+        $user = $this->signIn();
+
+        // and there is a user that has a list with a user in it
+        $ownerOfTheList = factory('App\User')->create();
+
+        $list = factory('App\TwitterList')->create(['user_id' => $ownerOfTheList->id]);
+
+        $userToRemoveFromTheList = factory('App\User')->create();
+
+        $ownerOfTheList->follow($userToRemoveFromTheList);
+
+        $this->actingAs($ownerOfTheList)->post("/lists/{$list->id}/users", [
+            'user_id' => $userToRemoveFromTheList->id
+        ]);
+
+        // When we hit the route to remove that user form the list
+        $this->actingAs($user)->delete("/lists/{$list->id}/users", [
+            'user_id' => $userToRemoveFromTheList->id
+        ]);
+
+        // Then there should not be a record for this user in the database
+        $this->assertDatabaseHas('list_users', [
+            'user_id' => $userToRemoveFromTheList->id,
+            'list_id' => $list->id
+        ]);
+    }
 }
