@@ -18,6 +18,8 @@ class CreateListUsersTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('list_id');
             $table->timestamps();
+
+            $table->unique(['user_id', 'list_id']);
         });
     }
 

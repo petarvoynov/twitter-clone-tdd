@@ -230,4 +230,27 @@ class TwitterListsTest extends TestCase
             'list_id' => $list->id
         ]);
     }
+
+    /** @test */
+    function a_user_cannot_be_added_more_than_once_to_the_list()
+    {
+        // Given we are sing in and have a list
+        $user = $this->signIn();
+
+        $list = factory('App\TwitterList')->create(['user_id' => $user->id]);
+
+        // When we try to add a user to the list twice
+        $userToAdd = factory('App\User')->create();
+
+        $this->post("/lists/{$list->id}/users", [
+            'user_id' => $userToAdd->id
+        ]);
+
+        $this->post("/lists/{$list->id}/users", [
+            'user_id' => $userToAdd->id
+        ]);
+
+        // Then there should be only one record in the database
+        $this->assertCount(1, $list->listUsers);
+    }
 }

@@ -17,7 +17,7 @@ class TwitterListUsersController extends Controller
 
     public function store(TwitterList $list)
     {
-        if(auth()->id() != $list->user_id){
+        if(auth()->id() != $list->user_id || $list->listUsers->contains('user_id', request('user_id'))){
             abort(403);
         }
 
