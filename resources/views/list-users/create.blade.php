@@ -21,7 +21,7 @@
                             </form>
                         </div>
 
-                        <div {{ ($list->holds($following->id)) ? 'style=display:none' : ''}}>
+                        <div {{ (!$list->holds($following->id)) ? 'style=display:none' : ''}}>
                             <form action="{{ route('twitter-list-users.destroy', ['list' => $list->id, 'user_id' => $following->id]) }}" class="d-flex justify-content-center removeUserFromList" method="POST">
                                 @csrf
                                 @method('DELETE')
