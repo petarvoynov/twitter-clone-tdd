@@ -14,14 +14,14 @@
                     <img class="card-img-top" src="{{ $following->profilePicture() }}" alt="Card image cap">
                     <div class="card-body">
                         <p class="card-text text-center">{{ $following->name }}</p>
-                        <div {{ ($list->listUsers()->where('user_id', $following->id)->exists()) ? 'style=display:none' : ''}}>
+                        <div {{ ($list->holds($following->id)) ? 'style=display:none' : ''}}>
                             <form action="{{ route('twitter-list-users.store', ['list' => $list->id, 'user_id' => $following->id]) }}" class="d-flex justify-content-center addUserToList" method="POST">
                                 @csrf
                                 <button class="btn btn-primary btn-sm">Add to List</button>
                             </form>
                         </div>
 
-                        <div {{ (!$list->listUsers()->where('user_id', $following->id)->exists()) ? 'style=display:none' : ''}}>
+                        <div {{ ($list->holds($following->id)) ? 'style=display:none' : ''}}>
                             <form action="{{ route('twitter-list-users.destroy', ['list' => $list->id, 'user_id' => $following->id]) }}" class="d-flex justify-content-center removeUserFromList" method="POST">
                                 @csrf
                                 @method('DELETE')

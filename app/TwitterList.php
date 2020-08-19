@@ -30,4 +30,9 @@ class TwitterList extends Model
     {
         return $this->hasMany('App\ListUser', 'list_id');
     }
+
+    public function holds($user_id)
+    {
+        return !! $this->listUsers->where('user_id', $user_id)->count();
+    }
 }
