@@ -2,77 +2,91 @@
 
 @section('content')
 
-    <form action="">
-        <input type="text" placeholder="Search Users">
-    </form>
-
-    @if($followings->count() > 0)
-        <div class="row d-flex justify-content-around">
-        @foreach ($followings as $following)
-            <div class="col-6">
-                <div class="card mt-2" style="width: 13rem;">
-                    <img class="card-img-top" src="{{ $following->profilePicture() }}" alt="Card image cap">
-                    <div class="card-body">
-                        <p class="card-text text-center">{{ $following->name }}</p>
-                        <div {{ ($list->holds($following->id)) ? 'style=display:none' : ''}}>
-                            <form action="{{ route('twitter-list-users.store', ['list' => $list->id, 'user_id' => $following->id]) }}" class="d-flex justify-content-center addUserToList" method="POST">
-                                @csrf
-                                <button class="btn btn-primary btn-sm">Add to List</button>
-                            </form>
-                        </div>
-
-                        <div {{ (!$list->holds($following->id)) ? 'style=display:none' : ''}}>
-                            <form action="{{ route('twitter-list-users.destroy', ['list' => $list->id, 'user_id' => $following->id]) }}" class="d-flex justify-content-center removeUserFromList" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-primary btn-sm">Remove from List</button>
-                            </form>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            @if($loop->iteration % 2 == 0)
-                </div>
-                <div class="row">
-            @endif
-        @endforeach
-        </div>
-    @endif
-
-    <hr>
-    @foreach ($followings as $following)
-        {{ $following->name }} <br>
-    @endforeach
+    <input autocomplete="off" id="searchbar" class="searchbar" type="text" placeholder="Search Users">
+    <div class="user-cards"></div>
 
     <script>
         // Using axios
 
         window.onload = function(){
-            let formToAdd = document.querySelectorAll('.addUserToList');
-            let formToRemove = document.querySelectorAll('.removeUserFromList');
+            /* Searchbar ------- */
+            let search = document.querySelector('#searchbar');
+            let userCards = document.querySelector('.user-cards');
 
-            for(let i = 0; i < formToAdd.length; i++){
-                formToAdd[i].addEventListener('submit', function(e){
-                    e.preventDefault();
-                    
-                    axios.post(e.target.action).then(function(response){
-                        formToAdd[i].parentNode.style.display = 'none';
-                        formToRemove[i].parentNode.style.display = 'block';
-                    });
+            let list = {!! json_encode($list->toArray(), JSON_HEX_TAG) !!};
+            
+            getAllUsers();
+
+            search.addEventListener('keyup', (e) => {
+                if(search.value.trim() != ''){
+                    filterUsers();
+                } else {
+                    getAllUsers();
+                }
+            });
+
+            function getAllUsers(){
+                axios.post(`/lists/${list.id}/users/filter`, {empty: true}).then((response) => {
+                    userCards.innerHTML = response.data.html;
+
+                    let formToAdd = document.querySelectorAll('.addUserToList');
+                    let formToRemove = document.querySelectorAll('.removeUserFromList');
+
+                    for(let i = 0; i < formToAdd.length; i++){
+                        formToAdd[i].addEventListener('submit', function(e){
+                            e.preventDefault();
+
+                            axios.post(e.target.action).then(function(response){
+                                formToAdd[i].parentNode.style.display = 'none';
+                                formToRemove[i].parentNode.style.display = 'block';
+                            });
+                        });
+                    }
+
+                    for(let i = 0; i < formToRemove.length; i++){
+                        formToRemove[i].addEventListener('submit', (e) => {
+                            e.preventDefault();
+
+                            axios.delete(e.target.action).then((response) => {
+                                formToAdd[i].parentNode.style.display = 'block';
+                                formToRemove[i].parentNode.style.display = 'none';
+                            });
+                        });
+                    }
                 });
             }
 
-            for(let i = 0; i < formToRemove.length; i++){
-                formToRemove[i].addEventListener('submit', (e) => {
-                    e.preventDefault();
+            function filterUsers(){
+                axios.post(`/lists/${list.id}/users/filter`, { query: search.value}).then((response) => {
+                    userCards.innerHTML = response.data.html;
 
-                    axios.delete(e.target.action).then((response) => {
-                        formToAdd[i].parentNode.style.display = 'block';
-                        formToRemove[i].parentNode.style.display = 'none';
-                    });
+                    let formToAdd = document.querySelectorAll('.addUserToList');
+                    let formToRemove = document.querySelectorAll('.removeUserFromList');
+
+                    for(let i = 0; i < formToAdd.length; i++){
+                        formToAdd[i].addEventListener('submit', function(e){
+                            e.preventDefault();
+
+                            axios.post(e.target.action).then(function(response){
+                                formToAdd[i].parentNode.style.display = 'none';
+                                formToRemove[i].parentNode.style.display = 'block';
+                            });
+                        });
+                    }
+
+                    for(let i = 0; i < formToRemove.length; i++){
+                        formToRemove[i].addEventListener('submit', (e) => {
+                            e.preventDefault();
+
+                            axios.delete(e.target.action).then((response) => {
+                                formToAdd[i].parentNode.style.display = 'block';
+                                formToRemove[i].parentNode.style.display = 'none';
+                            });
+                        });
+                    }
                 });
             }
+            
         };
     </script>
 
