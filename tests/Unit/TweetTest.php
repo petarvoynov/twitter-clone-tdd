@@ -103,4 +103,12 @@ class TweetTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $tweet->activities);
     }
+
+    /** @test */
+    function a_tweet_has_many_bookmarks()
+    {
+        $tweet = factory('App\Tweet')->create();
+
+        $this->assertInstanceOf(Collection::class, $tweet->bookmarks);
+    }
 }

@@ -55,4 +55,9 @@ class Tweet extends Model
     {
         return $this->morphMany('App\Activity', 'subject');
     }
+    
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
+    }
 }
