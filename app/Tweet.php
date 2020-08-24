@@ -68,6 +68,11 @@ class Tweet extends Model
         ]);
     }
 
+    public function unbookmark()
+    {
+        $this->bookmarks()->where('user_id', auth()->id())->delete();
+    }
+
     public function isBookmarked()
     {
         return $this->bookmarks->where('user_id', auth()->id())->count();

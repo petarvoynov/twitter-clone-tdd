@@ -16,4 +16,9 @@ class BookmarksController extends Controller
 
         $tweet->bookmark();
     }
+
+    public function destroy(Tweet $tweet)
+    {
+        $tweet->unbookmark();
+    }
 }

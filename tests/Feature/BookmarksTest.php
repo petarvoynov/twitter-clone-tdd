@@ -51,4 +51,24 @@ class BookmarksTest extends TestCase
         // Then there should be one record in the database for bookmarking this tweet
         $this->assertEquals(1, $tweet->bookmarks->count());
     }
+
+    /** @test */
+    function a_user_can_unbookmark_tweets()
+    {
+        // Given we are sing in and have a tweet and bookmark for this tweet
+        $user = $this->signIn();
+
+        $tweet = factory('App\Tweet')->create(['user_id' => $user->id]);
+
+        $tweet->bookmark();
+
+        // When we hit the route to unbookmark this tweet
+        $this->delete("/tweets/{$tweet->id}/unbookmark");
+
+        // Then we there shouldn't be records in the database
+        $this->assertDatabaseMissing('bookmarks', [
+            'user_id' => $user->id,
+            'tweet_id' => $tweet->id
+        ]);
+    }
 }
