@@ -149,4 +149,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\TwitterList');
     }
+
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
+    }
 }

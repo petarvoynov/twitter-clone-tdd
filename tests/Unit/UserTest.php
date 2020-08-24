@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Database\Eloquent\Collection;
 use Tests\TestCase;
+use App\User;
 
 class UserTest extends TestCase
 {
@@ -100,5 +101,13 @@ class UserTest extends TestCase
         $user = factory('App\User')->create();
 
         $this->assertInstanceOf(Collection::class, $user->lists);
+    }
+
+    /** @test */
+    function a_user_has_many_bookmarks()
+    {
+        $user = factory(User::class)->create();
+
+        $this->assertInstanceOf(Collection::class, $user->bookmarks);
     }
 }
