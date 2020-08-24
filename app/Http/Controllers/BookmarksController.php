@@ -10,9 +10,6 @@ class BookmarksController extends Controller
 {
     public function store(Tweet $tweet)
     {
-        Bookmark::create([
-            'user_id' => auth()->id(),
-            'tweet_id' => $tweet->id
-        ]);
+        $tweet->bookmark();
     }
 }
