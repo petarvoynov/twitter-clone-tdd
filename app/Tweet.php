@@ -67,4 +67,9 @@ class Tweet extends Model
             'user_id' => auth()->id()
         ]);
     }
+
+    public function isBookmarked()
+    {
+        return $this->bookmarks->where('user_id', auth()->id())->count();
+    }
 }

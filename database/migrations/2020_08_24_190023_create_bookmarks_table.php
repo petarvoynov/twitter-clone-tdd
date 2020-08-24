@@ -18,6 +18,8 @@ class CreateBookmarksTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('tweet_id');
             $table->timestamps();
+
+            $table->unique(['user_id', 'tweet_id']);
         });
     }
 

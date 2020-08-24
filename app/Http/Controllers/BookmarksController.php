@@ -10,6 +10,10 @@ class BookmarksController extends Controller
 {
     public function store(Tweet $tweet)
     {
+        if($tweet->isBookmarked()){
+            abort(403);
+        }
+
         $tweet->bookmark();
     }
 }

@@ -34,4 +34,21 @@ class BookmarksTest extends TestCase
             'tweet_id' => $tweet->id
         ]);
     }
+
+    /** @test */
+    function a_user_cannot_bookmark_the_same_tweet_more_than_once()
+    {
+        // Given we are sing in and have a tweet
+        $user = $this->signIn();
+
+        $tweet = factory('App\Tweet')->create(['user_id' => $user->id]);
+
+        // When we hit the route to bookmark the tweet more than once
+        $this->post("/tweets/{$tweet->id}/bookmark");
+        $this->post("/tweets/{$tweet->id}/bookmark");
+        $this->post("/tweets/{$tweet->id}/bookmark");
+
+        // Then there should be one record in the database for bookmarking this tweet
+        $this->assertEquals(1, $tweet->bookmarks->count());
+    }
 }
