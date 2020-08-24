@@ -62,6 +62,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/lists/{list}/users/{user}', 'TwitterListUsersController@store')->name('twitter-list-users.store');
     Route::delete('/lists/{list}/users/{user}', 'TwitterListUsersController@destroy')->name('twitter-list-users.destroy');
     Route::get('/lists/{list}/users/create', 'TwitterListUsersController@create')->name('twitter-list-users.create');
+
+    Route::post('/tweets/{tweet}/bookmark', 'BookmarksController@store')->name('bookmarks.store');
 });
 
 Auth::routes();
