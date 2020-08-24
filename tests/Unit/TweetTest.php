@@ -111,4 +111,23 @@ class TweetTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $tweet->bookmarks);
     }
+
+    /** @test */
+    function a_tweet_can_be_bookmarked()
+    {
+        // Given we are sing in and have a tweet
+        $this->signIn();
+
+        $tweet = factory('App\Tweet')->create();
+
+        // When we call the method to bookmark a tweet
+        $tweet->bookmark();
+
+        // Then there should be a record in the database
+        $this->assertDatabaseHas('bookmarks', [
+            'user_id' => auth()->id(),
+            'tweet_id' => $tweet->id
+        ]);
+
+    }
 }

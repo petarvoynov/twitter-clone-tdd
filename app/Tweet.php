@@ -60,4 +60,11 @@ class Tweet extends Model
     {
         return $this->hasMany(Bookmark::class);
     }
+
+    public function bookmark()
+    {
+        $this->bookmarks()->create([
+            'user_id' => auth()->id()
+        ]);
+    }
 }
