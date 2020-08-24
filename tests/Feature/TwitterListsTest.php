@@ -133,9 +133,7 @@ class TwitterListsTest extends TestCase
         $list = factory('App\TwitterList')->create(['user_id' => $user->id]);
   
         // When we hit the route to add users to that list
-        $this->post("/lists/{$list->id}/users", [
-            'user_id' => $userToAdd->id
-        ]);
+        $this->post("/lists/{$list->id}/users/{$userToAdd->id}");
 
         // Then there should be record/records in the database
         $this->assertDatabaseHas('list_users', [
@@ -157,9 +155,7 @@ class TwitterListsTest extends TestCase
        $list = factory('App\TwitterList')->create(['user_id' => $creatorOfTheList->id]);
  
        // When we hit the route to add users to that list
-       $response = $this->post("/lists/{$list->id}/users", [
-           'user_id' => $userToAdd->id
-       ]);
+       $response = $this->post("/lists/{$list->id}/users/{$userToAdd->id}");
 
        // Then there should be a 403 response
        $response->assertStatus(403);
@@ -184,14 +180,10 @@ class TwitterListsTest extends TestCase
 
         $user->follow($userToRemoveFromTheList);
 
-        $this->post("/lists/{$list->id}/users", [
-            'user_id' => $userToRemoveFromTheList->id
-        ]);
+        $this->post("/lists/{$list->id}/users/{$userToRemoveFromTheList->id}");
 
         // When we hit the route to remove that user form the list
-        $this->delete("/lists/{$list->id}/users", [
-            'user_id' => $userToRemoveFromTheList->id
-        ]);
+        $this->delete("/lists/{$list->id}/users/{$userToRemoveFromTheList->id}");
 
         // Then there should not be a record for this user in the database
         $this->assertDatabaseMissing('list_users', [
@@ -215,14 +207,10 @@ class TwitterListsTest extends TestCase
 
         $ownerOfTheList->follow($userToRemoveFromTheList);
 
-        $this->actingAs($ownerOfTheList)->post("/lists/{$list->id}/users", [
-            'user_id' => $userToRemoveFromTheList->id
-        ]);
+        $this->actingAs($ownerOfTheList)->post("/lists/{$list->id}/users/{$userToRemoveFromTheList->id}");
 
         // When we hit the route to remove that user form the list
-        $this->actingAs($user)->delete("/lists/{$list->id}/users", [
-            'user_id' => $userToRemoveFromTheList->id
-        ]);
+        $this->actingAs($user)->delete("/lists/{$list->id}/users/{$userToRemoveFromTheList->id}");
 
         // Then there should not be a record for this user in the database
         $this->assertDatabaseHas('list_users', [
@@ -242,13 +230,9 @@ class TwitterListsTest extends TestCase
         // When we try to add a user to the list twice
         $userToAdd = factory('App\User')->create();
 
-        $this->post("/lists/{$list->id}/users", [
-            'user_id' => $userToAdd->id
-        ]);
+        $this->post("/lists/{$list->id}/users/{$userToAdd->id}");
 
-        $this->post("/lists/{$list->id}/users", [
-            'user_id' => $userToAdd->id
-        ]);
+        $this->post("/lists/{$list->id}/users/{$userToAdd->id}");
 
         // Then there should be only one record in the database
         $this->assertCount(1, $list->listUsers);
