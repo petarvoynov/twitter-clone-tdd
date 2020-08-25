@@ -6,7 +6,7 @@
     <form action="{{ route('bookmarks.search') }}" method="POST">
         @csrf
         <input class="searchbar" type="text" name="body" placeholder="Search bookmarked tweets">
-        <button class="btn btn-secondary btn-sm rounded-pill">Search</button>
+        <button class="btn btn-primary btn-sm rounded-pill">Search</button>
     </form>
 
     @foreach ($bookmarks as $bookmark)
