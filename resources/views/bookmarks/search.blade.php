@@ -9,7 +9,7 @@
         <button class="btn btn-primary btn-sm rounded-pill">Search</button>
     </form>
 
-    @foreach ($tweets as $tweet)
+    @forelse($tweets as $tweet)
         <div class="card mt-4">
             <div class="card-header d-flex justify-content-between">
                 <h5><a href="{{ route('users.show', ['user' => $tweet->user_id]) }}"><img class="rounded-circle mr-2" src="{{ $tweet->user->profilePicture() }}" alt="profile picture" width="40px" height="40px">{{ $tweet->user->name }}</a></h5> 
@@ -31,6 +31,8 @@
                 </div>
             </div>  
         </div>       
-    @endforeach
+    @empty
+        <p>There are no bookmarked tweets containing: {{ $inputValue }}</p>    
+    @endforelse
        
 @endsection
