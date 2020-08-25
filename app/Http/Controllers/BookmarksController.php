@@ -32,4 +32,12 @@ class BookmarksController extends Controller
 
         return back();
     }
+
+    public function search()
+    {
+        $bookmarksIds = auth()->user()->bookmarks->pluck('tweet_id');
+        $tweets = Tweet::whereIn('id', $bookmarksIds)->where('body', 'like', '%'. request('body') .'%')->get();
+        
+        return view('bookmarks.search', compact('tweets'));
+    }
 }

@@ -66,6 +66,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/bookmarks', 'BookmarksController@index')->name('bookmarks.index');
     Route::post('/tweets/{tweet}/bookmark', 'BookmarksController@store')->name('bookmarks.store');
     Route::delete('/tweets/{tweet}/unbookmark', 'BookmarksController@destroy')->name('bookmarks.destroy');
+    Route::post('/bookmarks/search', 'BookmarksController@search')->name('bookmarks.search');
 });
 
 Auth::routes();

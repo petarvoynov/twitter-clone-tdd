@@ -71,4 +71,28 @@ class BookmarksTest extends TestCase
             'tweet_id' => $tweet->id
         ]);
     }
+
+    /** @test */
+    function bookmarks_can_be_searched()
+    {
+        $user = $this->signIn();
+
+        $tweetToSee = factory('App\Tweet')->create(['body' => 'We should see it']);
+        $tweetToSee2 = factory('App\Tweet')->create(['body' => 'This should be seen']);
+        $tweetNotToSee = factory('App\Tweet')->create(['body' => 'This not']);
+        $tweetNotToSee2 = factory('App\Tweet')->create(['body' => 'This not as well']);
+
+        $tweetToSee->bookmark();
+        $tweetToSee2->bookmark();
+        $tweetNotToSee->bookmark();
+        $tweetNotToSee2->bookmark();
+
+        // When we hit the form to search a tweet
+        $response = $this->post('/bookmarks/search', ['body' => 'should']);
+
+        // Then there should be correct tweet record on the page
+        $response->assertSee($tweetToSee->body, $tweetToSee2);
+        $response->assertDontSee($tweetNotToSee->body, $tweetNotToSee2);
+
+    }
 }
