@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Tests\TestCase;
 use App\Bookmark;
 use App\User;
+use App\Tweet;
 
 class BookmarkTest extends TestCase
 {
@@ -19,5 +20,13 @@ class BookmarkTest extends TestCase
         $bookmark = factory(Bookmark::class)->create();
 
         $this->assertInstanceOf(User::class, $bookmark->user);
+    }
+
+    /** @test */
+    function a_bookmark_belongs_to_a_tweet()
+    {
+        $bookmark = factory(Bookmark::class)->create();
+
+        $this->assertInstanceOf(Tweet::class, $bookmark->tweet);
     }
 }

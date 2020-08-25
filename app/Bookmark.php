@@ -12,4 +12,9 @@ class Bookmark extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function tweet()
+    {
+        return $this->belongsTo(Tweet::class);
+    }
 }
