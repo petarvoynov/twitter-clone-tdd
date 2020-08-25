@@ -35,8 +35,19 @@
     </div>
     <div class="col-lg-3 d-flex flex-column justify-content-between">
         <small>
-            <span class="font-weight-bold mr-1">5555</span>Bookmarks
+            <span class="font-weight-bold mr-1">{{ $tweet->bookmarks->count() }}</span>Bookmarks
         </small>
-        <button class="btn btn-primary btn-sm">Bookmark</button>
+        @if(!$tweet->isBookmarked())
+            <form action="{{ route('bookmarks.store', ['tweet' => $tweet->id]) }}" method="POST">
+                @csrf
+                <button class="btn btn-primary btn-sm">Bookmark</button>
+            </form>
+        @else
+            <form action="{{ route('bookmarks.destroy', ['tweet' => $tweet->id]) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button class="btn btn-primary btn-sm">Unbookmark</button>
+            </form>
+        @endif
     </div>
 </div>

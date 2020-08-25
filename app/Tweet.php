@@ -75,6 +75,6 @@ class Tweet extends Model
 
     public function isBookmarked()
     {
-        return $this->bookmarks->where('user_id', auth()->id())->count();
+        return !! $this->bookmarks->where('user_id', auth()->id())->count();
     }
 }

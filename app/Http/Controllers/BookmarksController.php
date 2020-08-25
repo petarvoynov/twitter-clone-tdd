@@ -8,6 +8,13 @@ use App\Tweet;
 
 class BookmarksController extends Controller
 {
+    public function index()
+    {
+        $bookmarks = auth()->user()->bookmarks->sortByDesc('created_at')->paginate(10);
+
+        return view('bookmarks.index', compact('bookmarks'));
+    }
+
     public function store(Tweet $tweet)
     {
         if($tweet->isBookmarked()){
@@ -15,10 +22,14 @@ class BookmarksController extends Controller
         }
 
         $tweet->bookmark();
+        
+        return back();
     }
 
     public function destroy(Tweet $tweet)
     {
         $tweet->unbookmark();
+
+        return back();
     }
 }
