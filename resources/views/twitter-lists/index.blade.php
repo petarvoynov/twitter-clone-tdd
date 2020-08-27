@@ -11,10 +11,19 @@
     <div class="border-bottom">
         <h2 class="border-bottom font-weight-bold p-2">Pinned Lists</h2>
         @forelse($pinnedLists as $list)
-            <div class="d-flex align-items-center py-2">
-                <svg style="width:24px" viewBox="0 0 20 20" fill="currentColor" class="bookmark-alt w-6 h-6"><path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5zm11 1H6v8l4-2 4 2V6z" clip-rule="evenodd"></path></svg>
-                <img class="ml-2" style="width: 40px; height:40px;" src="{{ $list->coverImage() }}" alt="list cover image">
-                <div class="ml-2">{{ $list->name }}</div>
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="{{ route('twitter-lists.show', ['list' => $list->id]) }}">
+                    <div class="d-flex align-items-center py-2">
+                        <svg style="width:24px" viewBox="0 0 20 20" fill="currentColor" class="bookmark-alt w-6 h-6"><path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5zm11 1H6v8l4-2 4 2V6z" clip-rule="evenodd"></path></svg>
+                        <img class="ml-2" style="width: 40px; height:40px;" src="{{ $list->coverImage() }}" alt="list cover image">
+                        <div class="ml-2">{{ $list->name }}</div>
+                    </div>
+                </a>
+                <form action="{{ route('pinned-lists.destroy',  ['list' => $list->id]) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-sm btn-primary">Unpin</button>
+                </form>
             </div>
         @empty
             <div class="py-2">

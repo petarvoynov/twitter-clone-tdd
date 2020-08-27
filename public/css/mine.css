@@ -3,6 +3,14 @@ ul {
     padding: 0;
 }
 
+a:hover {
+    text-decoration: none;
+}
+
+a {
+    color: black;
+}
+
 .menu-item > a {
     padding: 10px 25px 15px 20px;
     text-decoration: none;

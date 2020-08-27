@@ -3,10 +3,18 @@
 @section('content')
     <div id="buttons" class="d-flex justify-content-between my-2">
         <div>
-            <form action="{{ route('pinned-lists.store', ['list' => $list->id]) }}" method="POST">
-                @csrf
-                <button type="submit" class="btn btn-sm btn-primary">Pin List</button>
-            </form> 
+            @if(!$list->isPinned())
+                <form action="{{ route('pinned-lists.store', ['list' => $list->id]) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-sm btn-primary">Pin List</button>
+                </form>
+            @else
+                <form action="{{ route('pinned-lists.destroy', ['list' => $list->id]) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-sm btn-primary">Unpin List</button>
+                </form>
+            @endif
         </div>
         <div>
             <a href="#" class="btn btn-sm btn-primary">All Members</a>
