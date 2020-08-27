@@ -4,7 +4,7 @@ ul {
 }
 
 .menu-item > a {
-    padding: 10px 25px 15px 7px;
+    padding: 10px 25px 15px 20px;
     text-decoration: none;
     color: black;
 }
@@ -23,6 +23,10 @@ ul {
     line-height: 3rem;
 }
 
+.menu-item.logo > a{
+    padding: 10px 15px 15px 10px;
+}
+
 .button {
     background-color: #1DA1F2;
     color: white;
@@ -38,12 +42,7 @@ ul {
 }
 
 .icons {
-    font-size:28px;
-}
-
-.logo {
-    color :#1DA1F2; 
-    font-size:32px
+    width: 28px;
 }
 
 .searchbar {
