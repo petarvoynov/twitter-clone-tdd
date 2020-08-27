@@ -18,4 +18,14 @@ class TwitterListTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $list->listUsers);
     }
+
+    /** @test */
+    function a_twitter_list_can_call_isPinned_method()
+    {
+        $pinnedList = factory('App\TwitterList')->create(['is_pinned' => 1]);
+        $unpinnedList = factory('App\TwitterList')->create(['is_pinned' => 0]);
+
+        $this->assertTrue($pinnedList->isPinned());
+        $this->assertFalse($unpinnedList->isPinned());
+    }
 }
