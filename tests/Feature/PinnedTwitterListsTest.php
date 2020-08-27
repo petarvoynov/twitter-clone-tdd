@@ -52,4 +52,24 @@ class PinnedTwitterListsTest extends TestCase
             'is_pinned' => 1
         ]); 
     }
+
+    /** @test */
+    function a_twitter_list_can_be_unpinned()
+    {
+        $this->withoutExceptionHandling();
+        // Given we are sing in and have a list that is pinned
+        $user = $this->signIn();
+
+        $list = factory('App\TwitterList')->create(['user_id' => $user->id, 'is_pinned' => 1]);
+
+        // When we hit the route to unpin it
+        $this->delete("/pinned-lists/{$list->id}");
+
+        // Then the list should not be pinned
+
+        $this->assertDatabaseMissing('twitter_lists', [
+            'id' => $list->id,
+            'is_pinned' => 1
+        ]);
+    }
 }

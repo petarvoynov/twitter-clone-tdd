@@ -26,6 +26,15 @@ class TwitterList extends Model
         return $this;
     }
 
+    public function unpin()
+    {
+        $this->update([
+            'is_pinned' => 0
+        ]);
+
+        return $this;
+    }
+
     public function listUsers()
     {
         return $this->hasMany('App\ListUser', 'list_id');

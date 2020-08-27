@@ -15,4 +15,11 @@ class PinnedListsController extends Controller
 
         return back();
     }
+
+    public function destroy(TwitterList $list)
+    {
+        $list->unpin();
+
+        return back();
+    }
 }
