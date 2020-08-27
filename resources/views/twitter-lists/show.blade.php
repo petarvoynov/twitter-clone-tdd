@@ -1,10 +1,18 @@
 @extends('layouts.master')
 
 @section('content')
-    <div id="buttons" class="d-flex justify-content-end my-2">
-        <a href="#" class="btn btn-sm btn-primary">All Members</a>
-        <a href="{{ route('twitter-list-users.create', ['list' => $list->id]) }}" class="btn btn-sm btn-primary ml-2">Add Members</a>
-        <a href="#" class="btn btn-sm btn-primary ml-2">Edit List</a>
+    <div id="buttons" class="d-flex justify-content-between my-2">
+        <div>
+            <form action="{{ route('pinned-lists.store', ['list' => $list->id]) }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-sm btn-primary">Pin List</button>
+            </form> 
+        </div>
+        <div>
+            <a href="#" class="btn btn-sm btn-primary">All Members</a>
+            <a href="{{ route('twitter-list-users.create', ['list' => $list->id]) }}" class="btn btn-sm btn-primary ml-2">Add Members</a>
+            <a href="#" class="btn btn-sm btn-primary ml-2">Edit List</a>
+        </div>
     </div>
     <div class="border-bottom">
         <div class="list-cover-image">
