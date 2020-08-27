@@ -2,7 +2,10 @@
 
 @section('content')
     <div id="buttons" class="d-flex justify-content-between my-2">
-        <div>
+        <div class="d-flex align-items-center">
+            <a class="mr-2" href="{{ url()->previous() }}">
+                <svg style="width: 26px; color:black;" viewBox="0 0 20 20" fill="currentColor" class="arrow-left w-6 h-6"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg>
+            </a>
             @if(!$list->isPinned())
                 <form action="{{ route('pinned-lists.store', ['list' => $list->id]) }}" method="POST">
                     @csrf
