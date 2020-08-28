@@ -13,7 +13,7 @@ class TweetsTest extends TestCase
     /** @test */
     function guests_cannot_see_create_update_or_delete_tweets()
     {
-        $this->get('/tweets')->assertRedirect('login');
+        $this->get('/')->assertRedirect('login');
         $this->post('/tweets', [])->assertRedirect('login');
 
         $tweet = factory('App\Tweet')->create();
@@ -39,7 +39,7 @@ class TweetsTest extends TestCase
         ]);
         
         // When a user goes to his homepage
-        $response = $this->get('/tweets');
+        $response = $this->get('/');
             
         // Then he should be able to see the tweets
         $response->assertSee($tweet->body);
@@ -72,7 +72,7 @@ class TweetsTest extends TestCase
         $tweet = factory('App\Tweet')->create(['user_id' => $userWeDontFollow->id]);
 
         // When we go to our homepage to see all tweets
-        $response = $this->get('/tweets');
+        $response = $this->get('/');
             
         // Then we should not be able to see the tweet
         $response->assertDontSee($tweet->body);
@@ -88,7 +88,7 @@ class TweetsTest extends TestCase
 
         // When we hit the route to store a tweet
         $response = $this->post('/tweets', $tweet)
-            ->assertRedirect('/tweets');
+            ->assertRedirect('/');
 
         // Then we should see it saved to the database
         $this->assertDatabaseHas('tweets', $tweet);
@@ -104,7 +104,7 @@ class TweetsTest extends TestCase
 
         // When we hit the route to edit the tweet
         $this->patch('/tweets/' . $tweet->id, ['body' => 'changed'])
-            ->assertRedirect('/tweets');
+            ->assertRedirect('/');
 
         // Then we should see the changes in the database
         $this->assertDatabaseHas('tweets', ['body' => 'changed']);
@@ -124,7 +124,7 @@ class TweetsTest extends TestCase
         // Then the tweet has to be removed from the database
         $this->assertDeleted('tweets', $tweet->toArray());
 
-        $response->assertRedirect('/tweets');
+        $response->assertRedirect('/');
     }
 
     /** @test */
