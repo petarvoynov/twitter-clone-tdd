@@ -154,4 +154,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Bookmark::class);
     }
+
+    public function getPinnedListsCountAttribute()
+    {
+        return \App\TwitterList::where('user_id', $this->id)->where('is_pinned', 1)->get()->count();
+    }
 }

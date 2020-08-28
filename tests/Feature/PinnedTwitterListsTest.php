@@ -72,4 +72,24 @@ class PinnedTwitterListsTest extends TestCase
             'is_pinned' => 1
         ]);
     }
+
+    /** @test */
+    function a_user_cannot_have_more_than_five_pinned_lists()
+    {
+        // Given we are sing in and have a 5 pinned lists
+        $user = $this->signIn();
+
+        $lists = factory('App\TwitterList', 5)->create(['user_id' => $user->id]);
+
+        foreach($lists as $list) {
+            $list->pin();
+        }
+
+        // When we try to pin 6th
+        $listNotToBeSaved = factory('App\TwitterList')->create(['user_id' => $user->id]);
+        $response = $this->post("/pinned-lists/{$listNotToBeSaved->id}");
+
+        // Then we should still have 5 pinned list
+        $this->assertEquals(5, \App\TwitterList::where('is_pinned', 1)->get()->count());
+    }
 }
