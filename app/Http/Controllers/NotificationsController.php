@@ -26,4 +26,11 @@ class NotificationsController extends Controller
 
         return view('notifications.read', compact('readNotifications'));
     }
+    
+    public function destroyAllRead()
+    {
+        auth()->user()->notifications()->whereNotNull('read_at')->delete();
+
+        return back()->with('success', 'You successfully delete all your read notifications');
+    }
 }

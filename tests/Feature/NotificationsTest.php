@@ -163,4 +163,28 @@ class NotificationsTest extends TestCase
             $tweet->body
         ]);
     }
+
+    /** @test */
+    function user_can_delete_his_read_notifications()
+    {
+        $this->withoutExceptionHandling();
+        // Given we are sing in and follow and subscribe to a user
+        $user = $this->signIn();
+
+        $userToFollowAndSubscribe = factory('App\User')->create();
+
+        $user->follow($userToFollowAndSubscribe);
+        $user->subscribe($userToFollowAndSubscribe);
+
+        // and he generate us a notification that we read
+        $this->actingAs($userToFollowAndSubscribe)->post('/tweets', ['body' => 'tesing body']);
+
+        $user->notifications->first()->markAsRead();
+
+        // When we hit the route to delete all read notifications
+        $this->actingAs($user)->delete('/notifications/read-notifications');
+
+        // Then we should have 0 notifications
+        $this->assertEquals(0, $user->readNotifications->count());
+    }
 }

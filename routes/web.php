@@ -46,6 +46,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/notifications', 'NotificationsController@index')->name('notifications.index');
     Route::get('/unread-notifications', 'NotificationsController@unread')->name('notifications.unread');
     Route::get('/read-notifications', 'NotificationsController@read')->name('notifications.read');
+    Route::delete('/notifications/read-notifications', 'NotificationsController@destroyAllRead')->name('notifications.destroyAllRead');
 
     Route::get('/lists', 'TwitterListsController@index')->name('twitter-lists.index');
     Route::post('/lists', 'TwitterListsController@store')->name('twitter-lists.store');
