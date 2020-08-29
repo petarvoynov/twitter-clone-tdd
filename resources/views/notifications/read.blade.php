@@ -15,16 +15,15 @@
     
     @foreach($readNotifications as $notification)
         <div class="row">
-            <div id="{{ $notification->data['tweet_id'] }}" class="col-12 notification alert alert-light" role="alert">
-                <div>
-                    {{ $notification->data['tweet_owner_name'] }}<small> tweeted:</small>
+            <a style="width:100%" href="{{ route('tweets.show', ['tweet' => $notification->data['tweet_id']]) }}">
+                <div id="{{ $notification->data['tweet_id'] }}" class="col-12 notification alert alert-light" role="alert">
+                    <div>
+                        {{ $notification->data['tweet_owner_name'] }}<small> tweeted:</small>
+                    </div>
+                    <div>{{ Str::limit($notification->data['tweet_body'], 230) }}</div>
                 </div>
-                <div>{{ Str::limit($notification->data['tweet_body'], 230) }}</div>
-            </div>
+            </a>
         </div>
     @endforeach  
-@endsection
-
-@section('scripts')
-    <script src="{{ asset('js/openNotification.js') }}"></script>
+    {{ $readNotifications->links() }} 
 @endsection

@@ -47,7 +47,7 @@ class TweetsController extends Controller
     {
         $this->authorize('view', $tweet);
 
-        if(url()->previous() == url('/notifications') || url()->previous() == url('/unread-notifications')){
+        if(strpos(url()->previous(), url('/notifications')) !== false || strpos(url()->previous(), url('/unread-notifications')) !== false){
             auth()->user()->notifications()->where('data','LIKE','%"tweet_id":'. $tweet->id .'%')->first()->markAsRead();
         }
 

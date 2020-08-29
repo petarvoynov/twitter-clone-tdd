@@ -8,21 +8,21 @@ class NotificationsController extends Controller
 {
     public function index()
     {
-        $notifications = auth()->user()->notifications;
+        $notifications = auth()->user()->notifications->paginate(10);
 
         return view('notifications.index', compact('notifications'));
     }
 
     public function unread()
     {
-        $unreadNotifications = auth()->user()->unreadNotifications;
+        $unreadNotifications = auth()->user()->unreadNotifications->paginate(10);
 
         return view('notifications.unread', compact('unreadNotifications'));
     }
 
     public function read()
     {
-        $readNotifications = auth()->user()->readNotifications;
+        $readNotifications = auth()->user()->readNotifications->paginate(10);
 
         return view('notifications.read', compact('readNotifications'));
     }
