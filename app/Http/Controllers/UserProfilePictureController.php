@@ -27,7 +27,7 @@ class UserProfilePictureController extends Controller
             'profile_picture' => request()->file('profile_picture')->store('profile_pictures', 'public')
         ]);
         
-        return back();
+        return back()->with('success', 'You successfully updated your profile picture.');
     }
 
     public function edit(User $user)

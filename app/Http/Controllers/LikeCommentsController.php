@@ -19,7 +19,7 @@ class LikeCommentsController extends Controller
             ]);
         } 
        
-        return back();
+        return back()->with('success', 'You successfully liked a comment.');
     }
 
     public function destroy(Comment $comment)
@@ -30,6 +30,6 @@ class LikeCommentsController extends Controller
             $comment->unlike();
         }
 
-        return back();
+        return back()->with('success', 'You successfully unliked the comment.');
     }
 }

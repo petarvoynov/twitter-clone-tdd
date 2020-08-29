@@ -34,7 +34,7 @@ class TwitterListsController extends Controller
         
         $list = auth()->user()->lists()->create($data);
 
-        return redirect()->route('twitter-lists.show', ['list' => $list->id]);
+        return redirect()->route('twitter-lists.show', ['list' => $list->id])->with('success', 'You successfully created a list.');
     }
 
     public function show(TwitterList $list)

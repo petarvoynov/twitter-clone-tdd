@@ -29,7 +29,7 @@ class TwitterListUsersController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'User ' . $user->name . ' has been added to the list'
+            'success' => 'User ' . $user->name . ' has been added to the list'
         ]);
     }
 
@@ -42,7 +42,7 @@ class TwitterListUsersController extends Controller
         $list->listUsers()->where('user_id', $user->id)->delete();
 
         return response()->json([
-            'message' => 'User ' . $user->name . ' has been removed from the list'
+            'success' => 'User ' . $user->name . ' has been removed from the list'
         ]);
     }
 

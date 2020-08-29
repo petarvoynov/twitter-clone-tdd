@@ -31,7 +31,7 @@ class UsersController extends Controller
     
         auth()->user()->update($validatedData);
 
-        return redirect()->route('users.show', ['user' => $user->id]);
+        return redirect()->route('users.show', ['user' => $user->id])->with('success', 'You successfully updated your profile.');
     }
 
     public function follow(User $user)
@@ -40,7 +40,7 @@ class UsersController extends Controller
             auth()->user()->follow($user);
         }
         
-        return back();
+        return back()->with('success', 'You successfully followed '. $user->name .'.');
     }
 
     public function unfollow(User $user)
@@ -55,6 +55,6 @@ class UsersController extends Controller
 
         auth()->user()->unfollow($user);
         
-        return back();
+        return back()->with('success', 'You successfully unfollowed '. $user->name .'.');;
     }
 }

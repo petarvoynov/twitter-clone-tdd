@@ -67,6 +67,7 @@
                 </nav>    
             </div>
             <div class="col-lg-6 col-sm-12 border border-bottom-0">
+                @include('messages.messages')
                 @yield('content')
             </div>
         
@@ -97,8 +98,6 @@
             </div>
         </div>
     </div>
-    <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
     @yield('scripts')
-
 </body>
 </html>

@@ -20,7 +20,7 @@ class LikeTweetsController extends Controller
             ]);
         }
 
-        return back();
+        return back()->with('success', 'You successfully liked the tweet.');
     }
 
     public function destroy(Tweet $tweet)
@@ -32,6 +32,6 @@ class LikeTweetsController extends Controller
             $tweet->unlike();
         } 
         
-        return back();
+        return back()->with('success', 'You successfully unliked the tweet.');
     }
 }

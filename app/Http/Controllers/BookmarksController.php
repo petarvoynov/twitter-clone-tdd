@@ -23,14 +23,14 @@ class BookmarksController extends Controller
 
         $tweet->bookmark();
         
-        return back();
+        return back()->with('success', 'You successfully bookmarked this tweet.');
     }
 
     public function destroy(Tweet $tweet)
     {
         $tweet->unbookmark();
 
-        return back();
+        return back()->with('success', 'You successfully unbookmarked this tweet.');
     }
 
     public function search()

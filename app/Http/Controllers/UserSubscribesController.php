@@ -11,13 +11,13 @@ class UserSubscribesController extends Controller
     {
         auth()->user()->subscribe($user);
 
-        return back();
+        return back()->with('success', 'You successfully subscribed to '. $user->name .'.');;
     }
 
     public function destroy(User $user)
     {
         auth()->user()->unsubscribe($user);
 
-        return back();
+        return back()->with('success', 'You successfully unsubscribed from '. $user->name .'.');;
     }
 }

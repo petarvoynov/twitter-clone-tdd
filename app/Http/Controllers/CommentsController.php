@@ -25,7 +25,7 @@ class CommentsController extends Controller
             'description' => 'commented a tweet'
         ]);
 
-        return back();
+        return back()->with('success', 'You successfully posted a comment.');
 
     }
 
@@ -39,7 +39,7 @@ class CommentsController extends Controller
         
         $comment->update(request(['body']));
 
-        return back();
+        return back()->with('success', 'You successfully updated the comment.');
     }
 
     public function destroy(Tweet $tweet, Comment $comment)
@@ -49,5 +49,7 @@ class CommentsController extends Controller
         $comment->activities()->where('user_id', auth()->id())->where('description', 'commented a tweet')->delete();
 
         $comment->delete();
+
+        return back()->with('success', 'You successfully deleted the comment.');
     }
 }

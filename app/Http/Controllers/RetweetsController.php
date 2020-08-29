@@ -17,7 +17,7 @@ class RetweetsController extends Controller
             'description' => 'this tweet is being retweeted'
         ]);
 
-        return back();
+        return back()->with('success', 'You successfully retweeted the tweet.');
     }
 
     public function destroy(Tweet $tweet)
@@ -28,6 +28,6 @@ class RetweetsController extends Controller
 
         $tweet->retweets()->where('user_id', auth()->id())->delete();
 
-        return back();
+        return back()->with('success', 'You successfully unretweeted the tweet.');
     }
 }

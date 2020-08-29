@@ -40,7 +40,7 @@ class TweetsController extends Controller
             'description' => 'created a tweet'
         ]);
         
-        return redirect()->route('tweets.index');
+        return redirect()->route('tweets.index')->with('success', 'You successfully posted a tweet.');
     }
 
     public function show(Tweet $tweet)
@@ -64,7 +64,7 @@ class TweetsController extends Controller
 
         $tweet->update($data);
 
-        return redirect()->route('tweets.index');
+        return redirect()->route('tweets.index')->with('success', 'You successfully updated the tweet.');
     }
 
     public function destroy(Tweet $tweet)
@@ -82,7 +82,7 @@ class TweetsController extends Controller
 
         $tweet->delete();
 
-        return redirect()->route('tweets.index');
+        return redirect()->route('tweets.index')->with('success', 'You successfully deleted the tweet.');
     }
 
     protected function validatedData()
