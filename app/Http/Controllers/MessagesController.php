@@ -15,8 +15,7 @@ class MessagesController extends Controller
 
     public function store(User $user)
     {
-        Message::create([
-            'from' => auth()->id(),
+        auth()->user()->sendMessages()->create([
             'to' => $user->id,
             'message' => request('message')
         ]);

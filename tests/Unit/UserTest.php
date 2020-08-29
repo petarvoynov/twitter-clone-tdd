@@ -110,4 +110,12 @@ class UserTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $user->bookmarks);
     }
+
+    /** @test */
+    function a_user_has_many_send_messages()
+    {
+        $user = factory('App\User')->create();
+
+        $this->assertInstanceOf(Collection::class, $user->sendMessages);
+    }
 }
