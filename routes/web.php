@@ -33,6 +33,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/comments/{comment}/like', 'LikeCommentsController@store')->name('likes.store');
     Route::delete('/comments/{comment}/unlike', 'LikeCommentsController@destroy')->name('likes.destroy');
 
+    Route::post('/users/find', 'UsersController@find')->name('users.find');
     Route::get('/users/{user}', 'UsersController@show')->name('users.show');
     Route::get('/users/{user}/edit', 'UsersController@edit')->name('users.edit');
     Route::patch('/users/{user}', 'UsersController@update')->name('users.update');

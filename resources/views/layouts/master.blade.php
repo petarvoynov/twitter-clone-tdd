@@ -73,8 +73,12 @@
         
             <div class="col-lg-3 col-sm-12">
                 <div class="mt-2">
-                    <form action="#">
-                        <input class="searchbar" type="text" placeholder="Search TwitterClone">
+                    <form action="{{ route('users.find') }}" method="POST">
+                        @csrf
+                        <div class="d-flex">
+                            <input class="searchbar" type="text" name="name" placeholder="Search TwitterClone">
+                            <button class="btn btn-primary btn-sm rounded-pill ml-1" type="submit">Search</button>
+                        </div>
                     </form>
                 </div>
                 <div class="card bg-light mt-3" style="max-width: 18rem;">

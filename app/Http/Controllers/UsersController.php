@@ -57,4 +57,13 @@ class UsersController extends Controller
         
         return back()->with('success', 'You successfully unfollowed '. $user->name .'.');;
     }
+
+    public function find()
+    {
+        $searchName = request('name');
+
+        $users = User::where('id', '!=', auth()->id())->where('name', 'like', '%'. $searchName .'%')->paginate(10);
+
+        return view('users.find', compact('users', 'searchName'));
+    }
 }
