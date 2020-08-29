@@ -55,7 +55,7 @@ class UsersController extends Controller
 
         auth()->user()->unfollow($user);
         
-        return back()->with('success', 'You successfully unfollowed '. $user->name .'.');;
+        return back()->with('success', 'You successfully unfollowed '. $user->name .'.');
     }
 
     public function find()
