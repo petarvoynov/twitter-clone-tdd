@@ -165,7 +165,7 @@ class User extends Authenticatable
         return $this->hasMany('App\Message', 'from');
     }
 
-    public function recievedMessages()
+    public function receivedMessages()
     {
         return $this->hasMany('App\Message', 'to');
     }

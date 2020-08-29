@@ -120,10 +120,10 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    function a_user_has_many_recieved_messages()
+    function a_user_has_many_received_messages()
     {
         $user = factory('App\User')->create();
 
-        $this->assertInstanceOf(Collection::class, $user->recievedMessages);
+        $this->assertInstanceOf(Collection::class, $user->receivedMessages);
     }
 }
