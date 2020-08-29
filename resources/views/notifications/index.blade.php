@@ -7,8 +7,15 @@
                 <svg style="width: 26px;" viewBox="0 0 20 20" fill="currentColor" class="arrow-left w-6 h-6"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg>
             </a>
         </div>
-        <div class="col-11">
+        <div class="col-8">
             <h2 class="text-center">All Notifications</h2>
+        </div>
+        <div class="col-3">
+            <form action="{{ route('notifications.destroyAllRead') }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button class="btn btn-sm btn-primary" type="submit">Clear Read Notifications</button>
+            </form>
         </div>
     </div>
     
