@@ -120,3 +120,22 @@ a {
     text-decoration: none;
     color: white;
 }
+
+.chat-box-auth {
+    background-color: #1DA1F2;
+    color: white;
+    padding: 10px;
+    border-radius: 20px;
+    max-width: 80%;
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
+.chat-box {
+    background-color: #d9d9d9;
+    padding: 10px;
+    border-radius: 20px;
+    max-width: 80%;
+    margin-left: 5px;
+    margin-top: 5px;
+}
