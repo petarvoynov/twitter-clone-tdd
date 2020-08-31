@@ -35,4 +35,18 @@ class MessagesTest extends TestCase
             'message' => 'Hello'
         ]);
     }
+
+    /** @test */
+    function a_user_can_visit_the_page_to_see_all_his_started_conversations()
+    {
+        $this->withoutExceptionHandling();
+        // Given we are sing in
+        $user = $this->signIn();
+
+        // When we visit the page to see our conversations
+        $response = $this->get('/messages');
+
+        // We shoud see the title of the page "Your Conversations"
+        $response->assertSee('Your Conversations');
+    }
 }

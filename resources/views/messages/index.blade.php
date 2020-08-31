@@ -12,15 +12,6 @@
         </div>
     </div>
 
-    <div class="d-flex justify-content-center mb-3">
-        <a class="btn btn-primary" href="{{ route('messages.show', ['user' => $user->id, 'more' => true]) }}">
-            Load more
-        </a>
-        <a class="btn btn-primary ml-2" href="{{ route('messages.index', ['user' => $user->id]) }}">
-           Load all
-        </a> 
-    </div>
-
     <div class="border">
         @foreach($messages as $message)
             @if($message->to == auth()->id())
@@ -41,6 +32,10 @@
                 </div>
             @endif
         @endforeach
+
+        <div class="d-flex justify-content-center mt-4">
+            {{ $messages->links() }}
+        </div>
 
         <form class="m-2" action="{{ route('messages.store', ['user' => $user->id]) }}" method="POST">
             @csrf
