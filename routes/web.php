@@ -66,7 +66,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/tweets/{tweet}/unbookmark', 'BookmarksController@destroy')->name('bookmarks.destroy');
     Route::post('/bookmarks/search', 'BookmarksController@search')->name('bookmarks.search');
 
-    Route::get('/messages/{user}/all', 'MessagesController@index')->name('messages.index');
+    Route::get('/messages', 'MessagesController@index')->name('messages.index');
+    Route::get('/messages/{user}/all', 'MessagesController@all')->name('messages.all');
     Route::get('/messages/{user}', 'MessagesController@show')->name('messages.show');
     Route::post('/messages/{user}', 'MessagesController@store')->name('messages.store');
 });

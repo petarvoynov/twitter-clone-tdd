@@ -8,12 +8,17 @@ use App\User;
 
 class MessagesController extends Controller
 {
-    public function index(User $user)
+    public function index()
     {
-        $mySendMessages = Message::where('from', auth()->id())->where('to', $user->id);
-        $messages = Message::where('from', $user->id)->where('to', auth()->id())->union($mySendMessages)->orderBy('created_at', 'asc')->paginate(20);
+        $fromMe = Message::where('from', auth()->id())->pluck('to')->unique();
 
-        return view('messages.index', compact('user', 'messages'));
+        $toMe = Message::where('to', auth()->id())->pluck('from')->unique();
+
+        $usersId = $fromMe->merge($toMe)->unique();
+
+        $users = User::find($usersId);
+
+        return view('messages.index', compact('users'));
     }
 
     public function show(User $user)
@@ -45,5 +50,13 @@ class MessagesController extends Controller
         ]);
 
         return back()->with('success', 'You message has been send.');
+    }
+
+    public function all(User $user)
+    {
+        $mySendMessages = Message::where('from', auth()->id())->where('to', $user->id);
+        $messages = Message::where('from', $user->id)->where('to', auth()->id())->union($mySendMessages)->orderBy('created_at', 'asc')->paginate(20);
+
+        return view('messages.all', compact('user', 'messages'));
     }
 }

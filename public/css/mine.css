@@ -139,3 +139,21 @@ a {
     margin-left: 5px;
     margin-top: 5px;
 }
+
+.chat-pannel {
+    margin: 5px;
+    padding: 5px;
+}
+
+.chat-pannel:hover {
+    cursor: pointer;
+    background-color: #1DA1F2;
+    border-radius: 20px;
+    color: white
+}
+
+.chat-image img{
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+}

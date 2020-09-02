@@ -169,4 +169,21 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Message', 'to');
     }
+
+    public function lastMessage($user)
+    {
+        // Getting the messages that we send to the given user
+        $fromMe = $this->sendMessages->where('to', $user->id);
+
+        // Getting the messages that were send to us by the given user
+        $fromHim =  $this->receivedMessages->where('from', $user->id);
+
+        // Merge the collections
+        $messages = $fromMe->merge($fromHim);
+
+        // Sort then and take the last message in the chat
+        $message = $messages->sortByDesc('created_at')->first();
+
+        return $message;
+    }
 }

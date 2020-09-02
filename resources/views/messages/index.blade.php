@@ -8,43 +8,30 @@
             </a>
         </div>
         <div class="col-11">
-            <h2 class="font-weight-bold text-center border-bottom">Your chat with {{ $user->name }}</h2>
+            <h1 class="border-bottom text-center">All Conversations</h1>
         </div>
     </div>
 
-    <div class="border">
-        @foreach($messages as $message)
-            @if($message->to == auth()->id())
-                <div class="row">
-                    <div class="col-12 d-flex">
-                        <div class="chat-box">
-                            <img style="width: 30px; height: 30px;" src="{{ $message->sender->profilePicture() }}" alt="">
-                            {{ $message->message }}
-                        </div>
-                        
+    @forelse($users as $user)
+    <a href="{{ route('messages.show', ['user' => $user->id]) }}">
+        <div class="chat-pannel row d-flex align-items-center mt-2">
+            <div class="chat-image col-2">
+                <img src="{{ $user->profilePicture() }}" alt="user profile picture">
+            </div>
+            <div class="chat-last-message col-10">
+                <div class="lead">{{ $user->name }}</div>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        {{ auth()->user()->lastMessage($user)->message }} 
                     </div>
+                    <small>{{ auth()->user()->lastMessage($user)->created_at->diffForHumans() }}</small>
                 </div>
-            @else
-                <div class="row">
-                    <div class="col-12 d-flex justify-content-end">
-                        <div class="chat-box-auth">{{ $message->message }}</div>
-                    </div>
-                </div>
-            @endif
-        @endforeach
-
-        <div class="d-flex justify-content-center mt-4">
-            {{ $messages->links() }}
+            </div>
         </div>
+    </a>
+    @empty
+        <p class="lead">You have started a conversation yet.</p>
+    @endforelse
 
-        <form class="m-2" action="{{ route('messages.store', ['user' => $user->id]) }}" method="POST">
-            @csrf
-            <div class="form-group">
-                <textarea class="form-control" name="message" id="" cols="10" rows="3" placeholder="Send message..."></textarea>
-            </div>
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-primary">Send</button>
-            </div>
-        </form>
-    </div>
+    
 @endsection
