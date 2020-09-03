@@ -19,7 +19,14 @@ class MessagesController extends Controller
         // Merge them in one collection
         $usersId = $fromMe->merge($toMe)->unique();
 
-        $users = User::find($usersId);
+        $users = User::findOrFail($usersId);
+
+        // Adding last_message field containing the timestamp for the last message betweets the auth and the user so we can sort the chats 
+        $users = $users->map(function($user){
+            $user->last_message = auth()->user()->lastMessage($user)->created_at->toDateTimeString();
+            return $user;
+        })->sortByDesc('last_message')
+            ->paginate(15);
 
         return view('messages.index', compact('users'));
     }
