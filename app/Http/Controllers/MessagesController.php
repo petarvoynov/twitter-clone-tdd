@@ -10,10 +10,13 @@ class MessagesController extends Controller
 {
     public function index()
     {
+        // Getting the users ID that i had send messages to
         $fromMe = Message::where('from', auth()->id())->pluck('to')->unique();
 
+        // Getting the users ID that they send messages to me
         $toMe = Message::where('to', auth()->id())->pluck('from')->unique();
 
+        // Merge them in one collection
         $usersId = $fromMe->merge($toMe)->unique();
 
         $users = User::find($usersId);

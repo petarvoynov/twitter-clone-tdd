@@ -15,16 +15,16 @@
     @forelse($users as $user)
     <a href="{{ route('messages.show', ['user' => $user->id]) }}">
         <div class="chat-pannel row d-flex align-items-center mt-2">
-            <div class="chat-image col-2">
-                <img src="{{ $user->profilePicture() }}" alt="user profile picture">
+            <div class="chat-image col-2" >
+                <img class="img-fluid" style="max-width: 100%; height: auto;" src="{{ $user->profilePicture() }}" alt="user profile picture">
             </div>
             <div class="chat-last-message col-10">
-                <div class="lead">{{ $user->name }}</div>
-                <div class="d-flex justify-content-between">
-                    <div>
-                        {{ auth()->user()->lastMessage($user)->message }} 
-                    </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="lead">{{ $user->name }}</div>
                     <small>{{ auth()->user()->lastMessage($user)->created_at->diffForHumans() }}</small>
+                </div>
+                <div>
+                    {{ Str::limit(auth()->user()->lastMessage($user)->message, 60) }} 
                 </div>
             </div>
         </div>
