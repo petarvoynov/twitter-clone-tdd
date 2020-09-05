@@ -69,7 +69,18 @@
                 @else
                     <p>Followed by {{ $followedBy }} and {{ $user->followers_count - 3 }} {{ Str::plural('other', $user->followers_count - 3) }}.</p>
                 @endif
+                @if($user->isFollowing(auth()->user()) || $user->message_settings == 'everyone')
+                    <div class="d-flex justify-content-center">
+                        <a href="{{ route('messages.show', ['user' => $user->id]) }}">
+                            <svg style="width: 60px; color: #1DA1F2" viewBox="0 0 20 20" fill="currentColor" class="mail w-6 h-6">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+                            </svg>
+                        </a>
+                    </div> 
+                @endif
             </div>
+            
         </div>
     </div>
 </div>
