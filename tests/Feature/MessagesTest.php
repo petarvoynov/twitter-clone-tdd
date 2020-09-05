@@ -86,5 +86,22 @@ class MessagesTest extends TestCase
         $response->assertSee('All Conversations');
     }
 
+    /** @test */
+    function a_user_cannot_chat_with_himself()
+    {
+        // Given we are sing in
+        $user = $this->signIn();
+
+        // When we hit the route to send a message to ourself
+        $response = $this->post("/messages/{$user->id}", ['message' => 'This message is for me.']);
+
+        // Then we should be redirected to the /message route
+        $response->assertRedirect('/messages');
+
+        // and there should not be record for this message in the database
+        $this->assertDatabaseMissing('messages', [
+            'message' => 'This message is for me.'
+        ]);
+    }
     
 }
