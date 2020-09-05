@@ -45,8 +45,11 @@
         <form class="m-2" action="{{ route('messages.store', ['user' => $user->id]) }}" method="POST">
             @csrf
             <div class="form-group">
-                <textarea class="form-control" name="message" id="" cols="10" rows="3" placeholder="Send message..."></textarea>
+                <textarea class="form-control" name="message" id="" cols="10" rows="3" placeholder="Send message..." required></textarea>
             </div>
+            @error('message')
+                <small class="alert alert-danger">{{ $message }}</small>
+            @enderror
             <div class="d-flex justify-content-end">
                 <button class="btn btn-primary">Send</button>
             </div>

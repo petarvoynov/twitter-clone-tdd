@@ -53,7 +53,11 @@ class MessagesController extends Controller
     }
 
     public function store(User $user)
-    {          
+    {     
+        request()->validate([
+            'message' => 'required'
+        ]);
+        
         if(!$user->isFollowing(auth()->user()) && $user->message_settings != 'everyone' ){
             return back()->with('success', $user->name . ' has his privacy chat settings "on" and only people that he follows can message him.');
         }
