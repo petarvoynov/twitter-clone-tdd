@@ -26,12 +26,13 @@ class UsersController extends Controller
         $validatedData = request()->validate([
             'name' => 'required',
             'description' => 'nullable',
-            'location' => 'nullable'
+            'location' => 'nullable',
+            'message_settings' => ''
         ]);
     
         auth()->user()->update($validatedData);
 
-        return redirect()->route('users.show', ['user' => $user->id])->with('success', 'You successfully updated your profile.');
+        return redirect()->route('users.show', ['user' => auth()->id()])->with('success', 'You successfully updated your profile.');
     }
 
     public function follow(User $user)

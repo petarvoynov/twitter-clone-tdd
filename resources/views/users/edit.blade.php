@@ -22,6 +22,15 @@
             <input type="text" class="form-control" id="location" name="location" value="{{ $user->location }}">
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div>
+            <label for="message_settings">Chat privacy</label>
+            <select class="form-control form-control-sm" name="message_settings" aria-describedby="chat_settings">
+                <option value="everyone" {{ ($user->message_settings == 'everyone') ? 'selected' : '' }}>Everyone</option>
+                <option value="friends" {{ ($user->message_settings == 'friends') ? 'selected' : '' }}>Friends</option>
+            </select>
+            <small id="chat_settings" class="form-text text-muted">Chose who can send you messages.</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
     </form>
 @endsection
