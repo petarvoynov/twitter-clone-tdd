@@ -53,7 +53,11 @@ class MessagesController extends Controller
     }
 
     public function store(User $user)
-    {
+    {   
+        if(!$user->isFollowing(auth()->user())){
+            abort(403);
+        }
+
         auth()->user()->sendMessages()->create([
             'to' => $user->id,
             'message' => request('message')

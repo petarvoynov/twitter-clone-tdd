@@ -37,6 +37,25 @@ class MessagesTest extends TestCase
     }
 
     /** @test */
+    function a_user_cannot_message_people_that_are_not_following_him()
+    {
+        // Given we are sing in
+        $user = $this->signIn();
+
+        $userToMessage = factory('App\User')->create();
+
+        // When we try to message a user that doesn't follow us
+        $response = $this->post("/messages/{$userToMessage->id}",['message' => 'this should not be saved']);
+
+        // Then there should not be a record in the database and should receive response 403
+        $response->assertStatus(403);
+
+        $this->assertDataBaseMissing('messages', [
+            'message' => 'this should not be saved'
+        ]);
+    }
+
+    /** @test */
     function a_user_can_visit_the_page_to_see_all_his_started_conversations()
     {
         $this->withoutExceptionHandling();
@@ -47,6 +66,6 @@ class MessagesTest extends TestCase
         $response = $this->get('/messages');
 
         // We shoud see the title of the page "Your Conversations"
-        $response->assertSee('Your Conversations');
+        $response->assertSee('All Conversations');
     }
 }
