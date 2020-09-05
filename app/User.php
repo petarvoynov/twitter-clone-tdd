@@ -101,7 +101,7 @@ class User extends Authenticatable
 
     public function isFollowing($user)
     {
-        return auth()->user()->followings()->where('leader_id', $user->id)->exists();
+        return !! $this->followings->where('id', $user->id)->count();
     }
 
     public function getCreatedTweetsCountAttribute()
