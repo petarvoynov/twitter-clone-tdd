@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('profile_picture')->default('noimage.jpg');
             $table->string('location')->nullable();
             $table->mediumText('description')->nullable();
+            $table->string('message_settings')->default('everyone');
             $table->rememberToken();
             $table->timestamps();
         });

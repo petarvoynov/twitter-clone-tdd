@@ -53,8 +53,8 @@ class MessagesController extends Controller
     }
 
     public function store(User $user)
-    {   
-        if(!$user->isFollowing(auth()->user())){
+    {          
+        if(!$user->isFollowing(auth()->user()) && $user->message_settings != 'everyone' ){
             abort(403);
         }
 

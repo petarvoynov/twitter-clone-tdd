@@ -37,6 +37,23 @@ class MessagesTest extends TestCase
     }
 
     /** @test */
+    function a_user_can_message_people_that_are_not_following_him_if_they_have_chat_settings_set_to_everyone()
+    {
+        // Given we are sing in 
+        $user = $this->signIn();
+
+        $userToMessage = factory('App\User')->create();
+
+        // When we hit the route to message a user with chat setting set to everyone
+        $this->post("/messages/{$userToMessage->id}", ['message' => 'This should be received']);
+
+        // Then there should be a record in the database
+        $this->assertDatabaseHas('messages', [
+            'message' => 'This should be received'
+        ]);
+    }
+
+    /** @test */
     function a_user_cannot_message_people_that_are_not_following_him()
     {
         // Given we are sing in
@@ -68,4 +85,6 @@ class MessagesTest extends TestCase
         // We shoud see the title of the page "Your Conversations"
         $response->assertSee('All Conversations');
     }
+
+    
 }
