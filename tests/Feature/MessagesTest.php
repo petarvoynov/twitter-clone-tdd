@@ -64,9 +64,7 @@ class MessagesTest extends TestCase
         // When we try to message a user that doesn't follow us
         $response = $this->post("/messages/{$userToMessage->id}",['message' => 'this should not be saved']);
 
-        // Then there should not be a record in the database and should receive response 403
-        $response->assertStatus(403);
-
+        // Then there should not be a record in the database
         $this->assertDataBaseMissing('messages', [
             'message' => 'this should not be saved'
         ]);
