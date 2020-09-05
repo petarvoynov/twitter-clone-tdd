@@ -54,12 +54,12 @@ class MessagesTest extends TestCase
     }
 
     /** @test */
-    function a_user_cannot_message_people_that_are_not_following_him()
+    function a_user_cannot_message_people_that_are_not_following_him_and_have_chat_settings_set_to_friends()
     {
         // Given we are sing in
         $user = $this->signIn();
 
-        $userToMessage = factory('App\User')->create();
+        $userToMessage = factory('App\User')->create(['message_settings' => 'friends']);
 
         // When we try to message a user that doesn't follow us
         $response = $this->post("/messages/{$userToMessage->id}",['message' => 'this should not be saved']);
