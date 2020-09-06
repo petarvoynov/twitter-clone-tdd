@@ -66,15 +66,6 @@ class TweetsController extends Controller
     {
         $this->authorize('delete', $tweet);
         
-        // Deleting all the activities for the given tweet
-        $tweet->activities()->delete();
-
-        // Deleting all the likes 
-        $tweet->likes()->delete();
-
-        // Deleting all the retweets
-        $tweet->retweets()->delete();
-
         $tweet->delete();
 
         return redirect()->route('tweets.index')->with('success', 'You successfully deleted the tweet.');

@@ -42,7 +42,24 @@ class TweetObserver
      */
     public function deleted(Tweet $tweet)
     {
-        //
+        // Deleting all the activities for the given tweet
+        $tweet->activities()->delete();
+
+        // Deleting all the likes 
+        $tweet->likes()->delete();
+
+        // Deleting all the comments and activities for the comments
+        $tweet->comments->each(function($comment){
+            $comment->activities()->delete();
+            $comment->likes()->delete();
+        });
+        $tweet->comments()->delete();
+
+        // Deleting all the bookmarks
+        $tweet->bookmarks()->delete();
+
+        // Deleting all the retweets
+        $tweet->retweets()->delete();
     }
 
     /**
