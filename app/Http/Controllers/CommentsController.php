@@ -40,8 +40,6 @@ class CommentsController extends Controller
     public function destroy(Tweet $tweet, Comment $comment)
     {
         $this->authorize('delete', $comment);
-        
-        $comment->activities()->where('user_id', auth()->id())->where('description', 'commented a tweet')->delete();
 
         $comment->delete();
 

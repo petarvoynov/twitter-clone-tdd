@@ -42,7 +42,11 @@ class CommentObserver
      */
     public function deleted(Comment $comment)
     {
-        //
+        // Delete all activities for the comment
+        $comment->activities()->delete();
+
+        // Remove all the likes for the comment
+        $comment->likes()->delete();
     }
 
     /**
