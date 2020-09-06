@@ -33,7 +33,7 @@ class MessagesController extends Controller
 
     public function show(User $user)
     {
-        if(auth()->id() == $user->id) return redirect()->route('messages.index')->with('success', 'You cannot chat with yourself');
+        if(auth()->id() == $user->id) return redirect()->route('messages.index')->with('warning', 'You cannot chat with yourself');
 
         // Getting all the messages that auth wrote to the given user
         $mySendMessages = Message::where('from', auth()->id())->where('to', $user->id);
@@ -59,14 +59,14 @@ class MessagesController extends Controller
 
     public function store(User $user)
     {     
-        if(auth()->id() == $user->id) return redirect()->route('messages.index')->with('success', 'You cannot chat with yourself');
+        if(auth()->id() == $user->id) return redirect()->route('messages.index')->with('warning', 'You cannot chat with yourself');
 
         request()->validate([
             'message' => 'required'
         ]);
         
         if(!$user->isFollowing(auth()->user()) && $user->message_settings != 'everyone' ){
-            return back()->with('success', $user->name . ' has his privacy chat settings "on" and only people that he follows can message him.');
+            return back()->with('warning', $user->name . ' has his privacy chat settings "on" and only people that he follows can message him.');
         }
 
         auth()->user()->sendMessages()->create([
