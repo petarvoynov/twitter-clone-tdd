@@ -13,11 +13,6 @@ class LikeTweetsController extends Controller
         if(!$tweet->isLiked()) {
             
             $tweet->like();
-            
-            $tweet->activities()->create([
-                'user_id' => auth()->id(),
-                'description' => 'this tweet is being liked'
-            ]);
         }
 
         return back()->with('success', 'You successfully liked the tweet.');

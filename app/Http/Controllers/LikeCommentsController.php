@@ -12,11 +12,6 @@ class LikeCommentsController extends Controller
     {
         if(!$comment->isLiked()){
             $comment->like();
-
-            $comment->activities()->create([
-                'user_id' => auth()->id(),
-                'description' => 'this comment is being liked'
-            ]);
         } 
        
         return back()->with('success', 'You successfully liked a comment.');

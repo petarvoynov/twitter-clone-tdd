@@ -9,6 +9,8 @@ use App\Tweet;
 use App\Observers\TweetObserver;
 use App\Comment;
 use App\Observers\CommentObserver;
+use App\Like;
+use App\Observers\LikeObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -57,6 +59,7 @@ class AppServiceProvider extends ServiceProvider
         /* Observers */
         Tweet::observe(TweetObserver::class);
         Comment::observe(CommentObserver::class);
+        Like::observe(LikeObserver::class);
 
     }
 }
