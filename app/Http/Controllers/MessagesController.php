@@ -50,6 +50,7 @@ class MessagesController extends Controller
             $messages = $messages->sortBy('created_at');
         }
 
+        $messages->where('from', $user->id)->last()->update(['read_at' => now()]);
 
         return view('messages.show', compact('user', 'messages'));
     }

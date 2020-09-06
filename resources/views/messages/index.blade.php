@@ -15,13 +15,15 @@
     @if(count($users) > 0)
         @foreach($users as $user)
             <a href="{{ route('messages.show', ['user' => $user->id]) }}">
-                <div class="chat-pannel row d-flex align-items-center mt-2">
+                <div class="chat-pannel row d-flex align-items-center mt-2
+                    {{ (is_null(auth()->user()->lastMessage($user)->read_at) && auth()->user()->lastMessage($user)->from == $user->id) ? 'unread-message' : '' }}">
                     <div class="chat-image col-2" >
                         <img class="img-fluid" style="max-width: 100%; height: auto;" src="{{ $user->profilePicture() }}" alt="user profile picture">
                     </div>
                     <div class="chat-last-message col-10">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="lead">{{ $user->name }}</div>
+                            
                             <small>{{ auth()->user()->lastMessage($user)->created_at->diffForHumans() }}</small>
                         </div>
                         <div>
@@ -30,6 +32,7 @@
                     </div>
                 </div>
             </a>
+            
         @endforeach
         <div>
             {{ $users->links() }}

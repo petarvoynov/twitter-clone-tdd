@@ -157,3 +157,8 @@ a {
     height: 80px;
     border-radius: 40px;
 }
+
+.unread-message {
+    background-color: rgb(31, 215, 248);
+    border-radius: 20px;
+}

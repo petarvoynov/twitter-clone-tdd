@@ -18,6 +18,7 @@ class CreateMessagesTable extends Migration
             $table->unsignedBigInteger('from');
             $table->unsignedBigInteger('to');
             $table->mediumText('message');
+            $table->timestamp('read_at')->nullable()->default(null);
             $table->timestamps();
         });
     }
