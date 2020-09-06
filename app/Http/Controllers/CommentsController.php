@@ -20,11 +20,6 @@ class CommentsController extends Controller
             'tweet_id' => $tweet->id,
         ]);
 
-        $comment->activities()->create([
-            'user_id' => auth()->id(),
-            'description' => 'commented a tweet'
-        ]);
-
         return back()->with('success', 'You successfully posted a comment.');
 
     }

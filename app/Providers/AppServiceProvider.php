@@ -7,6 +7,8 @@ use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Tweet;
 use App\Observers\TweetObserver;
+use App\Comment;
+use App\Observers\CommentObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -54,6 +56,7 @@ class AppServiceProvider extends ServiceProvider
 
         /* Observers */
         Tweet::observe(TweetObserver::class);
+        Comment::observe(CommentObserver::class);
 
     }
 }
