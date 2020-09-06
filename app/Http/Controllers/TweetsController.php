@@ -34,11 +34,6 @@ class TweetsController extends Controller
         $tweet = auth()->user()->tweets()->create($data);
 
         auth()->user()->notifySubscribers($tweet);
-
-        $tweet->activities()->create([
-            'user_id' => auth()->id(),
-            'description' => 'created a tweet'
-        ]);
         
         return redirect()->route('tweets.index')->with('success', 'You successfully posted a tweet.');
     }
