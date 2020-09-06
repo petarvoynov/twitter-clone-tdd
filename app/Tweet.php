@@ -33,7 +33,7 @@ class Tweet extends Model
 
     public function unlike()
     {
-        $this->likes()->where('user_id', auth()->id())->delete();
+        $this->likes()->where('user_id', auth()->id())->get()->each->delete();
     }
 
     public function isLiked()

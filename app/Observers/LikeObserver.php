@@ -51,7 +51,13 @@ class LikeObserver
      */
     public function deleted(Like $like)
     {
-        //
+        if($like->likeable_type == 'App\Tweet'){
+            Activity::where('user_id', $like->user_id)->where('description', 'this tweet is being liked')->delete();
+        }
+        
+        if($like->likeable_type == 'App\Comment'){ 
+            Activity::where('user_id', $like->user_id)->where('description', 'this comment is being liked')->delete();
+        }
     }
 
     /**

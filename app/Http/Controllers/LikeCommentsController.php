@@ -19,9 +19,7 @@ class LikeCommentsController extends Controller
 
     public function destroy(Comment $comment)
     {
-        if($comment->isLiked()){
-            $comment->activities()->where('user_id', auth()->id())->where('description', 'this comment is being liked')->delete();
-
+        if($comment->isLiked()){ 
             $comment->unlike();
         }
 
