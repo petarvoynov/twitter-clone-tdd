@@ -47,3 +47,10 @@ This project is created only for learning purposes and job applications. I've cr
 ```
     php artisan db:seed
 ```
+
+This will give you 13 users with random amount of tweet, retweets, comments, likes and follows.
+All users password will be "password".
+The first 3 users will be:
+- username: test1, email: test1@example.com, password: password
+- username: test2, email: test2@example.com, password: password
+- username: test3, email: test3@example.com, password: password
