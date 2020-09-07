@@ -17,12 +17,17 @@ During this project I wrote 124 test with 180 assertions.
 4. Notifications
 5. Bookmarks
 6. Lists
-7. Tweets, Retweets, Likes, Comments, Follow and Subscribe
+7. Tweets
+8. Retweets
+9. Likes
+10. Comments
+11. Follow
+12. Subscribe
 
 #### Installation
 1. Clone the project to xampp/htdocs folder
 ```
-    git clone https://github.com/lelemalee/twitter-clone.git
+    git clone https://github.com/lelemalee/twitter-clone-tdd.git
 ```
 2. cd to the project folder
 ```
