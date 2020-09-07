@@ -35,7 +35,7 @@
     </div>
     <div class="col-lg-3 d-flex flex-column justify-content-between">
         <small>
-            <span class="font-weight-bold mr-1">{{ $tweet->bookmarks->count() }}</span>Bookmarks
+            <span class="font-weight-bold mr-1">{{ $tweet->bookmarks_count }}</span>Bookmarks
         </small>
         @if(!$tweet->isBookmarked())
             <form action="{{ route('bookmarks.store', ['tweet' => $tweet->id]) }}" method="POST">

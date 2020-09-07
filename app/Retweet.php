@@ -8,6 +8,8 @@ class Retweet extends Model
 {
     protected $guarded = [];
 
+    protected $with = ['tweet'];
+
     public function tweet()
     {
         return $this->belongsTo('App\Tweet');

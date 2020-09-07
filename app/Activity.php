@@ -8,7 +8,7 @@ class Activity extends Model
 {
     protected $guarded = [];
 
-    protected $with = ['user']; 
+    protected $with = ['user', 'subject']; 
     
     public function subject()
     {

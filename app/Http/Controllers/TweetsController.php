@@ -20,8 +20,9 @@ class TweetsController extends Controller
         /* $followings[] = auth()->id(); */
         
         $activities = Activity::whereIn('user_id', $followings)->with('subject')->get()->loadMorph('subject', [
-            Tweet::class => ['user'],
-            Comment::class => ['tweet.user']
+            Tweet::class => ['user', 'bookmarks'],
+            Comment::class => ['tweet.user'],
+            Retweet::class => ['tweet.bookmarks']
         ])->paginate(15);
 
         return view('tweets.index', compact('activities'));

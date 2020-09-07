@@ -8,8 +8,8 @@ class Tweet extends Model
 {
     protected $guarded = [];
 
-    protected $with = ['likes', 'bookmarks'];
-    protected $withCount = ['likes', 'comments', 'retweets'];
+    protected $with = ['likes'];
+    protected $withCount = ['likes', 'comments', 'retweets', 'bookmarks'];
 
     public function user()
     {
