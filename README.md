@@ -44,7 +44,7 @@ During this project I wrote 124 test with 180 assertions.
 7. Open .env file and fill your database information
 8. Run php artisan migrate
 ```
-    php artisan:migrate
+    php artisan migrate
 ```
 9. You can seed the project with data running php artisan db:seed
 ```
