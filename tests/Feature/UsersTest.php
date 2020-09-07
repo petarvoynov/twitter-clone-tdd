@@ -127,8 +127,9 @@ class UsersTest extends TestCase
         $this->post('/tweets/'. $tweet->id .'/like');
 
         // Then there should be one activity in the database for liking the tweet
-        $this->assertCount(1, $user->activities);
-        $this->assertEquals('this tweet is being liked', $user->activities->first()->description);
+        $this->assertCount(2, $user->activities);
+        $this->assertEquals('created a tweet', $user->activities->first()->description);
+        $this->assertEquals('this tweet is being liked', $user->activities->last()->description);
     }
 
     /** @test */
@@ -144,7 +145,8 @@ class UsersTest extends TestCase
         $this->delete('/tweets/'. $tweet->id .'/unlike');
 
         // Then there should not be activity in the database
-        $this->assertCount(0, $user->activities);
+        $this->assertCount(1, $user->activities);
+        $this->assertEquals('created a tweet', $user->activities->first()->description);
     }
 
     /** @test */
@@ -156,15 +158,16 @@ class UsersTest extends TestCase
         $tweet = factory('App\Tweet')->create(['user_id' => $user->id]);
 
         // When we hit the route to comment the tweet
-        $comment = factory('App\Comment')->create([
+        $comment = factory('App\Comment')->make([
             'tweet_id' => $tweet->id,
             'user_id' => $user->id
         ]);
         $this->post('/tweets/'. $tweet->id .'/comments', $comment->toArray());
 
         // Then there should be records in the activity table for commenting the tweet
-        $this->assertCount(1, $user->activities);
-        $this->assertEquals('commented a tweet', $user->activities->first()->description);
+        $this->assertCount(2, $user->activities);
+        $this->assertEquals('created a tweet', $user->activities->first()->description);
+        $this->assertEquals('commented a tweet', $user->activities->last()->description);
     }
 
     /** @test */
@@ -190,7 +193,7 @@ class UsersTest extends TestCase
         // Then there shouldn't be a record in activities table for creating the comment
         $this->assertDatabaseMissing('activities', [
             'user_id' => $user->id,
-            'description' => 'comment'
+            'description' => 'commented a tweet'
         ]);
     }
 
@@ -211,6 +214,7 @@ class UsersTest extends TestCase
 
         // Then there should be retweet activity for us in the database
         $this->assertCount(1, $user->activities);
+        $this->assertCount(1, $userToFollow->activities);
         $this->assertDatabaseHas('activities', [
             'user_id' => $user->id,
             'description' => 'this tweet is being retweeted'
@@ -238,7 +242,7 @@ class UsersTest extends TestCase
         // Then there shouldn't be a record in activities table for retweeting the tweet
         $this->assertDatabaseMissing('activities', [
             'user_id' => $user->id,
-            'description' => 'retweet'
+            'description' => 'this tweet is being retweeted'
         ]);
     }
 
@@ -254,7 +258,7 @@ class UsersTest extends TestCase
         $this->post('/comments/'. $comment->id .'/like');
 
         // Then there should be a record in the activity table for liking this comment
-        $this->assertCount(1, $user->activities);
+        $this->assertCount(2, $user->activities);
         $this->assertDatabaseHas('activities', [
             'user_id' => $user->id,
             'subject_id' => $comment->id,
@@ -277,12 +281,12 @@ class UsersTest extends TestCase
         $this->delete('/comments/'. $comment->id .'/unlike');
         
         // Then there shouldn't be records in activity table for liking the comment
-        $this->assertCount(0, $user->activities);
+        $this->assertCount(1, $user->activities);
         $this->assertDatabaseMissing('activities', [
             'user_id' => $user->id,
             'subject_id' => $comment->id,
-            'subject_type' => get_class($comment),
-            'description' => 'like'
+            'subject_type' => 'App\Comment',
+            'description' => 'this comment is being liked'
         ]);
     }
 
