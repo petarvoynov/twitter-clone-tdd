@@ -209,4 +209,13 @@ class User extends Authenticatable
         }
  
     }
+
+    public function getUnreadNotificationsCount()
+    {
+        if($this->unreadNotifications()->count() > 99){
+            return '99+';
+        }
+        
+        return $this->unreadNotifications()->count();
+    }
 }
