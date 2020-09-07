@@ -1,11 +1,14 @@
-## Twitter Clone
+## Twitter Clone TDD
 
 ### About Twitter Clone
 This project is created only for learning purposes and job applications. I've created this project only to improve my backend laravel skills.
+During this project I wrote 124 test with 180 assertions.
 
 #### Used tools
 - PHP 7.2.30
 - Laravel Framework 6.18.20
+- Bootstrap 4
+- svgs from https://heroicons.dev/
 
 #### Build features
 1. Registration form (Build in laravel auth)
@@ -23,7 +26,7 @@ This project is created only for learning purposes and job applications. I've cr
 ```
 2. cd to the project folder
 ```
-    cd twitter-clone
+    cd twitter-clone-tdd
 ```
 3. Run composer install
 ```
@@ -51,6 +54,8 @@ This project is created only for learning purposes and job applications. I've cr
 This will give you 13 users with random amount of tweet, retweets, comments, likes and follows.
 All users password will be "password".
 The first 3 users will be:
-- username: test1, email: test1@example.com, password: password
-- username: test2, email: test2@example.com, password: password
-- username: test3, email: test3@example.com, password: password
+```
+    username: test1 | email: test1@example.com | password: password
+    username: test2 | email: test2@example.com | password: password
+    username: test3 | email: test3@example.com | password: password  
+```
