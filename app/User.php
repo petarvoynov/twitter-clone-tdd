@@ -186,4 +186,27 @@ class User extends Authenticatable
 
         return $message;
     }
+
+    public function getUnreadMessagesCount()
+    {
+        // Getting all the users that send us messages
+        $usersThatIreceiveMessagesFrom = $this->receivedMessages->map(function($message){
+            return $message->sender;
+        })->unique();
+
+        $usersThatIreceiveMessagesFrom->load('sendMessages');
+
+        // Get all the messages that are not read
+        $messages = $usersThatIreceiveMessagesFrom->filter(function($user){
+            return is_null($user->sendMessages->where('to', $this->id)->last()->read_at);
+        });
+
+        // Return the count of unread messages
+        if($messages->count() > 99){
+            return '99+';
+        } else {
+            return $messages->count();
+        }
+ 
+    }
 }
