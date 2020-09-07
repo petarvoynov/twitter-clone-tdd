@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         foreach($users as $user) {
             $u = factory('App\User')->create([
                 'name' => ucfirst($user),
-                'email' => $user.'@abv.bg',
+                'email' => $user.'@example.com',
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
                 'remember_token' => Str::random(10),
