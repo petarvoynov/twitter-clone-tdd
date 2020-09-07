@@ -13,6 +13,15 @@ class NotificationsController extends Controller
         return view('notifications.index', compact('notifications'));
     }
 
+    public function update()
+    {
+        auth()->user()->unreadNotifications()->each(function($notification){
+            $notification->markAsRead();
+        });
+
+        return back();
+    }
+
     public function unread()
     {
         $unreadNotifications = auth()->user()->unreadNotifications->paginate(10);

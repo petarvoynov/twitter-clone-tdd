@@ -187,4 +187,26 @@ class NotificationsTest extends TestCase
         // Then we should have 0 notifications
         $this->assertEquals(0, $user->readNotifications->count());
     }
+
+    /** @test */
+    function a_user_can_read_all_his_unread_notifications_at_once()
+    {
+        // Give we are sing in and follow and subscribe to a user
+        $user = $this->signIn();
+
+        $userToFollowAndSubscribe = factory('App\User')->create();
+
+        $user->follow($userToFollowAndSubscribe);
+        $user->subscribe($userToFollowAndSubscribe);
+
+        // and this user generate us a notifications
+        $this->actingAs($userToFollowAndSubscribe)->post('/tweets', ['body' => 'this tweet generates activity']);
+        $this->actingAs($userToFollowAndSubscribe)->post('/tweets', ['body' => 'this tweet generates activity 2']);
+
+        // When we hit the route to read all unread notifications
+        $this->actingAs($user)->patch('/notifications');
+
+        // Then we should have 0 unread notifications
+        $this->assertEquals(0, $user->unreadNotifications->count());
+    }
 }

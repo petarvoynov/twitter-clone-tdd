@@ -11,11 +11,21 @@
             <h2 class="text-center">All Notifications</h2>
         </div>
         <div class="col-3">
-            <form action="{{ route('notifications.destroyAllRead') }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button class="btn btn-sm btn-primary" type="submit">Clear Read Notifications</button>
-            </form>
+            <div>
+                <form action="{{ route('notifications.update') }}" method="POST">
+                    @csrf
+                    @method('PATCH')
+                    <button class="btn btn-primary btn-sm">Mark All As Read</button>
+                </form>
+            </div>
+            
+            <div class="mt-2">
+                <form action="{{ route('notifications.destroyAllRead') }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-sm btn-primary" type="submit">Clear Read Notifications</button>
+                </form>
+            </div>
         </div>
     </div>
     
