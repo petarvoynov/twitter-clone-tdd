@@ -7,20 +7,20 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class TweetCreated extends Notification
+class Unfollowed extends Notification
 {
     use Queueable;
 
-    protected $tweet;
+    protected $user;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($tweet)
+    public function __construct($user)
     {
-        $this->tweet = $tweet;
+        $this->user = $user;
     }
 
     /**
@@ -64,12 +64,10 @@ class TweetCreated extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'type' => 'tweet-created',
+            'type' => 'unfollowed',
             'notifiable_name' => $notifiable->name,
-            'tweet_id' => $this->tweet->id,
-            'tweet_owner_name' => $this->tweet->user->name,
-            'tweet_body' => $this->tweet->body,
-            'created_at' => $this->tweet->created_at
+            'user_name' => $this->user->name,
+            'user_id' => $this->user->id,
         ];
     }
 }

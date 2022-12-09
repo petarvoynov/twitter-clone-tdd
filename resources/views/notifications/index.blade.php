@@ -32,16 +32,13 @@
     @include('notifications.components.navigation')
 
     @foreach($notifications as $notification)
-        <div  class="row">
-            <a style="width:100%" href="{{ route('tweets.show', ['tweet' => $notification->data['tweet_id']]) }}">
-                <div id="{{ $notification->data['tweet_id'] }}" class="col-12 notification alert {{ is_null($notification->read_at) ? 'alert-primary' : 'alert-light' }}" role="alert">
-                    <div>
-                        {{ $notification->data['tweet_owner_name'] }}<small> tweeted:</small>
-                    </div>
-                    <div>{{ Str::limit($notification->data['tweet_body'], 230) }}</div>
-                </div>
-            </a>
-        </div>
+        @if($notification->type == 'tweet-created')
+            @include('shared.notifications.tweet-created', ['notification' => $notification])
+        @elseif($notification->type == 'new-follower')
+            @include('shared.notifications.new-follower', ['notification' => $notification])
+        @elseif($notification->type == 'unfollowed')
+            @include('shared.notifications.unfollowed', ['notification' => $notification])
+        @endif
     @endforeach  
     {{ $notifications->links() }} 
 @endsection

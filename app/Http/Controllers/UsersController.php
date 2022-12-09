@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\Unfollowed;
 use Illuminate\Http\Request;
 use App\User;
 
@@ -39,6 +40,7 @@ class UsersController extends Controller
     {
         if(!auth()->user()->followings->contains($user)){
             auth()->user()->follow($user);
+            $user->notify(new NewFollower(auth()->user()));
         }
         
         return back()->with('success', 'You successfully followed '. $user->name .'.');
@@ -55,6 +57,7 @@ class UsersController extends Controller
         }
 
         auth()->user()->unfollow($user);
+        $user->notify(new Unfollowed(auth()->user()));
         
         return back()->with('success', 'You successfully unfollowed '. $user->name .'.');
     }
