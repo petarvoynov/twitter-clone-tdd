@@ -33,7 +33,7 @@
 
     @foreach($notifications as $notification)
         @php
-            dd($notifications, $notifcation);
+            dd($notifications, $notification);
         @endphp
         @if($notification['type'] == 'tweet-created')
             @include('shared.notifications.tweet-created', ['notification' => $notification])
