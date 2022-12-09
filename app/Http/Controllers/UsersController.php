@@ -15,6 +15,10 @@ class UsersController extends Controller
 
         $followedBy = $user->followers->take(3)->implode('name', ', ');
 
+        if(request()->has('notification_id')) { 
+            request()->user()->notifications()->where('id', request()->notification_id)->first()->markAsRead();
+        }
+
         return view('users.show', compact(['user', 'activities', 'followedBy']));
     }
 
