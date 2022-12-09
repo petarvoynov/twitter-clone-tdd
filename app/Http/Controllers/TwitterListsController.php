@@ -22,7 +22,7 @@ class TwitterListsController extends Controller
     {
         $data = request()->validate([
             'name' => 'required',
-            'description' => '',
+            'description' => 'required',
             'is_private' => '',
             'cover_image' => 'image'
         ]);
