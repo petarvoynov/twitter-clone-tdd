@@ -32,6 +32,9 @@
     @include('notifications.components.navigation')
 
     @foreach($notifications as $notification)
+        @php
+            dd($notifications, $notifcation);
+        @endphp
         @if($notification['type'] == 'tweet-created')
             @include('shared.notifications.tweet-created', ['notification' => $notification])
         @elseif($notification['type'] == 'new-follower')
