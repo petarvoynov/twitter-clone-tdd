@@ -64,7 +64,6 @@ class TweetCreated extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'type' => 'tweet-created',
             'notifiable_name' => $notifiable->name,
             'tweet_id' => $this->tweet->id,
             'tweet_owner_name' => $this->tweet->user->name,

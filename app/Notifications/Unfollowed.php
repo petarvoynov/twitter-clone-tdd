@@ -64,7 +64,6 @@ class Unfollowed extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'type' => 'unfollowed',
             'notifiable_name' => $notifiable->name,
             'user_name' => $this->user->name,
             'user_id' => $this->user->id,

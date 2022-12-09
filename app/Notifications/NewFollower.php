@@ -64,7 +64,6 @@ class NewFollower extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'type' => 'new-follower',
             'notifiable_name' => $notifiable->name,
             'user_name' => $this->user->name,
             'user_id' => $this->user->id,

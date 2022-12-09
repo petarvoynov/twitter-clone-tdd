@@ -32,14 +32,11 @@
     @include('notifications.components.navigation')
 
     @foreach($notifications as $notification)
-        @php
-            dd($notifications, $notification);
-        @endphp
-        @if($notification['type'] == 'tweet-created')
+        @if($notification->type == "App\Notifications\TweetCreated")
             @include('shared.notifications.tweet-created', ['notification' => $notification])
-        @elseif($notification['type'] == 'new-follower')
+        @elseif($notification->type == "App\Notifications\NewFollower")
             @include('shared.notifications.new-follower', ['notification' => $notification])
-        @elseif($notification['type'] == 'unfollowed')
+        @elseif($notification->type == "App\Notifications\Unfollowed")
             @include('shared.notifications.unfollowed', ['notification' => $notification])
         @endif
     @endforeach  
