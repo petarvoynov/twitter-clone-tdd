@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Notifications\Unfollowed;
+use App\Notifications\NewFollower;
 use Illuminate\Http\Request;
 use App\User;
 
